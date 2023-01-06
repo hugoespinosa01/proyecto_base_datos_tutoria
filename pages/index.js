@@ -1,6 +1,6 @@
 import Head from "next/head";
 import {Compras} from './frontend/index.js'
-import Login from "../pages/frontend/Login/index"
+import Login from "../src/components/LoginComp/index"
 import CatalogoProductos1 from './frontend/catalogoProductos'
 
 export default function Home() {
@@ -31,7 +31,6 @@ export default function Home() {
 
       <div>
         <Login/>
-        <CatalogoProductos1/>
       </div>
     </>
   );

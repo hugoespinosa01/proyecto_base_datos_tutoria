@@ -13,7 +13,6 @@ import { Message } from 'primereact/message';
 import { Toast } from 'primereact/toast';
 import { useEffect, useRef, useState } from 'react'; 
 
-
 export default function Login() {
   const [displayScreen, setDisplayScreen] = useState(false);
   const router = useRouter();
@@ -50,8 +49,9 @@ export default function Login() {
     
   }else{
 
-    
+    window.location.href="../../frontend/catalogoProductos"
    }
+   
  }
 
   return (

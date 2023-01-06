@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { classNames } from 'primereact/utils';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-
+import {Card} from "primereact/card"
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FileUpload } from 'primereact/fileupload';
@@ -273,6 +273,7 @@ export default function CatalogoProductos () {
     );
 
     return (
+        <Card>
         <div className="datatable-crud-demo">
             <Toast ref={toast} />
 
@@ -351,6 +352,6 @@ export default function CatalogoProductos () {
                     {product && <span>Desea eliminar los siguientes productos?</span>}
                 </div>
             </Dialog>
-        </div>
+        </div></Card>
     );
 }
