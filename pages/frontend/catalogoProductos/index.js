@@ -1,12 +1,20 @@
+import { useRouter } from 'next/router';
 import Head from "next/head";
-import {Compras} from './frontend/index.js'
-import Login from "../src/components/LoginComp/index"
-import CatalogoProductos1 from './frontend/catalogoProductos'
+import  CatalogoProductos from '../../../src/components/ListaProductos/index';
+//import Layout from '@components/layouts/';
+//import { FormCreacionProvider } from '@hooks/formCreacionContext';
 
-export default function Home() {
+/** @function
+ * @name CatalogoProductos1
+ * @description Pagina que contiene el componente de Consulta general de arrastre
+ **/
+export default function CatalogoProductos1 () {
+  const router = useRouter();
+  const data = router.query;
+
   return (
     <>
-      <Head>
+    <Head>
         <title>Proyecto de Tutoría Base de Datos</title>
         <meta name="description" content="Proyecto de tutoría del segundo parcial" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -28,10 +36,10 @@ export default function Home() {
           href="https://unpkg.com/primeflex@3.2.1/primeflex.min.css"
         />
       </Head>
-
-      <div>
-        <Login/>
-      </div>
-    </>
+   
+        <div className="text-base text-color surface-overlay border-1 border-solid surface-border appearance-none outline-none focus:border-primary w-full">
+          <CatalogoProductos data={data}/>
+        </div></>
+    
   );
 }

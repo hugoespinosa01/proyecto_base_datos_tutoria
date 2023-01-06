@@ -12,8 +12,6 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Message } from 'primereact/message';
 import { Toast } from 'primereact/toast';
 import { useEffect, useRef, useState } from 'react'; 
-
-
 export default function Login() {
   const [displayScreen, setDisplayScreen] = useState(false);
   const router = useRouter();
@@ -50,8 +48,17 @@ export default function Login() {
     
   }else{
 
-    
+    console.log("name", tipoEntidadSeleccionada?.name)
+    router.push(
+      {
+        pathname: '/frontend/catalogoProductos',
+        query: { name:tipoEntidadSeleccionada?.name},
+      },
+      '../../frontend/catalogoProductos',
+    );
+   // window.location.href="../../frontend/catalogoProductos"
    }
+   
  }
 
   return (
