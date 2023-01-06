@@ -45,17 +45,20 @@ export default function CatalogoProductos (data2) {
     useEffect(() => {
         let producto= [{id: 1, codigo:"23234werw", nombre: 'Product 1', precio: 100, imagen: 'product-placeholder.svg', categoria: 'Category 1', cantidad: 100}]
         setProducts(producto)
+
+        if(data2?.data?.name==="Empresa"){
+            console.log("EMPRESA")
+            setDisableCliente(true);
+        }else{
+            console.log("CLIENTE")
+        }
     
     }, []); // eslint-disable-line react-hooks/exhaustive-deps*/
 
     const formatCurrency = (value) => {
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     }
-    if(data2?.data?.name==="Empresa"){
-        console.log("EMPRESA")
-    }else{
-        console.log("CLIENTE")
-    }
+    
 
     const openNew = () => {
         setProduct(emptyProduct);
@@ -213,7 +216,8 @@ export default function CatalogoProductos (data2) {
     const leftToolbarTemplate = () => {
         return (
             <React.Fragment>
-                <Button label="Nuevo" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew} />
+                {disableCliente?<Button label="Nuevo" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew} />:<></>}
+                
                 <Button label="Eliminar" icon="pi pi-trash" className="p-button-danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
             </React.Fragment>
         )
@@ -222,9 +226,10 @@ export default function CatalogoProductos (data2) {
     const rightToolbarTemplate = () => {
         return (
             <React.Fragment>
-                <FileUpload mode="basic" name="demo[]" auto url="https://primefaces.org/primereact/showcase/upload.php" accept=".csv" chooseLabel="Import" className="mr-2 inline-block" onUpload={importCSV} />
+                     {disableCliente?<><FileUpload mode="basic" name="demo[]" auto url="https://primefaces.org/primereact/showcase/upload.php" accept=".csv" chooseLabel="Import" className="mr-2 inline-block" onUpload={importCSV} />
                 <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />
-            </React.Fragment>
+           </>:<></>}
+                 </React.Fragment>
         )
     }
 
@@ -255,7 +260,7 @@ export default function CatalogoProductos (data2) {
 
     const header = (
         <div className="table-header">
-            <h5 className="mx-0 my-1">Listado de Productos</h5>
+            <h5 className="mx-0 my-1">{disableCliente?"Listado de Productos":"Carrito de Compras"}</h5>
            
         </div>
     );
@@ -279,7 +284,7 @@ export default function CatalogoProductos (data2) {
     );
 
     return (
-        <Card>
+        <Card title={disableCliente?"Listado de Productos":"Carrito de Compras"}>
         <div className="datatable-crud-demo">
             <Toast ref={toast} />
 
