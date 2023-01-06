@@ -197,9 +197,11 @@ export default function CatalogoProductos (data2) {
     const onCategoryChange = (e) => {
         let _product = {...product};
         _product['categoria'] = e.value;
+        _product['category'] = e.value;
         setProduct(_product);
        
     }
+    console.log({product})
     const onInputChange = (e, name) => {
         const val = (e.target && e.target.value) || '';
         let _product = {...product};
@@ -323,15 +325,15 @@ export default function CatalogoProductos (data2) {
                     <label className="mb-3">Categoría</label>
                     <div className="formgrid grid">
                         <div className="field-radiobutton col-6">
-                            <RadioButton inputId="category1" name="category" value="Accessorios" onChange={onCategoryChange} checked={product.category === 'Accessories'} />
+                            <RadioButton inputId="category1" name="category" value="Accessorios" onChange={onCategoryChange} checked={product.category === 'Accessorios'} />
                             <label htmlFor="category1">Accessorios</label>
                         </div>
                         <div className="field-radiobutton col-6">
-                            <RadioButton inputId="category2" name="category" value="Ropa" onChange={onCategoryChange} checked={product.category === 'Clothing'} />
+                            <RadioButton inputId="category2" name="category" value="Ropa" onChange={onCategoryChange} checked={product.category === 'Ropa'} />
                             <label htmlFor="category2">Ropa</label>
                         </div>
                         <div className="field-radiobutton col-6">
-                            <RadioButton inputId="category3" name="category" value="Electrónicos" onChange={onCategoryChange} checked={product.category === 'Electronics'} />
+                            <RadioButton inputId="category3" name="category" value="Electrónicos" onChange={onCategoryChange} checked={product.category === 'Electrónicos'} />
                             <label htmlFor="category3">Electrónicos</label>
                         </div>
                         <div className="field-radiobutton col-6">
