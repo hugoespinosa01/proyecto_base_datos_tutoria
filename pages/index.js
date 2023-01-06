@@ -1,6 +1,6 @@
 import Head from "next/head";
 import {Compras} from './frontend/index.js'
-
+import Login from "./frontend/Login/index.js"
 export default function Home() {
   return (
     <>
@@ -28,7 +28,7 @@ export default function Home() {
       </Head>
 
       <div>
-        <Compras/>
+        <Login/>
       </div>
     </>
   );
