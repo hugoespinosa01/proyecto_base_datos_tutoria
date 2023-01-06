@@ -49,8 +49,11 @@ export default function CatalogoProductos (data2) {
         if(data2?.data?.name==="Empresa"){
             console.log("EMPRESA")
             setDisableCliente(true);
-        }else{
+        }else if(data2?.data?.name==="Cliente"){
             console.log("CLIENTE")
+        }else{
+            console.log("SIN DATOS")
+            window.location.href="http://localhost:3000"
         }
     
     }, []); // eslint-disable-line react-hooks/exhaustive-deps*/
@@ -195,8 +198,8 @@ export default function CatalogoProductos (data2) {
         let _product = {...product};
         _product['categoria'] = e.value;
         setProduct(_product);
+       
     }
-
     const onInputChange = (e, name) => {
         const val = (e.target && e.target.value) || '';
         let _product = {...product};
