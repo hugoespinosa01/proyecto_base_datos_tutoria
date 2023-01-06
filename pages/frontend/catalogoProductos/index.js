@@ -12,8 +12,6 @@ export default function CatalogoProductos1 () {
   const router = useRouter();
   const data = router.query;
 
- console.log("demo",router)
-
   return (
     <>
     <Head>
@@ -40,7 +38,7 @@ export default function CatalogoProductos1 () {
       </Head>
    
         <div className="text-base text-color surface-overlay border-1 border-solid surface-border appearance-none outline-none focus:border-primary w-full">
-          <CatalogoProductos/>
+          <CatalogoProductos data={data}/>
         </div></>
     
   );

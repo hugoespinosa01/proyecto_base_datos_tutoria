@@ -14,7 +14,7 @@ import { InputNumber } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 
-export default function CatalogoProductos () {
+export default function CatalogoProductos (data2) {
 
     let emptyProduct = {
         id: null,
@@ -39,6 +39,7 @@ export default function CatalogoProductos () {
     const toast = useRef(null);
     const dt = useRef(null);
     const productService=null ;
+    const [disableCliente,setDisableCliente]=useState(false);
     
 
     useEffect(() => {
@@ -49,6 +50,11 @@ export default function CatalogoProductos () {
 
     const formatCurrency = (value) => {
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    }
+    if(data2?.data?.name==="Empresa"){
+        console.log("EMPRESA")
+    }else{
+        console.log("CLIENTE")
     }
 
     const openNew = () => {
