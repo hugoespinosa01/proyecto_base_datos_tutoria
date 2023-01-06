@@ -15,17 +15,16 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 
 export default function CatalogoProductos () {
+    var date = new Date( );
 
     let emptyProduct = {
         id: null,
-        name: '',
-        image: null,
-        description: '',
-        category: null,
-        price: 0,
-        quantity: 0,
-        rating: 0,
-        inventoryStatus: 'INSTOCK'
+        code: 213424242,
+        nombre: '',
+        imagen: null,
+        categoria: null,
+        precio: 0,
+        cantidad: 0,
     };
 
     const [products, setProducts] = useState(null);
@@ -42,7 +41,7 @@ export default function CatalogoProductos () {
     
 
     useEffect(() => {
-        let producto= [{id: 1, codigo:"23234werw", nombre: 'Product 1', precio: 100, imagen: 'product-placeholder.svg', categoria: 'Category 1', cantidad: 100}]
+        let producto= [{id: "ewfh", codigo:"23234werw", nombre: 'Product 1', precio: 100, imagen: 'product-placeholder.svg', categoria: 'Category 1', cantidad: 100}]
         setProducts(producto)
     
     }, []); // eslint-disable-line react-hooks/exhaustive-deps*/
@@ -213,14 +212,7 @@ export default function CatalogoProductos () {
         )
     }
 
-    const rightToolbarTemplate = () => {
-        return (
-            <React.Fragment>
-                <FileUpload mode="basic" name="demo[]" auto url="https://primefaces.org/primereact/showcase/upload.php" accept=".csv" chooseLabel="Import" className="mr-2 inline-block" onUpload={importCSV} />
-                <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />
-            </React.Fragment>
-        )
-    }
+    
 
     const imageBodyTemplate = (rowData) => {
         return <img src={`images/product/${rowData.imagen}`} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={rowData.image} className="product-image" />
@@ -278,7 +270,7 @@ export default function CatalogoProductos () {
             <Toast ref={toast} />
 
             <div className="card">
-                <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
+                <Toolbar className="mb-4" left={leftToolbarTemplate} ></Toolbar>
 
                 <DataTable ref={dt} emptyMessage="No se encontraron resultados" value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
                     dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
@@ -286,7 +278,7 @@ export default function CatalogoProductos () {
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
                     globalFilter={globalFilter} header={header} responsiveLayout="scroll">
                     <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false}></Column>
-                    <Column field="codigo" header="Código" sortable style={{ minWidth: '12rem' }}></Column>
+                    <Column field="id" header="Código" sortable style={{ minWidth: '12rem' }}></Column>
                     <Column field="nombre" header="Nombre" sortable style={{ minWidth: '16rem' }}></Column>
                     <Column field="imagen" header="Imagen" body={imageBodyTemplate}></Column>
                     <Column field="precio" header="Precio" body={priceBodyTemplate} sortable style={{ minWidth: '8rem' }}></Column>
