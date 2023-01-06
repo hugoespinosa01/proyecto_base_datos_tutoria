@@ -41,12 +41,26 @@ export default function Login() {
 
   const [administradorTecnico, setAdministradorTecnico] = useState(false);
  const opTipoEntidad=[{name:"Empresa"},{name:"Cliente"},]
+
+
+ const Loguear =()=>{
+  if(tipoEntidadSeleccionada==0){
+   
+      toast.current.show({severity:'error', summary: 'Error al Ingresar', detail:'Debe Seleccionar un Tipo de Usuario', life: 3000});
+    
+  }else{
+
+    
+   }
+ }
+
   return (
     <>
+      
       <Head>
         <title>Login :: Inicio de Sesión</title>
       </Head>
-
+      <Toast ref={toast} />
       <div className="surface-200 flex h-screen grid grid-nogutter surface-200">
         <div className="hidden md:inline-flex md:col-6">
           <Image
@@ -82,7 +96,7 @@ export default function Login() {
                     return (
                       <>
                         <label htmlFor="tipoEntidad" className="block text-900 font-medium mb-2">
-                          Tipo de entidad
+                          Tipo de Usuario
                         </label>
 
                         <Dropdown
@@ -93,8 +107,8 @@ export default function Login() {
                             setTipoEntidadSeleccionada(e.value);
                           }}
                           optionLabel="name"
-                          placeholder="Seleccione un tipo de entidad"
-                          emptyMessage="No hay tipo de entidad"
+                          placeholder="Seleccione un tipo de Usuario"
+                          emptyMessage="No hay tipo de usuario"
                         />
 
                         <div className="flex align-items-center justify-content-between mb-5" />
@@ -102,8 +116,10 @@ export default function Login() {
                         <Button
                           label="Iniciar Sesión"
                           icon="pi pi-sign-in"
-                          className="p-button-primary p-button-raised w-12rem"
+                          className="p-button-rounded p-button-info w-12rem"
+                         
                           onClick={() => {
+                            Loguear()
                           }}
                         />
                       
