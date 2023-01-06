@@ -1,6 +1,6 @@
 import Head from "next/head";
 import {Compras} from './frontend/index.js'
-import Login from "./frontend/Login/index.js"
+import Login from "../pages/frontend/Login/index"
 export default function Home() {
   return (
     <>

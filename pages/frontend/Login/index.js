@@ -58,15 +58,22 @@ export default function Login() {
             priority="true"
           />{' '}
         </div>
+        
         <div className="flex align-items-center justify-content-center md:col-6 text-left  p-3">
+          
           <div className="surface-card p-4 shadow-2 border-round lg:w-6 estiloSNP  ">
+          <div className="text-center mt-5">
+                <Image alt="Logo Tienda" src="/ShopIcon.svg" width={300} height={115} className="mb-1" priority />
+              </div>
             <div className="text-center mb-5 estiloSNP ">
               <div className=" text-2xl  mt-1 mb-2">Tienda Online XYZ</div>
               <div className="estiloSNP">
                 <Divider />
               </div>
+              
               <div className="font-medium">Inicio de Sesión</div>
             </div>
+            
 
             <div className="mb-3">
               {(() => {
@@ -107,9 +114,7 @@ export default function Login() {
                     );
                 }
               })()}
-              <div className="text-center mt-5">
-                <Image alt="Logo_senplades" src="/logoSIPeIP.svg" width={300} height={115} className="mb-1" priority />
-              </div>
+              
             </div>
           </div>
         </div>
