@@ -30,6 +30,7 @@ export default function CatalogoProductos(data2) {
   };
 
   const [equipos, setEquipos] = useState([]);
+  const [value19, setValue19] = useState(1);
 
   const getEquipos = () => {
     fetch("http://localhost:3001/equipos", {
@@ -360,16 +361,56 @@ export default function CatalogoProductos(data2) {
   const actionBodyTemplate = (rowData) => {
     return (
       <React.Fragment>
-        <Button
+         {disableCliente ? (
+          <Button
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success mr-2"
           onClick={() => editProduct(rowData)}
         />
-        <Button
-          icon="pi pi-trash"
-          className="p-button-rounded p-button-warning"
-          onClick={() => confirmDeleteProduct(rowData)}
-        />
+       
+        ) : (
+          <></>
+        )}
+
+{disableCliente ? (
+            <Button
+            icon="pi pi-trash"
+            className="p-button-rounded p-button-warning"
+            onClick={() => confirmDeleteProduct(rowData)}
+          />
+       
+        ) : (
+          <></>
+        )}
+        {disableCliente ? (
+  <></>
+          
+        ) : (
+        
+ <InputNumber inputId="vertical" value={value19} onValueChange={(e) => setValue19(e.value)} mode="decimal" showButtons buttonLayout="vertical" style={{width: '4rem'}}
+                            decrementButtonClassName="p-button-secondary" incrementButtonClassName="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" />
+        )}
+
+&nbsp;&nbsp;&nbsp;
+
+{disableCliente ? (
+  <></>
+          
+        ) : (
+        
+<Button
+            label="Agregar a carrito"
+            icon="pi pi-cart-plus"
+            className="p-button-success mr-2"
+           
+          />
+        )}
+
+
+
+
+
+       
       </React.Fragment>
     );
   };
@@ -429,6 +470,9 @@ export default function CatalogoProductos(data2) {
       />
     </React.Fragment>
   );
+  const onBasicUpload = () => {
+    toast.current.show({severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode'});
+}
 
   return (
     <div>
@@ -470,7 +514,7 @@ export default function CatalogoProductos(data2) {
                 exportable={false}
               ></Column>
               <Column
-                field="codigo"
+                field="id"
                 header="Código"
                 sortable
                 style={{ minWidth: "12rem" }}
@@ -511,7 +555,7 @@ export default function CatalogoProductos(data2) {
           <Dialog
             visible={productDialog}
             style={{ width: "450px" }}
-            header="Product Details"
+            header="Detalles del Producto"
             modal
             className="p-fluid"
             footer={productDialogFooter}
@@ -612,6 +656,12 @@ export default function CatalogoProductos(data2) {
                   integeronly
                 />
               </div>
+              <div className="field col">
+
+                <label htmlFor="image">Imagen</label> 
+                <FileUpload chooseLabel="Seleccione" mode="basic" name="demo[]" url="https://primefaces.org/primereact/showcase/upload.php" accept="image/*" maxFileSize={1000000} onUpload={onBasicUpload} />
+              </div>
+             
             </div>
           </Dialog>
 
