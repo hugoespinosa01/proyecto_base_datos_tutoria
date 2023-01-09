@@ -3,14 +3,18 @@ const router = express.Router();
 const connection = require('./connection');
 
 
-router.get('/equipos', (req, res) => {
-    connection.query('SELECT * FROM equipos', (error, results) => {
+router.get('/practica', (req, res) => {
+    connection.query('SELECT * FROM practica', (error, results) => {
         if (error){
             throw error
         }else{
             res.send(results);
         }
     })
+});
+
+router.get('/hello', (req, res) => {
+    res.send('Hello World!');
 });
 
 module.exports = router;

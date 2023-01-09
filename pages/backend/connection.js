@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const database = "equipos";
+const database = "practica";
 
 //Creamos la conexión
 const connection = mysql.createConnection({
