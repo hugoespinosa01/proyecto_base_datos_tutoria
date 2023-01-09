@@ -32,19 +32,13 @@ export default function CatalogoProductos(data2) {
   const [equipos, setEquipos] = useState([]);
   const [value19, setValue19] = useState(1);
 
-  const getEquipos = () => {
-    fetch("http://localhost:3001/equipos", {
+  useEffect(() => {
+    fetch("/api/hello", {
       method: "GET",
-      headers: {
-        "Access-Control-Allow-Origin": "https:/localhost:3001",
-
-      }
     })
       .then((res) => res.json())
       .then((data) => setEquipos(data));
-  };
-
-  getEquipos();
+  }, []);
 
   console.log("equipos", equipos);
 
@@ -84,7 +78,7 @@ export default function CatalogoProductos(data2) {
       console.log("SIN DATOS");
       window.location.href = "http://localhost:3000";
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps*/
+  }, []);
 
   const formatCurrency = (value) => {
     return value.toLocaleString("en-US", {
@@ -361,56 +355,51 @@ export default function CatalogoProductos(data2) {
   const actionBodyTemplate = (rowData) => {
     return (
       <React.Fragment>
-         {disableCliente ? (
+        {disableCliente ? (
           <Button
-          icon="pi pi-pencil"
-          className="p-button-rounded p-button-success mr-2"
-          onClick={() => editProduct(rowData)}
-        />
-       
-        ) : (
-          <></>
-        )}
-
-{disableCliente ? (
-            <Button
-            icon="pi pi-trash"
-            className="p-button-rounded p-button-warning"
-            onClick={() => confirmDeleteProduct(rowData)}
+            icon="pi pi-pencil"
+            className="p-button-rounded p-button-success mr-2"
+            onClick={() => editProduct(rowData)}
           />
-       
         ) : (
           <></>
         )}
         {disableCliente ? (
-  <></>
-          
+          <Button
+            icon="pi pi-trash"
+            className="p-button-rounded p-button-warning"
+            onClick={() => confirmDeleteProduct(rowData)}
+          />
         ) : (
-        
- <InputNumber inputId="vertical" value={value19} onValueChange={(e) => setValue19(e.value)} mode="decimal" showButtons buttonLayout="vertical" style={{width: '4rem'}}
-                            decrementButtonClassName="p-button-secondary" incrementButtonClassName="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" />
+          <></>
         )}
-
-&nbsp;&nbsp;&nbsp;
-
-{disableCliente ? (
-  <></>
-          
+        {disableCliente ? (
+          <></>
         ) : (
-        
-<Button
+          <InputNumber
+            inputId="vertical"
+            value={value19}
+            onValueChange={(e) => setValue19(e.value)}
+            mode="decimal"
+            showButtons
+            buttonLayout="vertical"
+            style={{ width: "4rem" }}
+            decrementButtonClassName="p-button-secondary"
+            incrementButtonClassName="p-button-secondary"
+            incrementButtonIcon="pi pi-plus"
+            decrementButtonIcon="pi pi-minus"
+          />
+        )}
+        &nbsp;&nbsp;&nbsp;
+        {disableCliente ? (
+          <></>
+        ) : (
+          <Button
             label="Agregar a carrito"
             icon="pi pi-cart-plus"
             className="p-button-success mr-2"
-           
           />
         )}
-
-
-
-
-
-       
       </React.Fragment>
     );
   };
@@ -471,8 +460,12 @@ export default function CatalogoProductos(data2) {
     </React.Fragment>
   );
   const onBasicUpload = () => {
-    toast.current.show({severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode'});
-}
+    toast.current.show({
+      severity: "info",
+      summary: "Success",
+      detail: "File Uploaded with Basic Mode",
+    });
+  };
 
   return (
     <div>
@@ -657,11 +650,17 @@ export default function CatalogoProductos(data2) {
                 />
               </div>
               <div className="field col">
-
-                <label htmlFor="image">Imagen</label> 
-                <FileUpload chooseLabel="Seleccione" mode="basic" name="demo[]" url="https://primefaces.org/primereact/showcase/upload.php" accept="image/*" maxFileSize={1000000} onUpload={onBasicUpload} />
+                <label htmlFor="image">Imagen</label>
+                <FileUpload
+                  chooseLabel="Seleccione"
+                  mode="basic"
+                  name="demo[]"
+                  url="https://primefaces.org/primereact/showcase/upload.php"
+                  accept="image/*"
+                  maxFileSize={1000000}
+                  onUpload={onBasicUpload}
+                />
               </div>
-             
             </div>
           </Dialog>
 
