@@ -29,6 +29,24 @@ export default function CatalogoProductos(data2) {
     inventoryStatus: "INSTOCK",
   };
 
+  const [equipos, setEquipos] = useState([]);
+
+  const getEquipos = () => {
+    fetch("http://localhost:3001/equipos", {
+      method: "GET",
+      headers: {
+        "Access-Control-Allow-Origin": "https:/localhost:3001",
+
+      }
+    })
+      .then((res) => res.json())
+      .then((data) => setEquipos(data));
+  };
+
+  getEquipos();
+
+  console.log("equipos", equipos);
+
   const [products, setProducts] = useState(null);
   const [productDialog, setProductDialog] = useState(false);
   const [deleteProductDialog, setDeleteProductDialog] = useState(false);
@@ -415,7 +433,7 @@ export default function CatalogoProductos(data2) {
   return (
     <div>
       <NavBar />
-      
+
       <Card
         title={disableCliente ? "Listado de Productos" : "Carrito de Compras"}
         className="mt-3"

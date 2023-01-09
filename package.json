@@ -20,6 +20,7 @@
     "mysql": "^2.18.1",
     "net": "^1.0.2",
     "next": "13.1.1",
+    "nodemon": "^2.0.20",
     "primeicons": "^6.0.1",
     "primereact": "^8.7.3",
     "react": "18.2.0",

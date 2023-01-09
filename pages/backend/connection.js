@@ -1,30 +1,23 @@
-const express = require("express");
-const {engine} = require("express-handlebars");
-const connection = require("express-myconnection");
-const bodyParser = require("body-parser");
-const mysql = require("mysql");
+const mysql = require('mysql');
+const database = "equipos";
 
-//Declaro la constante de conexion
-const app = express();
-app.set('port', process.env.PORT || 3000);
-
-
-//Configuro la conexión
-app.use(connection(mysql, {
+//Creamos la conexión
+const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    port: 3306,
-    database: 'equipos'
-}));
-
-
-
-
-
-//Escucho el puerto
-app.listen(app.get('port'), () => {
-    console.log("Escuchando en el puerto: ", app.get('port'));
+    database: database
 });
 
 
+
+//Nos conectamos
+connection.connect((err) => {
+    if(err){
+        console.log("Error al conectar con la base de datos");
+        return;
+    }
+    console.log('Conectado a la base de datos');
+});
+
+module.exports = connection;
