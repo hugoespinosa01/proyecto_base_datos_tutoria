@@ -297,34 +297,7 @@ export default function CatalogoProductos(data2) {
     );
   };
 
-  const rightToolbarTemplate = () => {
-    return (
-      <React.Fragment>
-        {disableCliente ? (
-          <>
-            <FileUpload
-              mode="basic"
-              name="demo[]"
-              auto
-              url="https://primefaces.org/primereact/showcase/upload.php"
-              accept=".csv"
-              chooseLabel="Import"
-              className="mr-2 inline-block"
-              onUpload={importCSV}
-            />
-            <Button
-              label="Export"
-              icon="pi pi-upload"
-              className="p-button-help"
-              onClick={exportCSV}
-            />
-          </>
-        ) : (
-          <></>
-        )}
-      </React.Fragment>
-    );
-  };
+  
 
   const imageBodyTemplate = (rowData) => {
     return (
@@ -489,7 +462,7 @@ export default function CatalogoProductos(data2) {
             <Toolbar
               className="mb-4"
               left={leftToolbarTemplate}
-              right={rightToolbarTemplate}
+             
             ></Toolbar>
 
             <DataTable
