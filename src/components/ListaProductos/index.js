@@ -33,7 +33,7 @@ export default function CatalogoProductos(data2) {
   const [value19, setValue19] = useState(1);
 
   useEffect(() => {
-    fetch("/api/hello", {
+    fetch("/api/productos", {
       method: "GET",
     })
       .then((res) => res.json())
@@ -41,6 +41,7 @@ export default function CatalogoProductos(data2) {
   }, []);
 
   console.log("equipos", equipos);
+
 
   const [products, setProducts] = useState(null);
   const [productDialog, setProductDialog] = useState(false);
@@ -461,7 +462,7 @@ export default function CatalogoProductos(data2) {
             <DataTable
               ref={dt}
               emptyMessage="No se encontraron resultados"
-              value={products}
+              value={equipos}
               selection={selectedProducts}
               onSelectionChange={(e) => setSelectedProducts(e.value)}
               dataKey="id"
@@ -480,7 +481,7 @@ export default function CatalogoProductos(data2) {
                 exportable={false}
               ></Column>
               <Column
-                field="id"
+                field="codigo"
                 header="Código"
                 sortable
                 style={{ minWidth: "12rem" }}
