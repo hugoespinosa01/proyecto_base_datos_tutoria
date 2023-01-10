@@ -2,11 +2,13 @@ import { Button } from "primereact/button";
 import { Menubar } from "primereact/menubar";
 import { Chip } from "primereact/chip";
 import { Tooltip } from "primereact/tooltip";
+import { Fragment } from "react";
 
 export const NavBar = () => {
   const items = [
     {
       label: "Productos",
+      className: "text-white",
       icon: "pi pi-fw pi-box",
       items: [
         {
@@ -72,7 +74,15 @@ export const NavBar = () => {
     },
   ];
 
-  const start = <Chip label="Tienda en línea" icon="pi pi-shopping-bag" />;
+  //const start = <Chip label="Tienda en línea" icon="pi pi-shopping-bag" />;
+  const start = <Fragment>
+    <div className="p-fluid formgrid grid justify-content-center">
+      <div className="field col-12 mt-2 mb-2 mr-4 ml-4">
+        <h1>Tienda en línea</h1>
+      </div>
+    </div>
+  </Fragment>;
+
   const end = (
     <Button
       icon="pi pi-shopping-cart"
@@ -84,7 +94,12 @@ export const NavBar = () => {
 
   return (
     <div>
-      <Menubar model={items} start={start} end={end} />
+      <Menubar
+        model={items}
+        start={start}
+        end={end}
+        className="p-4"
+      />
     </div>
   );
 };

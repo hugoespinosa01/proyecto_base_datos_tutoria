@@ -1,6 +1,8 @@
 import Head from "next/head";
 import {Compras} from './frontend/index.js'
 import Login from "../src/components/LoginComp/index"
+
+ 
 import CatalogoProductos1 from './frontend/catalogoProductos'
 
 export default function Home() {
