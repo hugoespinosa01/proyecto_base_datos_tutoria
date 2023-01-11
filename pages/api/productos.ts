@@ -17,8 +17,12 @@ export default function handler(
       if (error){
           throw error
       }else{
+       
+
+          results.map(() => {
+           fs.writeFileSync(path.join(__dirname, '../backend/dbimages'));
+            })
           
-           //fs.writeFileSync(path.join(__dirname, '../backend/dbimages'));
           res.send(results);
 
       }
