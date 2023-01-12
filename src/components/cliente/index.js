@@ -474,6 +474,7 @@ const[fechaNacimiento, setFechaNacimiento]=useState("");
     setEmail("")
     setCedula("")
     setFechaNacimiento("")
+    setProductDialog(false);
 
   }
 
