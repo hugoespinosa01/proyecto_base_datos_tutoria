@@ -16,6 +16,8 @@ import { InputText } from "primereact/inputtext";
 import { Menubar } from "primereact/menubar";
 import { NavBar } from "../../../pages/frontend/navbar";
 import { InputMask } from 'primereact/inputmask';
+import { Calendar } from 'primereact/calendar';
+
 
 export default function Clientes (data2) {
 
@@ -25,7 +27,7 @@ const [cedula, setCedula]=useState("");
 const [telefono, setTelefono]=useState();
 const [email, setEmail]=useState("");
 const [direccion, setDireccion]=useState("");
-const[fechaNacimiento, setFechaNacimiento]=useState("");
+const[fechaNacimiento, setFechaNacimiento]=useState(null);
 
 
   let emptyProduct = {
@@ -473,7 +475,7 @@ const[fechaNacimiento, setFechaNacimiento]=useState("");
     setDireccion("")
     setEmail("")
     setCedula("")
-    setFechaNacimiento("")
+    setFechaNacimiento(null)
     setProductDialog(false);
 
   }
@@ -648,16 +650,10 @@ const[fechaNacimiento, setFechaNacimiento]=useState("");
 
              <div className="field">
               <label htmlFor="fechaNacimiento">Fecha de Nacimiento</label>
-              <InputText
-                id="fechaNacimiento"
-                value={fechaNacimiento}
-                onChange={(e) => setFechaNacimiento(e.target.value)}
-                required
-                autoFocus
-                className={classNames({
+              <Calendar id="fechaNacimiento" value={fechaNacimiento} onChange={(e) => setFechaNacimiento(e.value)}  className={classNames({
                   "p-invalid": submitted && !fechaNacimiento,
-                })}
-              />
+                })} />
+             
               {submitted && !fechaNacimiento && (
                 <small className="p-error">Fecha de Nacimiento es requerido.</small>
               )}
