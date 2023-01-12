@@ -536,6 +536,12 @@ useEffect(() => {
                 exportable={false}
               ></Column>
               <Column
+                field="cedula"
+                header="Cédula"
+                sortable
+                style={{ minWidth: "8rem" }}
+              ></Column>
+              <Column
                 field="nombre"
                 header="Nombre"
                 sortable
@@ -548,12 +554,7 @@ useEffect(() => {
                 style={{ minWidth: "16rem" }}
               ></Column>
               
-              <Column
-                field="cedula"
-                header="Cédula"
-                sortable
-                style={{ minWidth: "8rem" }}
-              ></Column>
+              
               <Column
                 field="telefono"
                 header="Teléfono"
