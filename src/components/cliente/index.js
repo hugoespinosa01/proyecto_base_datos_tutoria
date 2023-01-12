@@ -15,6 +15,7 @@ import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Menubar } from "primereact/menubar";
 import { NavBar } from "../../../pages/frontend/navbar";
+import { InputMask } from 'primereact/inputmask';
 
 export default function Clientes (data2) {
   let emptyProduct = {
@@ -62,6 +63,7 @@ export default function Clientes (data2) {
 
 
   const [products, setProducts] = useState(null);
+  const [cliente, setCliente] = useState(null);
   const [productDialog, setProductDialog] = useState(false);
   const [deleteProductDialog, setDeleteProductDialog] = useState(false);
   const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
@@ -87,6 +89,10 @@ export default function Clientes (data2) {
       },
     ];
     setProducts(producto);
+    let cliente1 = [
+        { id: 1, cedula:"3423", nombre: "Cliente 1", apellido: "Apellido 1", telefono: "123456789", direccion: "Direccion 1", email: "  email 1", tipoEntidad: "Cliente" },
+        ];
+    setCliente(cliente1);
   }, []);
 
   const formatCurrency = (value) => {
@@ -261,10 +267,10 @@ export default function Clientes (data2) {
   console.log({ product });
   const onInputChange = (e, name) => {
     const val = (e.target && e.target.value) || "";
-    let _product = { ...product };
+    let _product = { ...cliente };
     _product[`${name}`] = val;
 
-    setProduct(_product);
+    setCliente(_product);
   };
 
   const onInputNumberChange = (e, name) => {
@@ -530,120 +536,137 @@ export default function Clientes (data2) {
           <Dialog
             visible={productDialog}
             style={{ width: "450px" }}
-            header="Detalles del Producto"
+            header="Perfil del Cliente"
             modal
             className="p-fluid"
             footer={productDialogFooter}
             onHide={hideDialog}
           >
-            {product.image && (
-              <img
-                src={`images/product/${product.image}`}
-                onError={(e) =>
-                (e.target.src =
-                  "https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png")
-                }
-                alt={product.image}
-                className="product-image block m-auto pb-3"
-              />
-            )}
+
             <div className="field">
-              <label htmlFor="name">Nombre</label>
+              <label htmlFor="cedula">Cédula</label>
               <InputText
-                id="name"
-                value={product.nombre}
+                id="cedula"
+                value={cliente?.cedula}
+                onChange={(e) => onInputChange(e, "cedula")}
+                required
+                autoFocus
+                className={classNames({
+                  "p-invalid": submitted && !cliente.cedula,
+                })}
+              />
+              {submitted && !cliente.cedula && (
+                <small className="p-error">Cédula es requerida.</small>
+              )}
+            </div>
+            <div className="field">
+              <label htmlFor="nombre">Nombre</label>
+              <InputText
+                id="nombre"
+                value={cliente?.nombre}
                 onChange={(e) => onInputChange(e, "nombre")}
                 required
                 autoFocus
                 className={classNames({
-                  "p-invalid": submitted && !product.nombre,
+                  "p-invalid": submitted && !cliente.nombre,
                 })}
               />
-              {submitted && !product.nombre && (
-                <small className="p-error">Nombre es requerido.</small>
+              {submitted && !cliente.nombre && (
+                <small className="p-error">Nombre es requerida.</small>
+              )}
+            </div>
+            <div className="field">
+              <label htmlFor="apellido">Appelido</label>
+              <InputText
+                id="apellido"
+                value={cliente?.apellido}
+                onChange={(e) => onInputChange(e, "apellido")}
+                required
+                autoFocus
+                className={classNames({
+                  "p-invalid": submitted && !cliente.apellido,
+                })}
+              />
+              {submitted && !cliente.apellido && (
+                <small className="p-error">Appelido es requerida.</small>
               )}
             </div>
 
             <div className="field">
-              <label className="mb-3">Categoría</label>
-              <div className="formgrid grid">
-                <div className="field-radiobutton col-6">
-                  <RadioButton
-                    inputId="category1"
-                    name="category"
-                    value="Accessorios"
-                    onChange={onCategoryChange}
-                    checked={product.category === "Accessorios"}
-                  />
-                  <label htmlFor="category1">Accessorios</label>
-                </div>
-                <div className="field-radiobutton col-6">
-                  <RadioButton
-                    inputId="category2"
-                    name="category"
-                    value="Ropa"
-                    onChange={onCategoryChange}
-                    checked={product.category === "Ropa"}
-                  />
-                  <label htmlFor="category2">Ropa</label>
-                </div>
-                <div className="field-radiobutton col-6">
-                  <RadioButton
-                    inputId="category3"
-                    name="category"
-                    value="Electrónicos"
-                    onChange={onCategoryChange}
-                    checked={product.category === "Electrónicos"}
-                  />
-                  <label htmlFor="category3">Electrónicos</label>
-                </div>
-                <div className="field-radiobutton col-6">
-                  <RadioButton
-                    inputId="category4"
-                    name="category"
-                    value="Fitness"
-                    onChange={onCategoryChange}
-                    checked={product.category === "Fitness"}
-                  />
-                  <label htmlFor="category4">Fitness</label>
-                </div>
-              </div>
+              <label htmlFor="telefono">Teléfono</label>
+
+              <InputMask
+              id="telefono"
+              mask="*** *** ****"
+              value={cliente?.telefono}
+              onChange={(e) => onInputChange(e, "telefono")}
+              required
+              autoFocus
+              className={classNames({
+                "p-invalid": submitted && !cliente.cedula,
+              })}
+            />
+              {submitted && !cliente.telefono && (
+                <small className="p-error">Teléfono es requerido.</small>
+              )}
             </div>
 
-            <div className="formgrid grid">
-              <div className="field col">
-                <label htmlFor="price">Precio</label>
-                <InputNumber
-                  id="price"
-                  value={product.precio}
-                  onValueChange={(e) => onInputNumberChange(e, "precio")}
-                  mode="currency"
-                  currency="USD"
-                  locale="en-US"
-                />
-              </div>
-              <div className="field col">
-                <label htmlFor="quantity">cantidad</label>
-                <InputNumber
-                  id="quantity"
-                  value={product.cantidad}
-                  onValueChange={(e) => onInputNumberChange(e, "cantidad")}
-                  integeronly
-                />
-              </div>
-              <div className="field col">
-                <label htmlFor="image">Imagen</label>
-                <FileUpload
-                  chooseLabel="Seleccione"
-                  mode="basic"
-                  name="demo[]"
-                  url="https://primefaces.org/primereact/showcase/upload.php"
-                  accept="image/*"
-                  maxFileSize={1000000}
-                  onUpload={onBasicUpload}
-                />
-              </div>
+
+            <div className="field">
+              <label htmlFor="email">Email</label>
+              <InputText
+                id="emnail"
+                value={cliente?.email}
+                onChange={(e) => onInputChange(e, "email")}
+                required
+                autoFocus
+                className={classNames({
+                  "p-invalid": submitted && !cliente.email,
+                })}
+              />
+              {submitted && !cliente.email && (
+                <small className="p-error">Email es requerido.</small>
+              )}
             </div>
+
+
+             <div className="field">
+              <label htmlFor="fechaNacimiento">Fecha de Nacimiento</label>
+              <InputText
+                id="fechaNacimiento"
+                value={cliente?.fechaNacimiento}
+                onChange={(e) => onInputChange(e, "fechaNacimiento")}
+                required
+                autoFocus
+                className={classNames({
+                  "p-invalid": submitted && !cliente.fechaNacimiento,
+                })}
+              />
+              {submitted && !cliente.fechaNacimiento && (
+                <small className="p-error">Fecha de Nacimiento es requerido.</small>
+              )}
+            </div>
+
+
+            <div className="field">
+              <label htmlFor="direccion">Dirección</label>
+              <InputText
+                id="direccion"
+                value={cliente?.direccion}
+                onChange={(e) => onInputChange(e, "direccion")}
+                required
+                autoFocus
+                className={classNames({
+                  "p-invalid": submitted && !cliente.direccion,
+                })}
+              />
+              {submitted && !cliente.direccion && (
+                <small className="p-error">Dirección es requerido.</small>
+              )}
+            </div>
+
+
+           
           </Dialog>
 
           <Dialog
