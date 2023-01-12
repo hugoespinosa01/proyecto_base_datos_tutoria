@@ -18,6 +18,16 @@ import { NavBar } from "../../../pages/frontend/navbar";
 import { InputMask } from 'primereact/inputmask';
 
 export default function Clientes (data2) {
+
+const [nombre, setNombre]=useState("");
+const [apellido, setApellido]=useState("");
+const [cedula, setCedula]=useState("");
+const [telefono, setTelefono]=useState();
+const [email, setEmail]=useState("");
+const [direccion, setDireccion]=useState("");
+const[fechaNacimiento, setFechaNacimiento]=useState("");
+
+
   let emptyProduct = {
     id: null,
     name: "",
@@ -64,6 +74,7 @@ export default function Clientes (data2) {
 
   const [products, setProducts] = useState(null);
   const [cliente, setCliente] = useState(null);
+  const [clientes, setClientes] = useState(null);
   const [productDialog, setProductDialog] = useState(false);
   const [deleteProductDialog, setDeleteProductDialog] = useState(false);
   const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
@@ -124,11 +135,11 @@ export default function Clientes (data2) {
   const saveProduct = () => {
     setSubmitted(true);
 
-    if (product.nombre.trim()) {
-      let _products = [...products];
-      let _product = { ...product };
-      if (product.id) {
-        const index = findIndexById(product.id);
+    if (cliente?.nombre?.trim()) {
+      let _products = [...clientes];
+      let _product = { ...cliente };
+      if (cliente?.id) {
+        const index = findIndexById(cliente.id);
 
         _products[index] = _product;
         toast.current.show({
@@ -266,7 +277,7 @@ export default function Clientes (data2) {
   };
   console.log({ product });
   const onInputChange = (e, name) => {
-    const val = (e.target && e.target.value) || "";
+    const val = (e?.target && e?.target?.value) || "";
     let _product = { ...cliente };
     _product[`${name}`] = val;
 
@@ -454,6 +465,17 @@ export default function Clientes (data2) {
       detail: "File Uploaded with Basic Mode",
     });
   };
+  const guardar = ()=> {
+    console.log("guardar")
+    setNombre("")
+    setApellido("")
+    setTelefono("")
+    setDireccion("")
+    setEmail("")
+    setCedula("")
+    setFechaNacimiento("")
+
+  }
 
   return (
     <div>
@@ -539,7 +561,7 @@ export default function Clientes (data2) {
             header="Perfil del Cliente"
             modal
             className="p-fluid"
-            footer={productDialogFooter}
+            //footer={productDialogFooter}
             onHide={hideDialog}
           >
 
@@ -547,15 +569,15 @@ export default function Clientes (data2) {
               <label htmlFor="cedula">Cédula</label>
               <InputText
                 id="cedula"
-                value={cliente?.cedula}
-                onChange={(e) => onInputChange(e, "cedula")}
+                value={cedula}
+                onChange={(e) => setCedula(e.target.value)}
                 required
                 autoFocus
                 className={classNames({
-                  "p-invalid": submitted && !cliente.cedula,
+                  "p-invalid": submitted && !cedula,
                 })}
               />
-              {submitted && !cliente.cedula && (
+              {submitted && !cedula && (
                 <small className="p-error">Cédula es requerida.</small>
               )}
             </div>
@@ -563,15 +585,15 @@ export default function Clientes (data2) {
               <label htmlFor="nombre">Nombre</label>
               <InputText
                 id="nombre"
-                value={cliente?.nombre}
-                onChange={(e) => onInputChange(e, "nombre")}
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
                 required
                 autoFocus
                 className={classNames({
-                  "p-invalid": submitted && !cliente.nombre,
+                  "p-invalid": submitted && !nombre,
                 })}
               />
-              {submitted && !cliente.nombre && (
+              {submitted && !nombre && (
                 <small className="p-error">Nombre es requerida.</small>
               )}
             </div>
@@ -579,52 +601,45 @@ export default function Clientes (data2) {
               <label htmlFor="apellido">Appelido</label>
               <InputText
                 id="apellido"
-                value={cliente?.apellido}
-                onChange={(e) => onInputChange(e, "apellido")}
+                value={apellido}
+                onChange={(e) => setApellido(e.target.value)}
                 required
                 autoFocus
                 className={classNames({
-                  "p-invalid": submitted && !cliente.apellido,
+                  "p-invalid": submitted && !apellido,
                 })}
               />
-              {submitted && !cliente.apellido && (
+              {submitted && !apellido && (
                 <small className="p-error">Appelido es requerida.</small>
               )}
             </div>
 
             <div className="field">
               <label htmlFor="telefono">Teléfono</label>
-
-              <InputMask
-              id="telefono"
-              mask="*** *** ****"
-              value={cliente?.telefono}
-              onChange={(e) => onInputChange(e, "telefono")}
-              required
-              autoFocus
-              className={classNames({
-                "p-invalid": submitted && !cliente.cedula,
-              })}
-            />
-              {submitted && !cliente.telefono && (
+              <InputMask id="telefono" mask="99-999999" value={telefono} placeholder="99-999999" onChange={(e) => setTelefono(e.value)}></InputMask>
+              
+              {submitted && !telefono && (
                 <small className="p-error">Teléfono es requerido.</small>
               )}
+             
             </div>
+
+          
 
 
             <div className="field">
               <label htmlFor="email">Email</label>
               <InputText
                 id="emnail"
-                value={cliente?.email}
-                onChange={(e) => onInputChange(e, "email")}
+               value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 autoFocus
                 className={classNames({
-                  "p-invalid": submitted && !cliente.email,
+                  "p-invalid": submitted && !email,
                 })}
               />
-              {submitted && !cliente.email && (
+              {submitted && !email && (
                 <small className="p-error">Email es requerido.</small>
               )}
             </div>
@@ -634,15 +649,15 @@ export default function Clientes (data2) {
               <label htmlFor="fechaNacimiento">Fecha de Nacimiento</label>
               <InputText
                 id="fechaNacimiento"
-                value={cliente?.fechaNacimiento}
-                onChange={(e) => onInputChange(e, "fechaNacimiento")}
+                value={fechaNacimiento}
+                onChange={(e) => setFechaNacimiento(e.target.value)}
                 required
                 autoFocus
                 className={classNames({
-                  "p-invalid": submitted && !cliente.fechaNacimiento,
+                  "p-invalid": submitted && !fechaNacimiento,
                 })}
               />
-              {submitted && !cliente.fechaNacimiento && (
+              {submitted && !fechaNacimiento && (
                 <small className="p-error">Fecha de Nacimiento es requerido.</small>
               )}
             </div>
@@ -652,18 +667,20 @@ export default function Clientes (data2) {
               <label htmlFor="direccion">Dirección</label>
               <InputText
                 id="direccion"
-                value={cliente?.direccion}
-                onChange={(e) => onInputChange(e, "direccion")}
+              value={direccion}
+                onChange={(e) => setDireccion(e.target.value)}
                 required
                 autoFocus
                 className={classNames({
-                  "p-invalid": submitted && !cliente.direccion,
+                  "p-invalid": submitted && !direccion,
                 })}
               />
-              {submitted && !cliente.direccion && (
+              {submitted && !direccion && (
                 <small className="p-error">Dirección es requerido.</small>
               )}
             </div>
+
+            <Button label="Guardar" className="p-button-secondary" onClick={()=> guardar()}/>
 
 
            
