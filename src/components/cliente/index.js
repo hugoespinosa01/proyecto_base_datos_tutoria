@@ -30,6 +30,22 @@ const [direccion, setDireccion]=useState("");
 const[fechaNacimiento, setFechaNacimiento]=useState(null);
 
 
+
+useEffect(() => { 
+    let cliente =[{
+        nombre: "Juan",
+        apellido: "Perez",
+        cedula: "123456789",
+        telefono: "0987654321",
+        email: "    ",
+        direccion: " ",
+        fechaNacimiento: " ",
+    }]
+    setCliente(cliente);
+   
+}, []);
+
+
   let emptyProduct = {
     id: null,
     name: "",
@@ -501,7 +517,7 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
             <DataTable
               ref={dt}
               emptyMessage="No se encontraron resultados"
-              value={equipos}
+              value={cliente}
               selection={selectedProducts}
               onSelectionChange={(e) => setSelectedProducts(e.value)}
               dataKey="id"
@@ -520,32 +536,40 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
                 exportable={false}
               ></Column>
               <Column
-                field="codigo"
-                header="Código"
+                field="nombre"
+                header="Nombre"
                 sortable
                 style={{ minWidth: "12rem" }}
               ></Column>
               <Column
-                field="nombre"
-                header="Nombre"
+                field="apellido"
+                header="Apellido"
                 sortable
                 style={{ minWidth: "16rem" }}
               ></Column>
+              
               <Column
-                field="imagen"
-                header="Imagen"
-                body={imageBodyTemplate}
-              ></Column>
-              <Column
-                field="precio"
-                header="Precio"
-                body={priceBodyTemplate}
+                field="cedula"
+                header="Cédula"
                 sortable
                 style={{ minWidth: "8rem" }}
               ></Column>
               <Column
-                field="categoria"
-                header="Categoría"
+                field="telefono"
+                header="Teléfono"
+                sortable
+                style={{ minWidth: "10rem" }}
+              ></Column>
+
+<Column
+                field="email"
+                header="Email"
+                sortable
+                style={{ minWidth: "10rem" }}
+              ></Column>
+               <Column
+                field="direccion"
+                header="Direción"
                 sortable
                 style={{ minWidth: "10rem" }}
               ></Column>
@@ -698,7 +722,7 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
               />
               {product && (
                 <span>
-                  Desea eliminar el siguiente producto : <b>{product.nombre}</b>
+                  Desea eliminar el siguiente cliente : <b>{product.nombre}</b>
                   ?
                 </span>
               )}
