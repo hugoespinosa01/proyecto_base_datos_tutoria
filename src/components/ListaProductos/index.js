@@ -40,7 +40,7 @@ export default function CatalogoProductos(data2) {
       .then((res) => res.json())
       .then((data) => setEquipos(data));
   
-    if (sessionStorage.getItem('usuario') !== null) {
+    if (sessionStorage.getItem('usuario') !== null || sessionStorage.getItem('usuario') !== undefined) {
       
       tipoEntidadSeleccionada=sessionStorage.getItem('usuario');
       
