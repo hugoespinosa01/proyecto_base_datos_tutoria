@@ -2,22 +2,29 @@ import { Button } from "primereact/button";
 import { Menubar } from "primereact/menubar";
 import { Chip } from "primereact/chip";
 import { Tooltip } from "primereact/tooltip";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { useRouter } from 'next/router';
 import { useEffect } from "react";
+import { useRef } from "react";
+import { OverlayPanel } from 'primereact/overlaypanel';
+import { DataTable } from "primereact/datatable";
+//import './OverlayPanelDemo.css';
 export const NavBar = () => {
   const router = useRouter();
+  const op = useRef(null);
   let tipoEntidadSeleccionada;
+  const [user, setUser]=useState("");
   useEffect(() => {
-    if (sessionStorage.getItem('usuario') !== null) {
+    if (sessionStorage.getItem('usuario') !== null || sessionStorage.getItem('usuario') !== undefined) {
       
       tipoEntidadSeleccionada=sessionStorage.getItem('usuario');
       
+      setUser(tipoEntidadSeleccionada);
     }
 
     if (tipoEntidadSeleccionada === "Empresa") {
       console.log("EMPRESA");
-    //  sessionStorage.setItem('usuario', tipoEntidadSeleccionada);
+      
      // setDisableCliente(true);
     } else if (tipoEntidadSeleccionada === "Cliente") {
     //  console.log("CLIENTE");
@@ -26,6 +33,7 @@ export const NavBar = () => {
      // window.location.href = "http://localhost:3000";
     }
   }, [])
+  console.log("tipoUser",tipoEntidadSeleccionada )
   
   const items = [
     {
@@ -61,6 +69,7 @@ export const NavBar = () => {
       ],
     },
     {
+      visible:user==="Cliente"?false:true,
       label: "Clientes",
       icon: "pi pi-users",
       items: [
@@ -117,10 +126,12 @@ export const NavBar = () => {
 
   const end = (
     <Button
+    visible={user==="Cliente"?true:false}
       icon="pi pi-shopping-cart"
-      className="p-button-primary p-button-text"
+      className="p-button-rounded p-button-secondary"
       tooltip="Carrito de compras"
       tooltipOptions={{ position: "left" }}
+      onClick={(e) => op.current.toggle(e)}
     />
   );
 
@@ -132,6 +143,43 @@ export const NavBar = () => {
         end={end}
         className="p-4"
       />
+
+<OverlayPanel
+          ref={op}
+          breakpoints={{ '1000px': '75vw', '640px': '100vw' }}
+          showCloseIcon
+          id="overlay_panel"
+          style={{ width: '450px' }}
+          className="overlaypanel-demo"
+        >
+          <h3>Carrito de Compras &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</h3>
+          
+          <DataTable
+          //  // value={data}
+          //   dataKey="id"
+          //   responsiveLayout="scroll"
+          //   paginator
+          //   rows={5}
+          //   filters={filtroBusqueda}
+          //   globalFilterFields={['codigoEstadoSituacionActual']}
+            emptyMessage="El carrito se encuentra vacío"
+           >
+             {/* <Column field="nemonicoProyecto" header="CUP" />
+             <Column field="nombreProyecto" header=" Nombre del proyecto"></Column>
+             <Column field="codigoEstadoSituacionActual" header="Tipo de Solicitud" body={tipoBodyTemplate}></Column>
+             <Column field="estado" header="Estado" body={estadoBodyTemplate}></Column>
+             <Column field="observacion" header="Observaciones"></Column>
+             <Column header="Consultas" body={consulta}></Column> */}
+           </DataTable>
+           <br></br>
+           <div className="flex align-items-center flex-wrap">
+           <div className="col-7"></div>
+           <Button icon="pi pi-shopping-cart" label="Ir al Carrito"></Button>
+
+           </div>
+           
+        </OverlayPanel>
     </div>
+    
   );
 };
