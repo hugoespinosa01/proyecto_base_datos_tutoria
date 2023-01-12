@@ -3,8 +3,30 @@ import { Menubar } from "primereact/menubar";
 import { Chip } from "primereact/chip";
 import { Tooltip } from "primereact/tooltip";
 import { Fragment } from "react";
-
+import { useRouter } from 'next/router';
+import { useEffect } from "react";
 export const NavBar = () => {
+  const router = useRouter();
+  let tipoEntidadSeleccionada;
+  useEffect(() => {
+    if (sessionStorage.getItem('usuario') !== null) {
+      
+      tipoEntidadSeleccionada=sessionStorage.getItem('usuario');
+      
+    }
+
+    if (tipoEntidadSeleccionada === "Empresa") {
+      console.log("EMPRESA");
+    //  sessionStorage.setItem('usuario', tipoEntidadSeleccionada);
+     // setDisableCliente(true);
+    } else if (tipoEntidadSeleccionada === "Cliente") {
+    //  console.log("CLIENTE");
+    } else {
+      //console.log("SIN DATOS", tipoEntidadSeleccionada);
+     // window.location.href = "http://localhost:3000";
+    }
+  }, [])
+  
   const items = [
     {
       label: "Productos",
@@ -45,6 +67,16 @@ export const NavBar = () => {
         {
           label: "New",
           icon: "pi pi-fw pi-user-plus",
+          command: () => {
+            router.push( {
+              pathname: '/frontend/cliente',
+            //  query: { name:tipoEntidadSeleccionada?.name},
+            },
+            '../../frontend/cliente',
+          );
+          } 
+          
+
         },
         {
           label: "Delete",

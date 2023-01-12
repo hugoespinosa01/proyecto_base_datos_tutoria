@@ -16,7 +16,7 @@ import { InputText } from "primereact/inputtext";
 import { Menubar } from "primereact/menubar";
 import { NavBar } from "../../../pages/frontend/navbar";
 
-export default function CatalogoProductos(data2) {
+export default function Clientes (data2) {
   let emptyProduct = {
     id: null,
     name: "",
@@ -454,7 +454,7 @@ export default function CatalogoProductos(data2) {
       <NavBar data={data2} />
 
       <Card
-        title={disableCliente ? "Listado de Productos" : "Carrito de Compras"}
+        title={disableCliente ? "Listado de Clientes" : "Carrito de Compras"}
         className="mt-3"
       >
         <div className="datatable-crud-demo">
@@ -526,7 +526,7 @@ export default function CatalogoProductos(data2) {
               ></Column>
             </DataTable>
           </div>
-
+    
           <Dialog
             visible={productDialog}
             style={{ width: "450px" }}

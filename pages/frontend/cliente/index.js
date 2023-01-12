@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import Head from "next/head";
-import  CatalogoProductos from '../../../src/components/ListaProductos/index';
+import  Clientes from '../../../src/components/cliente/index';
 
 //import { connection } from '../../backend/connection';
 //import Layout from '@components/layouts/';
@@ -42,7 +42,8 @@ export default function CatalogoProductos1 () {
       </Head>
 
         <div className="text-base text-color surface-overlay border-1 border-solid surface-border appearance-none outline-none focus:border-primary w-full">
-          <CatalogoProductos data={data}/>
+          
+          <Clientes data={data}/>
         </div></>
     
   );

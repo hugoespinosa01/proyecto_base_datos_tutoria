@@ -43,16 +43,18 @@ export default function Login() {
 
  const Loguear =()=>{
   if(tipoEntidadSeleccionada==0){
+    
    
       toast.current.show({severity:'error', summary: 'Error al Ingresar', detail:'Debe Seleccionar un Tipo de Usuario', life: 3000});
     
   }else{
 
+    sessionStorage.setItem('usuario', tipoEntidadSeleccionada?.name);
     console.log("name", tipoEntidadSeleccionada?.name)
     router.push(
       {
         pathname: '/frontend/catalogoProductos',
-        query: { name:tipoEntidadSeleccionada?.name},
+       // query: { name:tipoEntidadSeleccionada?.name},
       },
       '../../frontend/catalogoProductos',
     );
