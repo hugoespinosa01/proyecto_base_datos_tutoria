@@ -53,10 +53,10 @@ export default function Login() {
     console.log("name", tipoEntidadSeleccionada?.name)
     router.push(
       {
-        pathname: '/frontend/catalogoProductos',
+        pathname: '/frontend/index',
        // query: { name:tipoEntidadSeleccionada?.name},
       },
-      '../../frontend/catalogoProductos',
+      '../../frontend/index',
     );
    // window.location.href="../../frontend/catalogoProductos"
    }
