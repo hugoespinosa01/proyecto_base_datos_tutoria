@@ -1,33 +1,33 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
-const connection = require('../backend/connection');
-const fs = require('fs');
-const path = require('path');
+import type { NextApiRequest, NextApiResponse } from "next";
+const connection = require("../backend/connection");
+const fs = require("fs");
+const path = require("path");
 
 type Data = {
-  name: string
-}
+  name: string;
+};
 
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  if(req.method === 'GET'){
-    connection.query('SELECT * FROM producto', (error, results) => {
-      if (error){
-          throw error
-      }else{
-       
+  if (req.method === "GET") {
+    connection.query("SELECT * FROM producto", (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        results.map((item, index) => {
+          fs.writeFileSync(
+            path.join(__dirname, "../backend/dbimages" + index + ".jpg"),
+            item.imagen
+          );
+        });
+        
+        const imagedir = fs.readdirSync(path.join(__dirname, '../backend/dbimages'));
 
-          results.map(() => {
-           fs.writeFileSync(path.join(__dirname, '../backend/dbimages'));
-            })
-          
-          res.send(results);
-
+        res.send(imagedir);
       }
-  })
+    });
   }
 }
-
-
