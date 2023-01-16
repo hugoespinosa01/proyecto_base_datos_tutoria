@@ -31,19 +31,7 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
 
 
 
-useEffect(() => { 
-    let cliente =[{
-        nombre: "Juan",
-        apellido: "Perez",
-        cedula: "123456789",
-        telefono: "0987654321",
-        email: "    ",
-        direccion: " ",
-        fechaNacimiento: " ",
-    }]
-    setCliente(cliente);
-   
-}, []);
+
 
 
   let emptyProduct = {
@@ -119,7 +107,7 @@ useEffect(() => {
     ];
     setProducts(producto);
     let cliente1 = [
-        { id: 1, cedula:"3423", nombre: "Cliente 1", apellido: "Apellido 1", telefono: "123456789", direccion: "Direccion 1", email: "  email 1", tipoEntidad: "Cliente" },
+        { id: 1, cedula:"3423", nombre: "Cliente 1", apellido: "Apellido 1", telefono: "123456789", direccion: "Direccion 1", email: "  email 1", tipoEntidad: "Cliente", fechaNacimiento: "2021-01-01", direccion: "Direccion 1" },
         ];
     setCliente(cliente1);
   }, []);
@@ -184,8 +172,9 @@ useEffect(() => {
     }
   };
 
-  const editProduct = (product) => {
-    setProduct({ ...product });
+  const editProduct = (rowData) => {
+    console.log("rowData", rowData)
+    setCliente({ ...rowData });
     setProductDialog(true);
   };
 
@@ -369,6 +358,19 @@ useEffect(() => {
     );
   };
 
+  const editar = (rowData) => {
+    let fecha = new Date(rowData.fechaNacimiento)
+    console.log("rowData", rowData)
+   setNombre(rowData.nombre)
+   setCedula(rowData.cedula)
+   setApellido(rowData.apellido)
+   setFechaNacimiento(fecha)
+   setEmail(rowData.email)
+   setTelefono(rowData.telefono)
+   setDireccion(rowData.direccion)
+    setProductDialog(true);
+  }
+
   const actionBodyTemplate = (rowData) => {
     return (
       <React.Fragment>
@@ -376,7 +378,7 @@ useEffect(() => {
           <Button
             icon="pi pi-pencil"
             className="p-button-rounded p-button-success mr-2"
-            onClick={() => editProduct(rowData)}
+            onClick={() => editar(rowData)}
           />
         ) : (
           <></>
