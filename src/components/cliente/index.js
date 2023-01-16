@@ -120,8 +120,14 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
   };
 
   const openNew = () => {
-    setProduct(emptyProduct);
-    setSubmitted(false);
+    setNombre("")
+   setCedula("")
+   setApellido("")
+   setFechaNacimiento("")
+   setEmail("")
+   setTelefono("")
+   setDireccion("")
+  
     setProductDialog(true);
   };
 
