@@ -31,6 +31,12 @@ export default function CatalogoProductos(data2) {
 
   const [equipos, setEquipos] = useState([]);
   const [value19, setValue19] = useState(1);
+
+
+
+
+
+
  // const [tipoEntidadSeleccionada, setTipoEntidadSeleccionada] = useState(0);
   let tipoEntidadSeleccionada;
   useEffect(() => {
@@ -142,6 +148,21 @@ export default function CatalogoProductos(data2) {
           life: 3000,
         });
       }
+
+      fetch("/api/productos", 
+        {
+          method: "POST",
+          body: JSON.stringify({
+            codigo: null,
+            nombre: "ejemplo",
+            imagen: "",
+            precio: 100,
+            categoria: "ejemplo",
+          })
+        }
+      )
+      .then((res) => console.log("data", res.data))
+      .catch((err) => console.log(err));
 
       setProducts(_products);
       setProductDialog(false);
