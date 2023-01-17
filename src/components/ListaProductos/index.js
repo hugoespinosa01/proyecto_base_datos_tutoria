@@ -154,10 +154,10 @@ export default function CatalogoProductos(data2) {
           method: "POST",
           body: JSON.stringify({
             codigo: null,
-            nombre: "ejemplo",
+            nombre: "HOLAAAA",
             imagen: "",
-            precio: 100,
-            categoria: "ejemplo",
+            precio: 25.25,
+            categoria: "CATEGORÍA EJEMPLO",
           })
         }
       )

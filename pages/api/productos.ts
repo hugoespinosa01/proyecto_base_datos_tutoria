@@ -44,12 +44,12 @@ export default function handler(
     
     
     connection.query(
-      `INSERT INTO producto VALUES (null, ` + data.nombre + `, ` + data.imagen + `, ` + data.precio + `, ` + data.categoriza)`,
+      "INSERT INTO (codigo, nombre, imagen, precio y calidad) VALUES (null, ` + data.nombre + `, ` + data.imagen + `, ` + data.precio + `, ` + data.categoria`)",
       (error: Error, results: Data) => {
         if (error) {
           throw error;
         } else {
-          res.send(results);
+          res.send(data);
         }
       }
     );
