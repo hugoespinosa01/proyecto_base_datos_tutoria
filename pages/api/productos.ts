@@ -12,6 +12,8 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  console.log("req", req);
+  
   switch (req.method) {
     case "GET":
       return getProducts();
@@ -41,18 +43,19 @@ export default function handler(
   function createProduct () {
     
     const data = req.body;
+    console.log("data back", data);
     
     
-    connection.query(
-      "INSERT INTO (codigo, nombre, imagen, precio y calidad) VALUES (null, ` + data.nombre + `, ` + data.imagen + `, ` + data.precio + `, ` + data.categoria`)",
-      (error: Error, results: Data) => {
-        if (error) {
-          throw error;
-        } else {
-          res.send(data);
-        }
-      }
-    );
+    // connection.query(
+    //   "INSERT INTO (codigo, nombre, imagen, precio y calidad) VALUES (null, ` + data.nombre + `, ` + data.imagen + `, ` + data.precio + `, ` + data.categoria`)",
+    //   (error: Error, results: Data) => {
+    //     if (error) {
+    //       throw error;
+    //     } else {
+    //       res.send(data);
+    //     }
+    //   }
+    // );
   }  
   
   function updateProduct () {

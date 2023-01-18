@@ -29,32 +29,28 @@ export default function CatalogoProductos(data2) {
     inventoryStatus: "INSTOCK",
   };
 
-  const [equipos, setEquipos] = useState([]);
+  const [productos, setProductos] = useState([]);
   const [value19, setValue19] = useState(1);
 
-
-
-
-
-
- // const [tipoEntidadSeleccionada, setTipoEntidadSeleccionada] = useState(0);
+  // const [tipoEntidadSeleccionada, setTipoEntidadSeleccionada] = useState(0);
   let tipoEntidadSeleccionada;
   useEffect(() => {
     fetch("/api/productos", {
       method: "GET",
     })
       .then((res) => res.json())
-      .then((data) => setEquipos(data));
-  
-    if (sessionStorage.getItem('usuario') !== null || sessionStorage.getItem('usuario') !== undefined) {
-      
-      tipoEntidadSeleccionada=sessionStorage.getItem('usuario');
-      
+      .then((data) => setProductos(data));
+
+    if (
+      sessionStorage.getItem("usuario") !== null ||
+      sessionStorage.getItem("usuario") !== undefined
+    ) {
+      tipoEntidadSeleccionada = sessionStorage.getItem("usuario");
     }
 
     if (tipoEntidadSeleccionada === "Empresa") {
       console.log("EMPRESA");
-    //  sessionStorage.setItem('usuario', tipoEntidadSeleccionada);
+      //  sessionStorage.setItem('usuario', tipoEntidadSeleccionada);
       setDisableCliente(true);
     } else if (tipoEntidadSeleccionada === "Cliente") {
       console.log("CLIENTE");
@@ -63,9 +59,8 @@ export default function CatalogoProductos(data2) {
       window.location.href = "http://localhost:3000";
     }
   }, []);
-  
-  console.log("equipos", equipos);
 
+  console.log("equipos", productos);
 
   const [products, setProducts] = useState(null);
   const [productDialog, setProductDialog] = useState(false);
@@ -121,53 +116,67 @@ export default function CatalogoProductos(data2) {
     setDeleteProductsDialog(false);
   };
 
+  let imagen;
+
+  const manejadorImagen = ({ files }) => {
+    const [archivo] = files;
+    imagen = archivo;
+  };
+
+  const enviarProducto = async() => {
+    const response = await fetch("/api/productos", {
+      method: "GET",
+      //body: JSON.stringify(formData),
+    });
+    return response;
+  }
+
   const saveProduct = () => {
     setSubmitted(true);
 
-    if (product.nombre.trim()) {
-      let _products = [...products];
-      let _product = { ...product };
-      if (product.id) {
-        const index = findIndexById(product.id);
+    let formData = new FormData();
 
-        _products[index] = _product;
-        toast.current.show({
-          severity: "success",
-          summary: "Successful",
-          detail: "Product Updated",
-          life: 3000,
-        });
-      } else {
-        _product.id = createId();
-        _product.image = "product-placeholder.svg";
-        _products.push(_product);
-        toast.current.show({
-          severity: "success",
-          summary: "Successful",
-          detail: "Product Created",
-          life: 3000,
-        });
-      }
+    formData.append("codigo", null);
+    formData.append("nombre", "PRODUCTO X");
+    //formData.append("imagen", imagen);
+    formData.append("precio", 34.5);
+    formData.append("categoria", "Categoria X");
 
-      fetch("/api/productos", 
-        {
-          method: "POST",
-          body: JSON.stringify({
-            codigo: null,
-            nombre: "HOLAAAA",
-            imagen: "",
-            precio: 25.25,
-            categoria: "CATEGORÍA EJEMPLO",
-          })
-        }
-      )
-      .then((res) => console.log("data", res.data))
-      .catch((err) => console.log(err));
+    enviarProducto()
+    .then((res) => res.json(formData))
+    .then((data) => console.log(data))
+    .catch((err) => console.log(err));
 
-      setProducts(_products);
-      setProductDialog(false);
-      setProduct(emptyProduct);
-    }
+
+    // if (product.nombre.trim()) {
+    // let _products = [...products];
+    // let _product = { ...product };
+    // if (product.id) {
+    //   const index = findIndexById(product.id);
+
+    //   _products[index] = _product;
+    //   toast.current.show({
+    //     severity: "success",
+    //     summary: "Successful",
+    //     detail: "Product Updated",
+    //     life: 3000,
+    //   });
+    // } else {
+    //   _product.id = createId();
+    //   _product.image = "product-placeholder.svg";
+    //   _products.push(_product);
+    //   toast.current.show({
+    //     severity: "success",
+    //     summary: "Successful",
+    //     detail: "Product Created",
+    //     life: 3000,
+    //   });
+    // }
+
+    //setProducts(_products);
+    //   setProductDialog(false);
+    //   setProduct(emptyProduct);
+    // }
   };
 
   const editProduct = (product) => {
@@ -233,8 +242,8 @@ export default function CatalogoProductos(data2) {
             c === "Status"
               ? "inventoryStatus"
               : c === "Reviews"
-                ? "rating"
-                : c.toLowerCase();
+              ? "rating"
+              : c.toLowerCase();
           obj[c] = d[i].replace(/['"]+/g, "");
           (c === "price" || c === "rating") && (obj[c] = parseFloat(obj[c]));
           return obj;
@@ -321,15 +330,13 @@ export default function CatalogoProductos(data2) {
     );
   };
 
-
-
   const imageBodyTemplate = (rowData) => {
     return (
       <img
         src={`images/product/${rowData.imagen}`}
         onError={(e) =>
-        (e.target.src =
-          "https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png")
+          (e.target.src =
+            "https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png")
         }
         alt={rowData.image}
         className="product-image"
@@ -482,16 +489,12 @@ export default function CatalogoProductos(data2) {
           <Toast ref={toast} />
 
           <div className="card">
-            <Toolbar
-              className="mb-4"
-              left={leftToolbarTemplate}
-
-            ></Toolbar>
+            <Toolbar className="mb-4" left={leftToolbarTemplate}></Toolbar>
 
             <DataTable
               ref={dt}
               emptyMessage="No se encontraron resultados"
-              value={equipos}
+              value={productos}
               selection={selectedProducts}
               onSelectionChange={(e) => setSelectedProducts(e.value)}
               dataKey="id"
@@ -561,8 +564,8 @@ export default function CatalogoProductos(data2) {
               <img
                 src={`images/product/${product.image}`}
                 onError={(e) =>
-                (e.target.src =
-                  "https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png")
+                  (e.target.src =
+                    "https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png")
                 }
                 alt={product.image}
                 className="product-image block m-auto pb-3"
@@ -657,11 +660,12 @@ export default function CatalogoProductos(data2) {
                 <FileUpload
                   chooseLabel="Seleccione"
                   mode="basic"
-                  name="demo[]"
-                  url="https://primefaces.org/primereact/showcase/upload.php"
+                  onSelect={manejadorImagen}
+                  //url="https://primefaces.org/primereact/showcase/upload.php"
                   accept="image/*"
                   maxFileSize={1000000}
-                  onUpload={onBasicUpload}
+                  customUpload
+                  //onUpload={onBasicUpload}
                 />
               </div>
             </div>
