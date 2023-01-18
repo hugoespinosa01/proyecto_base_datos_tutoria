@@ -35,9 +35,7 @@ export default function CatalogoProductos(data2) {
   // const [tipoEntidadSeleccionada, setTipoEntidadSeleccionada] = useState(0);
   let tipoEntidadSeleccionada;
   useEffect(() => {
-    fetch("/api/productos", {
-      method: "GET",
-    })
+    fetch("/api/productos")
       .then((res) => res.json())
       .then((data) => setProductos(data));
 
@@ -59,8 +57,6 @@ export default function CatalogoProductos(data2) {
       window.location.href = "http://localhost:3000";
     }
   }, []);
-
-  console.log("equipos", productos);
 
   const [products, setProducts] = useState(null);
   const [productDialog, setProductDialog] = useState(false);
@@ -123,30 +119,23 @@ export default function CatalogoProductos(data2) {
     imagen = archivo;
   };
 
-  const enviarProducto = async() => {
-    const response = await fetch("/api/productos", {
-      method: "GET",
-      //body: JSON.stringify(formData),
-    });
-    return response;
-  }
 
-  const saveProduct = () => {
+  const saveProduct =  () => {
     setSubmitted(true);
 
-    let formData = new FormData();
+    const formData = {
+      codigo: null,
+      nombre: "HOLA",
+      imagen: imagen,
+      precio: 105.6,
+      categoria: "categoria",
+    };
 
-    formData.append("codigo", null);
-    formData.append("nombre", "PRODUCTO X");
-    //formData.append("imagen", imagen);
-    formData.append("precio", 34.5);
-    formData.append("categoria", "Categoria X");
-
-    enviarProducto()
-    .then((res) => res.json(formData))
-    .then((data) => console.log(data))
-    .catch((err) => console.log(err));
-
+    fetch('/api/productos', {
+      method: 'POST',
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(formData),
+    });
 
     // if (product.nombre.trim()) {
     // let _products = [...products];
@@ -331,15 +320,17 @@ export default function CatalogoProductos(data2) {
   };
 
   const imageBodyTemplate = (rowData) => {
+    console.log(rowData);
     return (
       <img
-        src={`images/product/${rowData.imagen}`}
+        src={`${rowData.imagen}`}
         onError={(e) =>
           (e.target.src =
             "https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png")
         }
         alt={rowData.image}
         className="product-image"
+        height={100}
       />
     );
   };
