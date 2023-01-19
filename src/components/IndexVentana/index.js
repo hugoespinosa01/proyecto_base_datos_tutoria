@@ -18,11 +18,14 @@ import { NavBar } from "../../../pages/frontend/navbar";
 import React, { useState, useEffect } from 'react';
 import { Galleria } from 'primereact/galleria';
 import axios from "axios";
+import { useRouter } from 'next/router';
 import CatalogoProductos from "../ListaProductos";
 const baseURL= 'https://rickandmortyapi.com/api/character';
 export default function VentanaIndex() {
+  const router = useRouter();
   const [post, setPost] = useState(null);
   const [imagenes2, setImagenes2] = useState(null);
+
     useEffect(() => {
       axios.get(baseURL).then((response) => {
         setPost(response.data);
@@ -30,18 +33,42 @@ export default function VentanaIndex() {
         let valor2=response.data.results
         setImages(valor2)
         let i=0
-        console.log("value",valor)
         let imagenes=[]
         for (i; i<valor;i++){
   
-          console.log(i)
-          console.log(valor2[i].image)
+        
           imagenes.push(valor2[i].image)
-          console.log(imagenes)
           setImagenes2(imagenes)
         }
       });
     }, []);
+    
+
+    let tipoEntidadSeleccionada;
+
+    
+    useEffect(() => {
+     
+      if (sessionStorage.getItem('usuario') !== null || sessionStorage.getItem('usuario') !== undefined) {
+        
+        tipoEntidadSeleccionada=sessionStorage.getItem('usuario');
+        
+      }
+  
+      if (tipoEntidadSeleccionada === "Empresa") {
+        console.log("EMPRESA");
+      //  sessionStorage.setItem('usuario', tipoEntidadSeleccionada);
+     
+      } else if (tipoEntidadSeleccionada === "Cliente") {
+        console.log("CLIENTE");
+      } else {
+        console.log("SIN DATOS", tipoEntidadSeleccionada);
+        window.location.href = "http://localhost:3000";
+      }
+    }, []);
+
+
+    
    
   const [images, setImages] = useState(null)
  // const galleriaService = new PhotoService();
@@ -70,6 +97,16 @@ const thumbnailTemplate = (imagenes2) => {
 }
 
 
+const login=()=>{
+   
+  router.push(
+    {
+      pathname: '../../frontend/catalogoProductos',
+
+    },
+    '../../frontend/catalogoProductos',
+  );
+}
 
 
   return (
@@ -78,14 +115,15 @@ const thumbnailTemplate = (imagenes2) => {
 
       <Card
         title=""
-        className="mt-3 bg-yellow-200 border-bg-yellow-200  " 
+        className="mt-3   " 
+        style={{backgroundColor: "#E7ECEF", borderColor:"#E7ECEF"}}
       >
            <div className="flex align-items-center justify-content-center ">
- <Button className=" col-6 transition-colors transition-duration-500  bg-yellow-500 text-color  hover: bg-white text-yellow-500  hover:bg-yellow-500 text-white
+ <Button className=" shadow-4 col-6 transition-colors transition-duration-500  bg-yellow-500 text-color  hover: bg-white text-yellow-500  hover:bg-blue-800 text-white
     flex align-items-center justify-content-center font-bold border-round cursor-pointer m-2 px-5 py-3"label="Ir a comprar" icon="pi
-    pi-shopping-bag"></Button>
+    pi-shopping-bag" onClick={()=>login()}></Button>
            </div>
-
+<br/>
 <div className="bg-bg-yellow-200 border-bg-yellow-200    ">
             <div className="card">
               <div className="flex align-items-center justify-content-center col-12">
