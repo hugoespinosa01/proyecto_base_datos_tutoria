@@ -578,7 +578,7 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
               ></Column>
                <Column
                 field="direccion"
-                header="Direción"
+                header="Dirección"
                 sortable
                 style={{ minWidth: "10rem" }}
               ></Column>
