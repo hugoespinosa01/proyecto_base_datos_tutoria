@@ -78,10 +78,15 @@ const thumbnailTemplate = (imagenes2) => {
 
       <Card
         title=""
-        className="mt-3 bg-cyan-400 border-cyan-500  " 
+        className="mt-3 bg-yellow-200 border-bg-yellow-200  " 
       >
+           <div className="flex align-items-center justify-content-center ">
+ <Button className=" col-6 transition-colors transition-duration-500  bg-yellow-500 text-color  hover: bg-white text-yellow-500  hover:bg-yellow-500 text-white
+    flex align-items-center justify-content-center font-bold border-round cursor-pointer m-2 px-5 py-3"label="Ir a comprar" icon="pi
+    pi-shopping-bag"></Button>
+           </div>
 
-<div className="bg-cyan-400 border-cyan-500    ">
+<div className="bg-bg-yellow-200 border-bg-yellow-200    ">
             <div className="card">
               <div className="flex align-items-center justify-content-center col-12">
               <Card className="col-3" >
@@ -118,12 +123,11 @@ const thumbnailTemplate = (imagenes2) => {
                 
             </div>
 
-            <Button className="scalein animation-duration-1000 animation-iteration-infinite flex align-items-center justify-content-center
-    font-bold bg-green-500 text-white border-round m-2 px-5 py-3"label="Ir a comprar"></Button>
+           
         </div>
         
       </Card>
-
+<footer></footer>
     </div>
   );
 }
