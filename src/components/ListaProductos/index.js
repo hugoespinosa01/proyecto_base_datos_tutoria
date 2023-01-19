@@ -34,11 +34,15 @@ export default function CatalogoProductos(data2) {
 
   // const [tipoEntidadSeleccionada, setTipoEntidadSeleccionada] = useState(0);
   let tipoEntidadSeleccionada;
+
+  //Obtener los productos
   useEffect(() => {
     fetch("/api/productos")
       .then((res) => res.json())
       .then((data) => setProductos(data));
+  }, []);
 
+  useEffect(() => {
     if (
       sessionStorage.getItem("usuario") !== null ||
       sessionStorage.getItem("usuario") !== undefined
@@ -119,8 +123,7 @@ export default function CatalogoProductos(data2) {
     imagen = archivo;
   };
 
-
-  const saveProduct =  () => {
+  const saveProduct = () => {
     setSubmitted(true);
 
     const formData = {
@@ -131,9 +134,9 @@ export default function CatalogoProductos(data2) {
       categoria: "categoria",
     };
 
-    fetch('/api/productos', {
-      method: 'POST',
-      headers: {"Content-Type": "application/json"},
+    fetch("/api/productos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     });
 
