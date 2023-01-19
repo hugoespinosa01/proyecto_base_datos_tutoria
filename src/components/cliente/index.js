@@ -30,6 +30,10 @@ const [direccion, setDireccion]=useState("");
 const[fechaNacimiento, setFechaNacimiento]=useState(null);
 
 
+
+
+
+
   let emptyProduct = {
     id: null,
     name: "",
@@ -103,7 +107,7 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
     ];
     setProducts(producto);
     let cliente1 = [
-        { id: 1, cedula:"3423", nombre: "Cliente 1", apellido: "Apellido 1", telefono: "123456789", direccion: "Direccion 1", email: "  email 1", tipoEntidad: "Cliente" },
+        { id: 1, cedula:"3423", nombre: "Cliente 1", apellido: "Apellido 1", telefono: "123456789", direccion: "Direccion 1", email: "  email 1", tipoEntidad: "Cliente", fechaNacimiento: "2021-01-01", direccion: "Direccion 1" },
         ];
     setCliente(cliente1);
   }, []);
@@ -116,8 +120,14 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
   };
 
   const openNew = () => {
-    setProduct(emptyProduct);
-    setSubmitted(false);
+    setNombre("")
+   setCedula("")
+   setApellido("")
+   setFechaNacimiento("")
+   setEmail("")
+   setTelefono("")
+   setDireccion("")
+  
     setProductDialog(true);
   };
 
@@ -168,8 +178,9 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
     }
   };
 
-  const editProduct = (product) => {
-    setProduct({ ...product });
+  const editProduct = (rowData) => {
+    console.log("rowData", rowData)
+    setCliente({ ...rowData });
     setProductDialog(true);
   };
 
@@ -353,6 +364,19 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
     );
   };
 
+  const editar = (rowData) => {
+    let fecha = new Date(rowData.fechaNacimiento)
+    console.log("rowData", rowData)
+   setNombre(rowData.nombre)
+   setCedula(rowData.cedula)
+   setApellido(rowData.apellido)
+   setFechaNacimiento(fecha)
+   setEmail(rowData.email)
+   setTelefono(rowData.telefono)
+   setDireccion(rowData.direccion)
+    setProductDialog(true);
+  }
+
   const actionBodyTemplate = (rowData) => {
     return (
       <React.Fragment>
@@ -360,7 +384,7 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
           <Button
             icon="pi pi-pencil"
             className="p-button-rounded p-button-success mr-2"
-            onClick={() => editProduct(rowData)}
+            onClick={() => editar(rowData)}
           />
         ) : (
           <></>
@@ -501,7 +525,7 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
             <DataTable
               ref={dt}
               emptyMessage="No se encontraron resultados"
-              value={equipos}
+              value={cliente}
               selection={selectedProducts}
               onSelectionChange={(e) => setSelectedProducts(e.value)}
               dataKey="id"
@@ -520,32 +544,41 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
                 exportable={false}
               ></Column>
               <Column
-                field="codigo"
-                header="Código"
+                field="cedula"
+                header="Cédula"
                 sortable
-                style={{ minWidth: "12rem" }}
+                style={{ minWidth: "8rem" }}
               ></Column>
               <Column
                 field="nombre"
                 header="Nombre"
                 sortable
+                style={{ minWidth: "12rem" }}
+              ></Column>
+              <Column
+                field="apellido"
+                header="Apellido"
+                sortable
                 style={{ minWidth: "16rem" }}
               ></Column>
+              
+              
               <Column
-                field="imagen"
-                header="Imagen"
-                body={imageBodyTemplate}
-              ></Column>
-              <Column
-                field="precio"
-                header="Precio"
-                body={priceBodyTemplate}
+                field="telefono"
+                header="Teléfono"
                 sortable
-                style={{ minWidth: "8rem" }}
+                style={{ minWidth: "10rem" }}
               ></Column>
-              <Column
-                field="categoria"
-                header="Categoría"
+
+<Column
+                field="email"
+                header="Email"
+                sortable
+                style={{ minWidth: "10rem" }}
+              ></Column>
+               <Column
+                field="direccion"
+                header="Direción"
                 sortable
                 style={{ minWidth: "10rem" }}
               ></Column>
@@ -698,7 +731,7 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
               />
               {product && (
                 <span>
-                  Desea eliminar el siguiente producto : <b>{product.nombre}</b>
+                  Desea eliminar el siguiente cliente : <b>{product.nombre}</b>
                   ?
                 </span>
               )}
