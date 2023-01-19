@@ -38,7 +38,7 @@ export const NavBar = () => {
   const items = [
     {
       label: "Productos",
-      className: "text-white",
+   className:"text-teal-50",
       icon: "pi pi-fw pi-box",
       items: [
         {
@@ -104,12 +104,13 @@ export const NavBar = () => {
   );
 
   return (
-    <div>
+    <div style={{backgroundColor: "#274C77", borderColor:"#274C77"}}>
       <Menubar
         model={items}
         start={start}
         end={end}
         className="p-4"
+        style={{backgroundColor: "#274C77", borderColor:"#274C77", color:"whitesmoke"}}
       />
 
 <OverlayPanel

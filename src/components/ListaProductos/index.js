@@ -17,6 +17,13 @@ import { Menubar } from "primereact/menubar";
 import { NavBar } from "../../../pages/frontend/navbar";
 
 export default function CatalogoProductos(data2) {
+
+
+
+
+
+
+  
   let emptyProduct = {
     id: null,
     name: "",
@@ -39,6 +46,7 @@ export default function CatalogoProductos(data2) {
     })
       .then((res) => res.json())
       .then((data) => setEquipos(data));
+      
   
     if (sessionStorage.getItem('usuario') !== null || sessionStorage.getItem('usuario') !== undefined) {
       
@@ -146,6 +154,16 @@ export default function CatalogoProductos(data2) {
       setProducts(_products);
       setProductDialog(false);
       setProduct(emptyProduct);
+      
+        fetch("/api/productos", {
+          method: 'POST', // or 'PUT'
+  body: JSON.stringify(products), // data can be `string` or {object}!
+  headers:{
+    'Content-Type': 'application/json'
+  }
+}).then(res => res.json())
+.catch(error => console.error('Error:', error))
+.then(response => console.log('Success:', response));
     }
   };
 
