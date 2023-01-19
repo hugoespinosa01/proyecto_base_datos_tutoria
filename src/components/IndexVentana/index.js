@@ -17,9 +17,32 @@ import { Menubar } from "primereact/menubar";
 import { NavBar } from "../../../pages/frontend/navbar";
 import React, { useState, useEffect } from 'react';
 import { Galleria } from 'primereact/galleria';
-import Axios from 'axios';
+import axios from "axios";
+import CatalogoProductos from "../ListaProductos";
+const baseURL= 'https://rickandmortyapi.com/api/character';
 export default function VentanaIndex() {
-
+  const [post, setPost] = useState(null);
+  const [imagenes2, setImagenes2] = useState(null);
+    useEffect(() => {
+      axios.get(baseURL).then((response) => {
+        setPost(response.data);
+        let valor=response.data.results.length
+        let valor2=response.data.results
+        setImages(valor2)
+        let i=0
+        console.log("value",valor)
+        let imagenes=[]
+        for (i; i<valor;i++){
+  
+          console.log(i)
+          console.log(valor2[i].image)
+          imagenes.push(valor2[i].image)
+          console.log(imagenes)
+          setImagenes2(imagenes)
+        }
+      });
+    }, []);
+   
   const [images, setImages] = useState(null)
  // const galleriaService = new PhotoService();
 
@@ -38,38 +61,69 @@ export default function VentanaIndex() {
       }
   ];
 
-  const itemTemplate = (item) => {
-    return <img src={item.itemImageSrc} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={item.alt} style={{ width: '100%', display: 'block' }} />;
+  const itemTemplate = (imagenes2) => {
+    return <img src={imagenes2} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'}  style={{ width: '100%', display: 'block' }} />;
 }
 
-const thumbnailTemplate = (item) => {
-    return <img src={item.thumbnailImageSrc} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={item.alt} style={{ display: 'block' }} />;
+const thumbnailTemplate = (imagenes2) => {
+    return <img src={imagenes2} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'}  style={{ display: 'block' }} />;
 }
 
-const axios = Axios.create({
-  baseURL: 'https://rickandmortyapi.com/api/character/1',
-});
-axios.defaults.timeout = 180000;
 
-console.log(axios.get(res=>console.log({res})))
+
 
   return (
-    <div>
+    <div   >
       <NavBar />
 
       <Card
         title=""
-        className="mt-3"
+        className="mt-3 bg-cyan-400 border-cyan-500  " 
       >
 
-<div>
+<div className="bg-cyan-400 border-cyan-500    ">
             <div className="card">
-                <Galleria value={images} responsiveOptions={responsiveOptions} numVisible={5} style={{ maxWidth: '640px' }}
-                    item={itemTemplate} thumbnail={thumbnailTemplate} circular autoPlay transitionInterval={2000} />
+              <div className="flex align-items-center justify-content-center col-12">
+              <Card className="col-3" >
+                <h1 className="text-6xl">Electrónicos</h1>
+                <br/>
+              <Galleria className=""value={imagenes2} responsiveOptions={responsiveOptions} numVisible={5} style={{ maxWidth: '720px' }}
+                    item={itemTemplate} circular autoPlay transitionInterval={5000} /> <br/>  <br/>
+                    <br/>
+              </Card>
+              <div className="col-1"></div>
+              <Card className="col-3">
+              <h1 className="text-6xl">Hogar</h1>  <br/>
+              <Galleria className=""value={imagenes2} responsiveOptions={responsiveOptions} numVisible={5} style={{ maxWidth: '720px' }}
+                    item={itemTemplate} circular autoPlay transitionInterval={2000}/>
+                      <br/>  <br/>
+                      <br/>
+              </Card>
+              
+              <div className="col-1"></div>
+                     
+              <Card className="col-3 " >
+              <h1 className="text-6xl">Computadoras y Accesorios</h1>  <br/>
+<Galleria className=""value={imagenes2} responsiveOptions={responsiveOptions} numVisible={5} style={{ maxWidth: '720px' }}
+                    item={itemTemplate} circular autoPlay transitionInterval={3000} />
+</Card>  
+
+                    
+              </div>
+                
             </div>
+            <div className="card">
+            <Galleria className=""value={imagenes2} responsiveOptions={responsiveOptions} numVisible={5} style={{ maxWidth: '720px' }}
+                    item={itemTemplate} circular autoPlay transitionInterval={3000}  fullScreen/>
+                
+            </div>
+
+            <Button className="scalein animation-duration-1000 animation-iteration-infinite flex align-items-center justify-content-center
+    font-bold bg-green-500 text-white border-round m-2 px-5 py-3"label="Ir a comprar"></Button>
         </div>
         
       </Card>
+
     </div>
   );
 }
