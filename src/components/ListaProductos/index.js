@@ -17,6 +17,13 @@ import { Menubar } from "primereact/menubar";
 import { NavBar } from "../../../pages/frontend/navbar";
 
 export default function CatalogoProductos(data2) {
+
+
+
+
+
+
+  
   let emptyProduct = {
     id: null,
     name: "",
