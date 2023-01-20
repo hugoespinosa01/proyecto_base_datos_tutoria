@@ -32,6 +32,11 @@ export default function CatalogoProductos(data2) {
   const [productos, setProductos] = useState([]);
   const [value19, setValue19] = useState(1);
   const [longitud, setLongitud] = useState(0);
+  const[nombre, setNombre]= useState("");
+  const[codigo, setCodigo]= useState(null);
+  const[precio, setPrecio]= useState("");
+  const[categoria, setCategoria]= useState("");
+
 
   // const [tipoEntidadSeleccionada, setTipoEntidadSeleccionada] = useState(0);
   let tipoEntidadSeleccionada;
@@ -128,64 +133,56 @@ export default function CatalogoProductos(data2) {
     setSubmitted(true);
 
     const formData = {
-      codigo: null,
-      nombre: "HOLA",
+      codigo: codigo==null?null:codigo,
+      nombre: nombre,
       imagen: imagen,
-      precio: 105.6,
-      categoria: "categoria",
+      precio: precio,
+      categoria: categoria,
     };
-
-    fetch("/api/productos", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+    if(codigo==null){
+      fetch("/api/productos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+    }
+    else{
+      fetch("/api/productos", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+    }
+  
     setLongitud(longitud+1);
 
-    // if (product.nombre.trim()) {
-    // let _products = [...products];
-    // let _product = { ...product };
-    // if (product.id) {
-    //   const index = findIndexById(product.id);
+  
+      setProductDialog(false);
+      setNombre("")
+      setPrecio(null)
+      setCategoria(null)
 
-    //   _products[index] = _product;
-    //   toast.current.show({
-    //     severity: "success",
-    //     summary: "Successful",
-    //     detail: "Product Updated",
-    //     life: 3000,
-    //   });
-    // } else {
-    //   _product.id = createId();
-    //   _product.image = "product-placeholder.svg";
-    //   _products.push(_product);
-    //   toast.current.show({
-    //     severity: "success",
-    //     summary: "Successful",
-    //     detail: "Product Created",
-    //     life: 3000,
-    //   });
-    // }
-
-    //setProducts(_products);
-    //   setProductDialog(false);
-    //   setProduct(emptyProduct);
-    // }
+      setCodigo(null)
   };
 
-  const editProduct = (product) => {
-    setProduct({ ...product });
+  const editProduct = (rowData) => {
+   setNombre(rowData.nombre)
+   setPrecio(rowData.precio)
+
+   setCategoria(rowData.categoria)
+   setCodigo(rowData.codigo)
     setProductDialog(true);
   };
 
   const confirmDeleteProduct = (product) => {
+    setCodigo(product.codigo)
     setProduct(product);
     setDeleteProductDialog(true);
   };
 
   const deleteProduct = () => {
-    let _products = products.filter((val) => val.id !== product.id);
-    setProducts(_products);
+    fetch(`/api/productos/${codigo}`, { method: 'DELETE' })
+    .then((res) => console.log("res", res));
     setDeleteProductDialog(false);
     setProduct(emptyProduct);
     toast.current.show({
@@ -277,10 +274,7 @@ export default function CatalogoProductos(data2) {
   };
 
   const onCategoryChange = (e) => {
-    let _product = { ...product };
-    _product["categoria"] = e.value;
-    _product["category"] = e.value;
-    setProduct(_product);
+    setCategoria(e.value)
   };
   console.log({ product });
   const onInputChange = (e, name) => {
@@ -571,15 +565,15 @@ export default function CatalogoProductos(data2) {
               <label htmlFor="name">Nombre</label>
               <InputText
                 id="name"
-                value={product.nombre}
-                onChange={(e) => onInputChange(e, "nombre")}
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
                 required
                 autoFocus
                 className={classNames({
-                  "p-invalid": submitted && !product.nombre,
+                  "p-invalid": submitted && !nombre,
                 })}
               />
-              {submitted && !product.nombre && (
+              {submitted && !nombre && (
                 <small className="p-error">Nombre es requerido.</small>
               )}
             </div>
@@ -593,7 +587,7 @@ export default function CatalogoProductos(data2) {
                     name="category"
                     value="Accessorios"
                     onChange={onCategoryChange}
-                    checked={product.category === "Accessorios"}
+                    checked={categoria === "Accessorios"}
                   />
                   <label htmlFor="category1">Accessorios</label>
                 </div>
@@ -603,7 +597,7 @@ export default function CatalogoProductos(data2) {
                     name="category"
                     value="Ropa"
                     onChange={onCategoryChange}
-                    checked={product.category === "Ropa"}
+                    checked={categoria === "Ropa"}
                   />
                   <label htmlFor="category2">Ropa</label>
                 </div>
@@ -613,7 +607,7 @@ export default function CatalogoProductos(data2) {
                     name="category"
                     value="Electrónicos"
                     onChange={onCategoryChange}
-                    checked={product.category === "Electrónicos"}
+                    checked={categoria === "Electrónicos"}
                   />
                   <label htmlFor="category3">Electrónicos</label>
                 </div>
@@ -623,7 +617,7 @@ export default function CatalogoProductos(data2) {
                     name="category"
                     value="Fitness"
                     onChange={onCategoryChange}
-                    checked={product.category === "Fitness"}
+                    checked={categoria === "Fitness"}
                   />
                   <label htmlFor="category4">Fitness</label>
                 </div>
@@ -635,22 +629,14 @@ export default function CatalogoProductos(data2) {
                 <label htmlFor="price">Precio</label>
                 <InputNumber
                   id="price"
-                  value={product.precio}
-                  onValueChange={(e) => onInputNumberChange(e, "precio")}
+                  value={precio}
+                  onValueChange={(e) => setPrecio(e.value)}
                   mode="currency"
                   currency="USD"
                   locale="en-US"
                 />
               </div>
-              <div className="field col">
-                <label htmlFor="quantity">cantidad</label>
-                <InputNumber
-                  id="quantity"
-                  value={product.cantidad}
-                  onValueChange={(e) => onInputNumberChange(e, "cantidad")}
-                  integeronly
-                />
-              </div>
+             
               <div className="field col">
                 <label htmlFor="image">Imagen</label>
                 <FileUpload
