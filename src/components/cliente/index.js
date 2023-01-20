@@ -19,42 +19,36 @@ import { InputMask } from 'primereact/inputmask';
 import { Calendar } from 'primereact/calendar';
 
 
-export default function Clientes (data2) {
+export default function Clientes(data2) {
 
-const [nombre, setNombre]=useState("");
-const [apellido, setApellido]=useState("");
-const [cedula, setCedula]=useState("");
-const [telefono, setTelefono]=useState();
-const [email, setEmail]=useState("");
-const [direccion, setDireccion]=useState("");
-const[fechaNacimiento, setFechaNacimiento]=useState(null);
-const [longitud, setLongitud]=useState(0)
-const [products, setProducts] = useState(null);
-const [cliente, setCliente] = useState(null);
-const [clientes, setClientes] = useState([]);
-const [productDialog, setProductDialog] = useState(false);
-const [deleteProductDialog, setDeleteProductDialog] = useState(false);
-const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [cedula, setCedula] = useState("");
+  const [telefono, setTelefono] = useState();
+  const [email, setEmail] = useState("");
+  const [direccion, setDireccion] = useState("");
+  const [fechaNacimiento, setFechaNacimiento] = useState(null);
+  const [longitud, setLongitud] = useState(0)
+  const [products, setProducts] = useState(null);
+  const [cliente, setCliente] = useState(null);
+  const [clientes, setClientes] = useState([]);
+  const [productDialog, setProductDialog] = useState(false);
+  const [deleteProductDialog, setDeleteProductDialog] = useState(false);
+  const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
 
-const [selectedProducts, setSelectedProducts] = useState(null);
-const [submitted, setSubmitted] = useState(false);
-const [globalFilter, setGlobalFilter] = useState(null);
-const toast = useRef(null);
-const dt = useRef(null);
-const productService = null;
-const [disableCliente, setDisableCliente] = useState(false);
+  const [selectedProducts, setSelectedProducts] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
+  const [globalFilter, setGlobalFilter] = useState(null);
+  const toast = useRef(null);
+  const dt = useRef(null);
+  const productService = null;
+  const [disableCliente, setDisableCliente] = useState(false);
 
-useEffect(() => {
-  fetch("/api/clientes", {
-    method: "GET",
-    headers: { "Content-Type": "application/json" }
-  })
-    .then((res) => console.log("res",res))
-    .then((data) => setEquipos(data));
-}, []);
-
-
-
+  useEffect(() => {
+    fetch(`/api/clientes`)
+      .then((res) =>  res.json())
+      .then((data) => setClientes(data));
+  }, []);
 
   let emptyProduct = {
     id: null,
@@ -71,20 +65,20 @@ useEffect(() => {
 
   const [equipos, setEquipos] = useState([]);
   const [value19, setValue19] = useState(1);
- // const [tipoEntidadSeleccionada, setTipoEntidadSeleccionada] = useState(0);
+  // const [tipoEntidadSeleccionada, setTipoEntidadSeleccionada] = useState(0);
   let tipoEntidadSeleccionada;
   useEffect(() => {
-    
-  
+
+
     if (sessionStorage.getItem('usuario') !== null) {
-      
-      tipoEntidadSeleccionada=sessionStorage.getItem('usuario');
-      
+
+      tipoEntidadSeleccionada = sessionStorage.getItem('usuario');
+
     }
 
     if (tipoEntidadSeleccionada === "Empresa") {
       console.log("EMPRESA");
-    //  sessionStorage.setItem('usuario', tipoEntidadSeleccionada);
+      //  sessionStorage.setItem('usuario', tipoEntidadSeleccionada);
       setDisableCliente(true);
     } else if (tipoEntidadSeleccionada === "Cliente") {
       console.log("CLIENTE");
@@ -93,7 +87,7 @@ useEffect(() => {
       window.location.href = "http://localhost:3000";
     }
   }, []);
-  
+
   console.log("equipos", equipos);
 
   useEffect(() => {
@@ -110,8 +104,8 @@ useEffect(() => {
     ];
     setProducts(producto);
     let cliente1 = [
-        { id: 1, cedula:"3423", nombre: "Cliente 1", apellido: "Apellido 1", telefono: "123456789", direccion: "Direccion 1", email: "  email 1", tipoEntidad: "Cliente", fechaNacimiento: "2021-01-01", direccion: "Direccion 1" },
-        ];
+      { id: 1, cedula: "3423", nombre: "Cliente 1", apellido: "Apellido 1", telefono: "123456789", direccion: "Direccion 1", email: "  email 1", tipoEntidad: "Cliente", fechaNacimiento: "2021-01-01", direccion: "Direccion 1" },
+    ];
     setCliente(cliente1);
   }, []);
 
@@ -123,19 +117,19 @@ useEffect(() => {
   };
 
   const openNew = () => {
-  
-      setProductDialog(false);
-   
+
+    setProductDialog(false);
 
 
-     setNombre("")
-   setCedula("")
+
+    setNombre("")
+    setCedula("")
     setApellido("")
     setFechaNacimiento("")
     setEmail("")
     setTelefono("")
-   setDireccion("")
-  
+    setDireccion("")
+
     setProductDialog(true);
   };
 
@@ -201,8 +195,8 @@ useEffect(() => {
     fetch('/api/productos' + product.codigo, {
       method: 'DELETE',
     })
-    .then(res => res.text()) // or res.json()
-    .then(res => console.log(res))
+      .then(res => res.text()) // or res.json()
+      .then(res => console.log(res))
     toast.current.show({
       severity: "success",
       summary: "Successful",
@@ -297,7 +291,7 @@ useEffect(() => {
     _product["category"] = e.value;
     setProduct(_product);
   };
- // console.log({ product });
+  // console.log({ product });
   const onInputChange = (e, name) => {
     const val = (e?.target && e?.target?.value) || "";
     let _product = { ...cliente };
@@ -376,13 +370,13 @@ useEffect(() => {
   const editar = (rowData) => {
     let fecha = new Date(rowData.fechaNacimiento)
     console.log("rowData", rowData)
-   setNombre(rowData.nombre)
-   setCedula(rowData.cedula)
-   setApellido(rowData.apellido)
-   setFechaNacimiento(fecha)
-   setEmail(rowData.email)
-   setTelefono(rowData.telefono)
-   setDireccion(rowData.direccion)
+    setNombre(rowData.nombre)
+    setCedula(rowData.cedula)
+    setApellido(rowData.apellido)
+    setFechaNacimiento(fecha)
+    setEmail(rowData.email)
+    setTelefono(rowData.telefono)
+    setDireccion(rowData.direccion)
     setProductDialog(true);
   }
 
@@ -500,29 +494,30 @@ useEffect(() => {
       detail: "File Uploaded with Basic Mode",
     });
   };
-  const guardar = ()=> {
-    fetch('/api/cliente', {
+  const guardar = () => {
+    fetch('/api/clientes', {
       method: 'POST',
       headers: {
-          "Content-Type": "application/json",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ 
-      cedula: "1234567898",
-      nombre: "rete",
-      apellido: "rete",
-      telefono: "042202215",
-      email: "rete",
-      fechaNacimiento: new Date(),
-      direccion: "rtert"})
-})
-.then(res => res.json())
-.then(res=> {
-    console.log(res);
-});
-   
-  
-  
-    setLongitud(longitud+1);
+      body: JSON.stringify({
+        cedula: "1234567898",
+        nombre: "rete",
+        apellido: "rete",
+        telefono: "042202215",
+        email: "rete",
+        fechaNacimiento: new Date(),
+        direccion: "rtert"
+      })
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+      });
+
+
+
+    setLongitud(longitud + 1);
     setNombre("")
     setApellido("")
     setTelefono("")
@@ -586,8 +581,8 @@ useEffect(() => {
                 sortable
                 style={{ minWidth: "16rem" }}
               ></Column>
-              
-              
+
+
               <Column
                 field="telefono"
                 header="Teléfono"
@@ -595,13 +590,13 @@ useEffect(() => {
                 style={{ minWidth: "10rem" }}
               ></Column>
 
-<Column
+              <Column
                 field="email"
                 header="Email"
                 sortable
                 style={{ minWidth: "10rem" }}
               ></Column>
-               <Column
+              <Column
                 field="direccion"
                 header="Dirección"
                 sortable
@@ -615,7 +610,7 @@ useEffect(() => {
               ></Column>
             </DataTable>
           </div>
-    
+
           <Dialog
             visible={productDialog}
             style={{ width: "450px" }}
@@ -678,21 +673,21 @@ useEffect(() => {
             <div className="field">
               <label htmlFor="telefono">Teléfono</label>
               <InputMask id="telefono" mask="99-999999" value={telefono} placeholder="99-999999" onChange={(e) => setTelefono(e.value)}></InputMask>
-              
+
               {submitted && !telefono && (
                 <small className="p-error">Teléfono es requerido.</small>
               )}
-             
+
             </div>
 
-          
+
 
 
             <div className="field">
               <label htmlFor="email">Email</label>
               <InputText
                 id="emnail"
-               value={email}
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 autoFocus
@@ -706,12 +701,12 @@ useEffect(() => {
             </div>
 
 
-             <div className="field">
+            <div className="field">
               <label htmlFor="fechaNacimiento">Fecha de Nacimiento</label>
-              <Calendar id="fechaNacimiento" value={fechaNacimiento} onChange={(e) => setFechaNacimiento(e.value)}  className={classNames({
-                  "p-invalid": submitted && !fechaNacimiento,
-                })} />
-             
+              <Calendar id="fechaNacimiento" value={fechaNacimiento} onChange={(e) => setFechaNacimiento(e.value)} className={classNames({
+                "p-invalid": submitted && !fechaNacimiento,
+              })} />
+
               {submitted && !fechaNacimiento && (
                 <small className="p-error">Fecha de Nacimiento es requerido.</small>
               )}
@@ -722,7 +717,7 @@ useEffect(() => {
               <label htmlFor="direccion">Dirección</label>
               <InputText
                 id="direccion"
-              value={direccion}
+                value={direccion}
                 onChange={(e) => setDireccion(e.target.value)}
                 required
                 autoFocus
@@ -735,10 +730,10 @@ useEffect(() => {
               )}
             </div>
 
-            <Button label="Guardar" className="p-button-secondary" onClick={()=> guardar()}/>
+            <Button label="Guardar" className="p-button-secondary" onClick={() => guardar()} />
 
 
-           
+
           </Dialog>
 
           <Dialog
