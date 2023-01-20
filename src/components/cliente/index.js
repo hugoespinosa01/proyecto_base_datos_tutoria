@@ -28,8 +28,27 @@ const [telefono, setTelefono]=useState();
 const [email, setEmail]=useState("");
 const [direccion, setDireccion]=useState("");
 const[fechaNacimiento, setFechaNacimiento]=useState(null);
+const [longitud, setLongitud]=useState(0)
+const [products, setProducts] = useState(null);
+const [cliente, setCliente] = useState(null);
+const [clientes, setClientes] = useState([]);
+const [productDialog, setProductDialog] = useState(false);
+const [deleteProductDialog, setDeleteProductDialog] = useState(false);
+const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
 
+const [selectedProducts, setSelectedProducts] = useState(null);
+const [submitted, setSubmitted] = useState(false);
+const [globalFilter, setGlobalFilter] = useState(null);
+const toast = useRef(null);
+const dt = useRef(null);
+const productService = null;
+const [disableCliente, setDisableCliente] = useState(false);
 
+useEffect(() => {
+  fetch('/api/clientes')
+    .then((res) => console.log("res",res))
+    .then((data) =>{ console.log("data",data), setClientes(data)});
+}, [longitud]);
 
 
 
@@ -45,6 +64,7 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
     rating: 0,
     inventoryStatus: "INSTOCK",
   };
+  const [product, setProduct] = useState(emptyProduct);
 
   const [equipos, setEquipos] = useState([]);
   const [value19, setValue19] = useState(1);
@@ -76,22 +96,6 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
   }, []);
   
   console.log("equipos", equipos);
-
-
-  const [products, setProducts] = useState(null);
-  const [cliente, setCliente] = useState(null);
-  const [clientes, setClientes] = useState(null);
-  const [productDialog, setProductDialog] = useState(false);
-  const [deleteProductDialog, setDeleteProductDialog] = useState(false);
-  const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
-  const [product, setProduct] = useState(emptyProduct);
-  const [selectedProducts, setSelectedProducts] = useState(null);
-  const [submitted, setSubmitted] = useState(false);
-  const [globalFilter, setGlobalFilter] = useState(null);
-  const toast = useRef(null);
-  const dt = useRef(null);
-  const productService = null;
-  const [disableCliente, setDisableCliente] = useState(false);
 
   useEffect(() => {
     let producto = [
@@ -289,7 +293,7 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
     _product["category"] = e.value;
     setProduct(_product);
   };
-  console.log({ product });
+ // console.log({ product });
   const onInputChange = (e, name) => {
     const val = (e?.target && e?.target?.value) || "";
     let _product = { ...cliente };
@@ -526,7 +530,7 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
             <DataTable
               ref={dt}
               emptyMessage="No se encontraron resultados"
-              value={cliente}
+              value={clientes}
               selection={selectedProducts}
               onSelectionChange={(e) => setSelectedProducts(e.value)}
               dataKey="id"
@@ -539,11 +543,6 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
               header={header}
               responsiveLayout="scroll"
             >
-              <Column
-                selectionMode="multiple"
-                headerStyle={{ width: "3rem" }}
-                exportable={false}
-              ></Column>
               <Column
                 field="cedula"
                 header="Cédula"
