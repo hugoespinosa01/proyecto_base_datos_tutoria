@@ -17,13 +17,6 @@ import { Menubar } from "primereact/menubar";
 import { NavBar } from "../../../pages/frontend/navbar";
 
 export default function CatalogoProductos(data2) {
-
-
-
-
-
-
-  
   let emptyProduct = {
     id: null,
     name: "",
@@ -38,6 +31,7 @@ export default function CatalogoProductos(data2) {
 
   const [productos, setProductos] = useState([]);
   const [value19, setValue19] = useState(1);
+  const [longitud, setLongitud] = useState(0);
 
   // const [tipoEntidadSeleccionada, setTipoEntidadSeleccionada] = useState(0);
   let tipoEntidadSeleccionada;
@@ -47,7 +41,7 @@ export default function CatalogoProductos(data2) {
     fetch("/api/productos")
       .then((res) => res.json())
       .then((data) => setProductos(data));
-  }, []);
+  }, [longitud]);
 
   useEffect(() => {
     if (
@@ -146,6 +140,7 @@ export default function CatalogoProductos(data2) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     });
+    setLongitud(longitud+1);
 
     // if (product.nombre.trim()) {
     // let _products = [...products];
