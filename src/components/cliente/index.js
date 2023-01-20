@@ -45,10 +45,13 @@ const productService = null;
 const [disableCliente, setDisableCliente] = useState(false);
 
 useEffect(() => {
-  fetch('/api/clientes')
+  fetch("/api/clientes", {
+    method: "GET",
+    headers: { "Content-Type": "application/json" }
+  })
     .then((res) => console.log("res",res))
-    .then((data) =>{ console.log("data",data), setClientes(data)});
-}, [longitud]);
+    .then((data) => setEquipos(data));
+}, []);
 
 
 
@@ -71,11 +74,7 @@ useEffect(() => {
  // const [tipoEntidadSeleccionada, setTipoEntidadSeleccionada] = useState(0);
   let tipoEntidadSeleccionada;
   useEffect(() => {
-    fetch("/api/productos", {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((data) => setEquipos(data));
+    
   
     if (sessionStorage.getItem('usuario') !== null) {
       
@@ -124,12 +123,17 @@ useEffect(() => {
   };
 
   const openNew = () => {
-    setNombre("")
+  
+      setProductDialog(false);
+   
+
+
+     setNombre("")
    setCedula("")
-   setApellido("")
-   setFechaNacimiento("")
-   setEmail("")
-   setTelefono("")
+    setApellido("")
+    setFechaNacimiento("")
+    setEmail("")
+    setTelefono("")
    setDireccion("")
   
     setProductDialog(true);
@@ -497,7 +501,28 @@ useEffect(() => {
     });
   };
   const guardar = ()=> {
-    console.log("guardar")
+    fetch('/api/cliente', {
+      method: 'POST',
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ 
+      cedula: "1234567898",
+      nombre: "rete",
+      apellido: "rete",
+      telefono: "042202215",
+      email: "rete",
+      fechaNacimiento: new Date(),
+      direccion: "rtert"})
+})
+.then(res => res.json())
+.then(res=> {
+    console.log(res);
+});
+   
+  
+  
+    setLongitud(longitud+1);
     setNombre("")
     setApellido("")
     setTelefono("")
