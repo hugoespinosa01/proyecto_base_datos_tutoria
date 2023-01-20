@@ -19,69 +19,79 @@ const handler = async (req, res) => {
 
   switch (req.method) {
     case "GET":
-      return getProducts();
+      return getCustomers();
     case "POST":
-      return createProduct();
+      return createCustomer();
     case "PUT":
-      return updateProduct();
+      return updateCustomer();
     case "DELETE":
-      return deleteProduct();
+      return deleteCustomer();
     default:
       return res.status(400).json({ message: "Error, método no existe" });
   }
 
-  function getProducts() {
+  function getCustomers() {
     connection.query("SELECT * FROM clientes", (error, results) => {
       if (error) throw error;
       return res.status(200).json(results);
     });
   }
 
-  function createProduct() {
+  function createCustomer() {
     const insertar =
       "INSERT INTO " +
       tabla +
-      " (cedula, nombre, apellido, precio, categoria) VALUES (NULL, '" +
+      " (cedula, nombre, apellido, telefono, email, fechaNacimiento, direccion) VALUES (NULL, '" +
+      cedula +
+      "', '" +
       nombre +
       "', '" +
-      imagen.objectURL +
+      apellido +
       "', '" +
-      precio +
+      telefono +
       "', '" +
-      categoria +
+      email +
+      "', '" +
+      fechaNacimiento +
+      "', '" +
+      direccion +
       "')";
     connection.query(insertar, (error, results) => {
       if (error) throw error;
-      return res.status(200).send("Producto creado");
+      return res.status(200).send("Cliente creado");
     });
   }
 
-  function updateProduct() {
+  function updateCustomer() {
     const actualizar =
       "UPDATE " +
       tabla +
       " SET nombre = '" +
       nombre +
-      "', imagen = '" +
-      imagen.objectURL +
-      "', precio = '" +
-      precio +
-      "', categoria = '" +
-      categoria +
+      "', apellido = '" +
+      apellido +
+      "', telefono = '" +
+      telefono +
+      "', email = '" +
+      email +
+      "', fechaNacimiento = '" +
+      fechaNacimiento +
+      "', direccion = '" +
+      direccion +
       "' WHERE cedula = " +
       cedula +
       "";
     connection.query(actualizar, (error, results) => {
       if (error) throw error;
-      return res.status(200).send("Producto actualizado");
+      return res.status(200).send("Cliente actualizado");
     });
   }
 
-  function deleteProduct() {
+  function deleteCustomer() {
     const eliminar = "DELETE FROM " + tabla + " WHERE cedula = " + cedula + "";
     connection.query(eliminar, (error, results) => {
       if (error) throw error;
-      return res.status(200).send("Producto eliminado");
+      return res.status(200).send("Cliente eliminado");
     });
   }
 };
