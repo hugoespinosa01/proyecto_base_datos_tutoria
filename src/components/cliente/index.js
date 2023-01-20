@@ -190,10 +190,11 @@ const[fechaNacimiento, setFechaNacimiento]=useState(null);
   };
 
   const deleteProduct = () => {
-    let _products = products.filter((val) => val.id !== product.id);
-    setProducts(_products);
-    setDeleteProductDialog(false);
-    setProduct(emptyProduct);
+    fetch('/api/productos' + product.codigo, {
+      method: 'DELETE',
+    })
+    .then(res => res.text()) // or res.json()
+    .then(res => console.log(res))
     toast.current.show({
       severity: "success",
       summary: "Successful",
