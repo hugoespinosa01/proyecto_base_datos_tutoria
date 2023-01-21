@@ -55,7 +55,7 @@ export default function CatalogoProductos(data2) {
     fetch("/api/productos")
       .then((res) => res.json())
       .then((data) => setProductos(data));
-  }, [longitud]);
+  }, [longitud, cliente]);
 
   useEffect(() => {
     if (
@@ -544,7 +544,7 @@ export default function CatalogoProductos(data2) {
           <div className="card">
             <Toolbar className="col-12" left={leftToolbarTemplate}></Toolbar>
             <br/>
-            {cliente===null || cliente===undefined?<><br></br><h2 style={{color:"red"}}>Debe Seleccionar un cliente para ver la lista de productos*</h2>
+            {(cliente===null || cliente===undefined) && disableCliente==false?<><br></br><h2 style={{color:"red"}}>Debe Seleccionar un cliente para ver la lista de productos*</h2>
             <br></br>
             <br></br>
             <br></br>

@@ -2,10 +2,14 @@ import { Button } from "primereact/button";
 import { Menubar } from "primereact/menubar";
 import { Chip } from "primereact/chip";
 import { Tooltip } from "primereact/tooltip";
-import { Fragment, useState } from "react";
+import { Toolbar } from "primereact/toolbar";
+import { useState } from "react";
+import { Fragment } from "react";
+import {Dropdown} from "primereact/dropdown";
 import { useRouter } from 'next/router';
 import { useEffect } from "react";
 import { useRef } from "react";
+import {AutoComplete} from "primereact/autocomplete";
 import { OverlayPanel } from 'primereact/overlaypanel';
 import { DataTable } from "primereact/datatable";
 //import './OverlayPanelDemo.css';
@@ -14,6 +18,16 @@ export const NavBar = () => {
   const op = useRef(null);
   let tipoEntidadSeleccionada;
   const [user, setUser]=useState("");
+  const [cliente, setCliente]=useState(null)
+  const [clienteLista, setClienteLista]=useState([])
+  const[nombreCliente, setNombreCliente]= useState("");
+  const[apellidoCliente, setApellidoCliente]= useState("");
+
+  useEffect(() => {
+    fetch(`/api/clientes`)
+      .then((res) =>  res.json())
+      .then((data) => setClienteLista(data));
+  }, []);
   useEffect(() => {
     if (sessionStorage.getItem('usuario') !== null || sessionStorage.getItem('usuario') !== undefined) {
       
@@ -89,7 +103,79 @@ export const NavBar = () => {
       onClick={(e) => op.current.toggle(e)}
     />
   );
+  const selecionarCliente=(e)=>{
+    setCliente(e.value)
+    let cliente2=e.value;
+   setNombreCliente(cliente2?.nombre);
+    setApellidoCliente(cliente2?.apellido)
+  }
 
+  const leftToolbarTemplate = () => {
+    return (
+      <Fragment>
+       
+          <div className=" col-6 flex align-items-center ">
+                <h3 htmlFor="name">Cliente: </h3>
+             
+              <div className="col-2">
+
+                <Dropdown
+                options={clienteLista}
+                optionLabel="cedula" value={cliente}
+                filterBy="cedula"
+                onChange={selecionarCliente} filter showClear  placeholder="Seleccione cédula de cliente"></Dropdown>
+                 
+                </div> 
+              
+                
+              </div>
+              
+           
+
+              
+
+       
+      </Fragment>
+    );
+  };
+  const leftToolbarTemplate2 = () => {
+    return (
+      <Fragment>
+       
+       <div className=" col-2 flex align-items-center ">
+                <h4 htmlFor="name">Usuario: </h4>
+             
+              <div className="col-1">
+
+                <AutoComplete
+                value={cliente===undefined?"":nombreCliente+ " "+ apellidoCliente}></AutoComplete>
+                 
+                </div> 
+              
+             
+
+             
+
+                
+              </div>
+             
+
+
+              
+             
+
+             
+
+                
+          
+           
+
+              
+
+       
+      </Fragment>
+    );
+  };
   return (
     <div style={{backgroundColor: "#274C77", borderColor:"#274C77"}}>
       <Menubar
@@ -110,7 +196,8 @@ export const NavBar = () => {
           className="overlaypanel-demo"
         >
           <h3>Carrito de Compras &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</h3>
-          
+          <Toolbar className="col-12" left={leftToolbarTemplate}></Toolbar>
+          <Toolbar className="col-12" left={leftToolbarTemplate2}> </Toolbar>
           <DataTable
           //  // value={data}
           //   dataKey="id"
