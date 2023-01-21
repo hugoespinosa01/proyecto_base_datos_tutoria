@@ -3,6 +3,7 @@ import { Menubar } from "primereact/menubar";
 import { Chip } from "primereact/chip";
 import { Tooltip } from "primereact/tooltip";
 import { Toolbar } from "primereact/toolbar";
+import { Column } from "primereact/column";
 import { useState } from "react";
 import { Fragment } from "react";
 import {Dropdown} from "primereact/dropdown";
@@ -18,16 +19,34 @@ export const NavBar = () => {
   const op = useRef(null);
   let tipoEntidadSeleccionada;
   const [user, setUser]=useState("");
-  const [cliente, setCliente]=useState(null)
+  const [cliente2, setCliente2]=useState(null)
   const [clienteLista, setClienteLista]=useState([])
   const[nombreCliente, setNombreCliente]= useState("");
   const[apellidoCliente, setApellidoCliente]= useState("");
+  const [carritoData,setCarritoData]=useState([])
 
+
+  
   useEffect(() => {
     fetch(`/api/clientes`)
       .then((res) =>  res.json())
       .then((data) => setClienteLista(data));
   }, []);
+
+
+  useEffect(() => {
+    console.log("cedula", cliente2?.cedula)
+    fetch(`/api/carrito_compras`,{
+      method:"GET",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({cliente:cliente2?.cedula})
+    })
+      .then((res) => res.json())
+      .then((data) => setCarritoData(data));
+  }, [cliente2]);
+ 
+
+
   useEffect(() => {
     if (sessionStorage.getItem('usuario') !== null || sessionStorage.getItem('usuario') !== undefined) {
       
@@ -84,6 +103,18 @@ export const NavBar = () => {
     },
   ];
 
+  const irCarrito=()=>{
+
+    router.push(
+      {
+        pathname: '../../frontend/carritoCompra',
+  
+      },
+      '../../frontend/carritoCompra',
+    );
+    
+  }
+
   //const start = <Chip label="Tienda en línea" icon="pi pi-shopping-bag" />;
   const start = <Fragment>
     <div className="p-fluid formgrid grid justify-content-center">
@@ -104,10 +135,10 @@ export const NavBar = () => {
     />
   );
   const selecionarCliente=(e)=>{
-    setCliente(e.value)
-    let cliente2=e.value;
-   setNombreCliente(cliente2?.nombre);
-    setApellidoCliente(cliente2?.apellido)
+    setCliente2(e.value)
+    let cliente3=e.value;
+   setNombreCliente(cliente3?.nombre);
+    setApellidoCliente(cliente3?.apellido)
   }
 
   const leftToolbarTemplate = () => {
@@ -121,7 +152,7 @@ export const NavBar = () => {
 
                 <Dropdown
                 options={clienteLista}
-                optionLabel="cedula" value={cliente}
+                optionLabel="cedula" value={cliente2}
                 filterBy="cedula"
                 onChange={selecionarCliente} filter showClear  placeholder="Seleccione cédula de cliente"></Dropdown>
                  
@@ -148,7 +179,7 @@ export const NavBar = () => {
               <div className="col-1">
 
                 <AutoComplete
-                value={cliente===undefined?"":nombreCliente+ " "+ apellidoCliente}></AutoComplete>
+                value={cliente2===undefined?"":nombreCliente+ " "+ apellidoCliente}></AutoComplete>
                  
                 </div> 
               
@@ -199,26 +230,24 @@ export const NavBar = () => {
           <Toolbar className="col-12" left={leftToolbarTemplate}></Toolbar>
           <Toolbar className="col-12" left={leftToolbarTemplate2}> </Toolbar>
           <DataTable
-          //  // value={data}
+          value={carritoData}
           //   dataKey="id"
-          //   responsiveLayout="scroll"
-          //   paginator
-          //   rows={5}
+            responsiveLayout="scroll"
+            paginator
+            rows={5}
           //   filters={filtroBusqueda}
           //   globalFilterFields={['codigoEstadoSituacionActual']}
             emptyMessage="El carrito se encuentra vacío"
            >
-             {/* <Column field="nemonicoProyecto" header="CUP" />
-             <Column field="nombreProyecto" header=" Nombre del proyecto"></Column>
-             <Column field="codigoEstadoSituacionActual" header="Tipo de Solicitud" body={tipoBodyTemplate}></Column>
-             <Column field="estado" header="Estado" body={estadoBodyTemplate}></Column>
-             <Column field="observacion" header="Observaciones"></Column>
-             <Column header="Consultas" body={consulta}></Column> */}
+             <Column field="nombre" header="Nombre Producto" />
+             <Column field="cantidad" header="cantidad"></Column>
+             <Column field="total" header="Total"></Column>
+             
            </DataTable>
            <br></br>
            <div className="flex align-items-center flex-wrap">
            <div className="col-7"></div>
-           <Button icon="pi pi-shopping-cart" label="Ir al Carrito"></Button>
+           <Button icon="pi pi-shopping-cart" onClick={()=>irCarrito()} label="Ir al Carrito"></Button>
 
            </div>
            
