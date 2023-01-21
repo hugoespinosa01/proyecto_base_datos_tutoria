@@ -115,6 +115,7 @@ export default function CatalogoProductos(data2) {
   };
 
   const hideDeleteProductDialog = () => {
+    setCodigo(null);
     setDeleteProductDialog(false);
   };
 
@@ -186,15 +187,18 @@ export default function CatalogoProductos(data2) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({codigo:codigo})
     })
-    .then((res) => console.log("res", res));
-    setDeleteProductDialog(false);
+    .then(() => setLongitud(longitud+1)).then(()=>{setDeleteProductDialog(false)
     setProduct(emptyProduct);
+    setCodigo(null);
     toast.current.show({
       severity: "success",
       summary: "Successful",
       detail: "Product Deleted",
       life: 3000,
-    });
+    })});
+    
+   
+
   };
 
   const findIndexById = (id) => {
