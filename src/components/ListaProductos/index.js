@@ -358,13 +358,9 @@ export default function CatalogoProductos(data2) {
 
     switch (field) {
         case 'cantidad':
-        case 'price':
-            if (isPositiveInteger(newValue))
-                rowData[field] = newValue;
-            else
-                event.preventDefault();
-            break;
-
+          rowData[field] = newValue;
+          break;
+       
         default:
            
                 event.preventDefault();
@@ -373,6 +369,30 @@ export default function CatalogoProductos(data2) {
 }
 
 const cellEditor1 = (options) =>{
+  return(
+    <span>
+    <InputNumber
+    inputId="vertical"
+    value={options.value}
+    onValueChange={(e) => options.editorCallback(e.value)}
+    mode="decimal"
+    showButtons
+    buttonLayout="vertical"
+    style={{ width: "4rem" }}
+    decrementButtonClassName="p-button-secondary"
+    incrementButtonClassName="p-button-secondary"
+    incrementButtonIcon="pi pi-plus"
+    decrementButtonIcon="pi pi-minus"
+  />
+  </span>
+
+  );
+  
+ 
+
+}
+
+const cellEditor= (options) =>{
   return(
     <span>
     <InputNumber
@@ -557,7 +577,9 @@ const cellEditor1 = (options) =>{
 
               <Column
               header="Cantidad"
+              field="cantidad"
               editor={(options) => cellEditor1(options)} onCellEditComplete={onCellEditComplete}
+              
               
                 exportable={false}
                 style={{ minWidth: "8rem" }}
