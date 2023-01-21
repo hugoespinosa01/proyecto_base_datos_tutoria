@@ -326,13 +326,7 @@ export default function Clientes(data2) {
           <></>
         )}
 
-        <Button
-          label="Eliminar"
-          icon="pi pi-trash"
-          className="p-button-danger"
-          onClick={confirmDeleteSelected}
-          disabled={!selectedProducts || !selectedProducts.length}
-        />
+       
       </React.Fragment>
     );
   };

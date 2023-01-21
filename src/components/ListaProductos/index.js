@@ -315,13 +315,7 @@ export default function CatalogoProductos(data2) {
           <></>
         )}
 
-        <Button
-          label="Eliminar"
-          icon="pi pi-trash"
-          className="p-button-danger"
-          onClick={confirmDeleteSelected}
-          disabled={!selectedProducts || !selectedProducts.length}
-        />
+       
       </React.Fragment>
     );
   };
@@ -518,11 +512,7 @@ export default function CatalogoProductos(data2) {
                 sortable
                 style={{ minWidth: "16rem" }}
               ></Column>
-              <Column
-                field="imagen"
-                header="Imagen"
-                body={imageBodyTemplate}
-              ></Column>
+              
               <Column
                 field="precio"
                 header="Precio"
@@ -642,17 +632,7 @@ export default function CatalogoProductos(data2) {
               </div>
              
               <div className="field col">
-                <label htmlFor="image">Imagen</label>
-                <FileUpload
-                  chooseLabel="Seleccione"
-                  mode="basic"
-                  onSelect={manejadorImagen}
-                  //url="https://primefaces.org/primereact/showcase/upload.php"
-                  accept="image/*"
-                  maxFileSize={1000000}
-                  customUpload
-                  //onUpload={onBasicUpload}
-                />
+                
               </div>
             </div>
           </Dialog>
