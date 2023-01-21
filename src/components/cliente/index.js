@@ -48,7 +48,7 @@ export default function Clientes(data2) {
     fetch(`/api/clientes`)
       .then((res) =>  res.json())
       .then((data) => setClientes(data));
-  }, []);
+  }, [longitud]);
 
   let emptyProduct = {
     id: null,
@@ -139,6 +139,7 @@ export default function Clientes(data2) {
   };
 
   const hideDeleteProductDialog = () => {
+    setCedula("");
     setDeleteProductDialog(false);
   };
 
@@ -187,22 +188,25 @@ export default function Clientes(data2) {
   };
 
   const confirmDeleteProduct = (product) => {
-    setProduct(product);
+    setCedula(product.cedula);
     setDeleteProductDialog(true);
   };
 
   const deleteProduct = () => {
-    fetch('/api/productos' + product.codigo, {
+    fetch(`/api/clientes/`, { 
       method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({cedula:cedula})
     })
-      .then(res => res.text()) // or res.json()
-      .then(res => console.log(res))
+    .then(() => setLongitud(longitud+1)).then(()=>{setDeleteProductDialog(false)
+    //setProduct(emptyProduct);
+    //setCodigo(null);
     toast.current.show({
       severity: "success",
       summary: "Successful",
-      detail: "Product Deleted",
+      detail: "Cliente Deleted",
       life: 3000,
-    });
+    })});
   };
 
   const findIndexById = (id) => {
@@ -495,25 +499,48 @@ export default function Clientes(data2) {
     });
   };
   const guardar = () => {
-    fetch('/api/clientes', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        cedula: "1234567898",
-        nombre: "rete",
-        apellido: "rete",
-        telefono: "042202215",
-        email: "rete",
-        fechaNacimiento: new Date(),
-        direccion: "rtert"
+    if(clientes.find(element => element.cedula === cedula)===undefined){
+      fetch('/api/clientes', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cedula: cedula,
+          nombre: nombre,
+          apellido: apellido,
+          telefono: telefono,
+          email: email,
+          fechaNacimiento: fechaNacimiento,
+          direccion: direccion
+        })
       })
-    })
-      .then(res => res.json())
-      .then(res => {
-        console.log(res);
-      });
+        .then(res => res.json())
+        .then(res => {
+          console.log(res);
+        });
+    }else{
+      fetch('/api/clientes', {
+        method: 'PUT',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cedula: cedula,
+          nombre: nombre,
+          apellido: apellido,
+          telefono: telefono,
+          email: email,
+          fechaNacimiento: fechaNacimiento,
+          direccion: direccion
+        })
+      })
+        .then(res => res.json())
+        .then(res => {
+          console.log(res);
+        });
+    }
+    
 
 
 
