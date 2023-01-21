@@ -1,4 +1,4 @@
-const connection = require("../backend/connection");
+const connection = require("../../backend/connection");
 let tabla = "carrito_compra";
 let codigo = null;
 let cliente = "";
