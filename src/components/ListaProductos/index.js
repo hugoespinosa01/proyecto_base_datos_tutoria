@@ -353,6 +353,49 @@ export default function CatalogoProductos(data2) {
       </span>
     );
   };
+  const onCellEditComplete = (e) => {
+    let { rowData, newValue, field, originalEvent: event } = e;
+
+    switch (field) {
+        case 'cantidad':
+        case 'price':
+            if (isPositiveInteger(newValue))
+                rowData[field] = newValue;
+            else
+                event.preventDefault();
+            break;
+
+        default:
+           
+                event.preventDefault();
+            break;
+    }
+}
+
+const cellEditor1 = (options) =>{
+  return(
+    <span>
+    <InputNumber
+    inputId="vertical"
+    value={options.value}
+    onValueChange={(e) => options.editorCallback(e.value)}
+    mode="decimal"
+    showButtons
+    buttonLayout="vertical"
+    style={{ width: "4rem" }}
+    decrementButtonClassName="p-button-secondary"
+    incrementButtonClassName="p-button-secondary"
+    incrementButtonIcon="pi pi-plus"
+    decrementButtonIcon="pi pi-minus"
+  />
+  </span>
+
+  );
+  
+ 
+
+}
+
 
   const actionBodyTemplate = (rowData) => {
     return (
@@ -375,23 +418,7 @@ export default function CatalogoProductos(data2) {
         ) : (
           <></>
         )}
-        {disableCliente ? (
-          <></>
-        ) : (
-          <InputNumber
-            inputId="vertical"
-            value={value19}
-            onValueChange={(e) => setValue19(e.value)}
-            mode="decimal"
-            showButtons
-            buttonLayout="vertical"
-            style={{ width: "4rem" }}
-            decrementButtonClassName="p-button-secondary"
-            incrementButtonClassName="p-button-secondary"
-            incrementButtonIcon="pi pi-plus"
-            decrementButtonIcon="pi pi-minus"
-          />
-        )}
+       
         &nbsp;&nbsp;&nbsp;
         {disableCliente ? (
           <></>
@@ -492,6 +519,7 @@ export default function CatalogoProductos(data2) {
               dataKey="id"
               paginator
               rows={10}
+              editMode="cell" className="editable-cells-table"
               rowsPerPageOptions={[5, 10, 25]}
               paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
@@ -528,7 +556,8 @@ export default function CatalogoProductos(data2) {
               ></Column>
 
               <Column
-                body={actionBodyTemplate}
+              editor={(options) => cellEditor1(options)} onCellEditComplete={onCellEditComplete}
+              body={actionBodyTemplate}
                 exportable={false}
                 style={{ minWidth: "8rem" }}
               ></Column>
