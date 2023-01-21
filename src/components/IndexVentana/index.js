@@ -25,6 +25,7 @@ export default function VentanaIndex() {
   const router = useRouter();
   const [post, setPost] = useState(null);
   const [imagenes2, setImagenes2] = useState(null);
+  const [entidad, setEntidad] = useState(null);
 
     useEffect(() => {
       axios.get(baseURL).then((response) => {
@@ -52,15 +53,18 @@ export default function VentanaIndex() {
       if (sessionStorage.getItem('usuario') !== null || sessionStorage.getItem('usuario') !== undefined) {
         
         tipoEntidadSeleccionada=sessionStorage.getItem('usuario');
+
         
       }
   
       if (tipoEntidadSeleccionada === "Empresa") {
         console.log("EMPRESA");
+        setEntidad("Empresa")
       //  sessionStorage.setItem('usuario', tipoEntidadSeleccionada);
-     
+        
       } else if (tipoEntidadSeleccionada === "Cliente") {
         console.log("CLIENTE");
+        setEntidad("Cliente")
       } else {
         console.log("SIN DATOS", tipoEntidadSeleccionada);
         window.location.href = "http://localhost:3000";
@@ -120,8 +124,7 @@ const login=()=>{
       >
            <div className="flex align-items-center justify-content-center ">
            
- <Button className=" w-30rem flex align-items-center justify-content-center font-bold border-round cursor-pointer m-2 px-5 py-3" label="Ir a comprar" icon="pi
-    pi-shopping-bag" onClick={()=>login()}  style={{backgroundColor: "#274C77", borderColor:"#274C77", color:"whitesmoke"}}></Button>
+ <Button className=" w-30rem flex align-items-center justify-content-center font-bold border-round cursor-pointer m-2 px-5 py-3" label={entidad === "Empresa"?"Revisa tus productos":"Ir a comprar"} icon={entidad === "Empresa"?"pi pi-sign-in":"pi pi-shopping-bag"} onClick={()=>login()}  style={{backgroundColor: "#274C77", borderColor:"#274C77", color:"whitesmoke"}}></Button>
          
            </div>
 <br/>
