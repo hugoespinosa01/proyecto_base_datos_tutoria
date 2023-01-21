@@ -556,7 +556,14 @@ const cellEditor1 = (options) =>{
               ></Column>
 
               <Column
+              header="Cantidad"
               editor={(options) => cellEditor1(options)} onCellEditComplete={onCellEditComplete}
+              
+                exportable={false}
+                style={{ minWidth: "8rem" }}
+              ></Column>
+              <Column
+              
               body={actionBodyTemplate}
                 exportable={false}
                 style={{ minWidth: "8rem" }}
