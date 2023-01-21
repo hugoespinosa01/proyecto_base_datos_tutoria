@@ -531,7 +531,7 @@ export default function CatalogoProductos(data2) {
   };
 
   return (
-    <div>
+    <div className="card">
       <NavBar data={data2} />
 
       <Card
@@ -544,8 +544,63 @@ export default function CatalogoProductos(data2) {
           <div className="card">
             <Toolbar className="col-12" left={leftToolbarTemplate}></Toolbar>
             <br/>
-
+            {cliente===null || cliente===undefined?<><br></br><h2 style={{color:"red"}}>Debe Seleccionar un cliente para ver la lista de productos*</h2>
+            <br></br>
+            <br></br>
+            <br></br>
             <DataTable
+              ref={dt}
+              emptyMessage="No se encontraron resultados"
+              
+              selection={selectedProducts}
+              onSelectionChange={(e) => setSelectedProducts(e.value)}
+              dataKey="id"
+              paginator
+              rows={10}
+              rowsPerPageOptions={[5, 10, 25]}
+              paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+              globalFilter={globalFilter}
+              header={header}
+              responsiveLayout="scroll"
+            >
+             
+              <Column
+                field="codigo"
+                header="Código"
+                sortable
+                style={{ minWidth: "12rem" }}
+              ></Column>
+              <Column
+                field="nombre"
+                header="Nombre"
+                sortable
+                style={{ minWidth: "16rem" }}
+              ></Column>
+              
+              <Column
+                field="precio"
+                header="Precio"
+                body={priceBodyTemplate}
+                sortable
+                style={{ minWidth: "8rem" }}
+              ></Column>
+              <Column
+                field="categoria"
+                header="Categoría"
+                sortable
+                style={{ minWidth: "10rem" }}
+              ></Column>
+
+              <Column
+                body={actionBodyTemplate}
+                exportable={false}
+                style={{ minWidth: "8rem" }}
+              ></Column>
+            </DataTable>
+            
+            
+            </>:<DataTable
               ref={dt}
               emptyMessage="No se encontraron resultados"
               value={productos}
@@ -594,7 +649,8 @@ export default function CatalogoProductos(data2) {
                 exportable={false}
                 style={{ minWidth: "8rem" }}
               ></Column>
-            </DataTable>
+            </DataTable>}
+            
           </div>
 
           <Dialog
