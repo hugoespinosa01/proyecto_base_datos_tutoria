@@ -31,7 +31,7 @@ const handler = async (req, res) => {
   }
 
   function getShoppingCart() {
-    connection.query("SELECT * FROM " + tabla, (error, results) => {
+    connection.query("SELECT * FROM '" + tabla + "' WHERE cliente = '" + cliente + "'", (error, results) => {
       if (error) throw error.message();
       return res.status(200).json(results);
     });
