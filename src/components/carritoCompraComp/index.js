@@ -13,11 +13,10 @@ import { RadioButton } from "primereact/radiobutton";
 import { InputNumber } from "primereact/inputnumber";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
-import {Dropdown} from "primereact/dropdown";
 import { Menubar } from "primereact/menubar";
 import { NavBar } from "../../../pages/frontend/navbar";
-import {AutoComplete} from "primereact/autocomplete";
-export default function CatalogoProductos(data2) {
+
+export default function carritoCompra(data2) {
   let emptyProduct = {
     id: null,
     name: "",
@@ -37,16 +36,8 @@ export default function CatalogoProductos(data2) {
   const[codigo, setCodigo]= useState(null);
   const[precio, setPrecio]= useState("");
   const[categoria, setCategoria]= useState("");
-  const [cliente, setCliente]=useState(null)
-  const [clienteLista, setClienteLista]=useState([])
-  const[nombreCliente, setNombreCliente]= useState("");
-  const[apellidoCliente, setApellidoCliente]= useState("");
 
-  useEffect(() => {
-    fetch(`/api/clientes`)
-      .then((res) =>  res.json())
-      .then((data) => setClienteLista(data));
-  }, []);
+
   // const [tipoEntidadSeleccionada, setTipoEntidadSeleccionada] = useState(0);
   let tipoEntidadSeleccionada;
 
@@ -309,12 +300,6 @@ export default function CatalogoProductos(data2) {
 
     setProduct(_product);
   };
-  const selecionarCliente=(e)=>{
-    setCliente(e.value)
-    let cliente2=e.value;
-   setNombreCliente(cliente2?.nombre);
-    setApellidoCliente(cliente2?.apellido)
-  }
 
   const leftToolbarTemplate = () => {
     return (
@@ -327,53 +312,7 @@ export default function CatalogoProductos(data2) {
             onClick={openNew}
           />
         ) : (
-          <div className="flex align-items-center justify-content-center">
-            <div className="col-3"></div>
-              <h3 className="" htmlFor="name">Cliente: </h3>
-              <div className="col-1">
-
-                
-              </div>
-              <div className="col-2">
-
-                <Dropdown
-                options={clienteLista}
-                optionLabel="cedula" value={cliente}
-                filterBy="cedula"
-                onChange={selecionarCliente} filter showClear  placeholder="Seleccione cédula de cliente"
-                 
-                
-              />
-              </div>
-
-              <div className="col-2">
-
-                
-              </div>
-
-              <div className="flex align-items-center justify-content-center">
-              <h3 className="" htmlFor="name">Nombre: </h3>
-              <AutoComplete
-              disabled
-              value={nombreCliente}
-              >
-                
-              </AutoComplete>
-              
-              </div>
-              <div className="col-1">
-
-                
-</div>
-              <div className="flex align-items-center justify-content-center">
-              <h3 className="" htmlFor="name">Apellido: </h3>
-              
-              <AutoComplete
-              disabled
-              value={apellidoCliente}
-              ></AutoComplete></div>
-              
-              </div>
+          <></>
         )}
 
        
@@ -542,8 +481,7 @@ export default function CatalogoProductos(data2) {
           <Toast ref={toast} />
 
           <div className="card">
-            <Toolbar className="col-12" left={leftToolbarTemplate}></Toolbar>
-            <br/>
+            <Toolbar className="mb-4" left={leftToolbarTemplate}></Toolbar>
 
             <DataTable
               ref={dt}
