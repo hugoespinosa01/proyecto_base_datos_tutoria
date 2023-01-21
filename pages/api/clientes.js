@@ -56,6 +56,7 @@ const handler = async (req, res) => {
       "', '" +
       direccion +
       "')";
+      
     connection.query(insertar, (error, results) => {
       if (error) throw error.message();
       return res.status(200).send("Cliente creado");
