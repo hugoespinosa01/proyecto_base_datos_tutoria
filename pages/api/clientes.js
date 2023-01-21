@@ -1,5 +1,5 @@
 const connection = require("../backend/connection");
-let tabla = "clientes";
+let tabla = "cliente";
 let cedula = "";
 let nombre = "";
 let apellido = "";
@@ -31,8 +31,8 @@ const handler = async (req, res) => {
   }
 
   function getCustomers() {
-    connection.query("SELECT * FROM clientes", (error, results) => {
-      if (error) throw error;
+    connection.query("SELECT * FROM " + tabla, (error, results) => {
+      if (error) throw error.message();
       return res.status(200).json(results);
     });
   }
@@ -41,7 +41,7 @@ const handler = async (req, res) => {
     const insertar =
       "INSERT INTO " +
       tabla +
-      " (cedula, nombre, apellido, telefono, email, fechaNacimiento, direccion) VALUES (NULL, '" +
+      " (cedula, nombre, apellido, telefono, email, fechaNacimiento, direccion) VALUES ('" +
       cedula +
       "', '" +
       nombre +
@@ -57,7 +57,7 @@ const handler = async (req, res) => {
       direccion +
       "')";
     connection.query(insertar, (error, results) => {
-      if (error) throw error;
+      if (error) throw error.message();
       return res.status(200).send("Cliente creado");
     });
   }
@@ -78,9 +78,9 @@ const handler = async (req, res) => {
       fechaNacimiento +
       "', direccion = '" +
       direccion +
-      "' WHERE cedula = " +
+      "' WHERE cedula = '" +
       cedula +
-      "";
+      "'";
     connection.query(actualizar, (error, results) => {
       if (error) throw error;
       return res.status(200).send("Cliente actualizado");
@@ -88,7 +88,8 @@ const handler = async (req, res) => {
   }
 
   function deleteCustomer() {
-    const eliminar = "DELETE FROM " + tabla + " WHERE cedula = " + cedula + "";
+    const eliminar = "DELETE FROM " + tabla + " WHERE cedula = '" + cedula + "'";
+    console.log(eliminar);
     connection.query(eliminar, (error, results) => {
       if (error) throw error;
       return res.status(200).send("Cliente eliminado");

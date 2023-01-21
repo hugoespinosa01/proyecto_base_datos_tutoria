@@ -181,7 +181,11 @@ export default function CatalogoProductos(data2) {
   };
 
   const deleteProduct = () => {
-    fetch(`/api/productos/${codigo}`, { method: 'DELETE' })
+    fetch(`/api/productos/`, { 
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({codigo:codigo})
+    })
     .then((res) => console.log("res", res));
     setDeleteProductDialog(false);
     setProduct(emptyProduct);
@@ -407,7 +411,7 @@ export default function CatalogoProductos(data2) {
   const header = (
     <div className="table-header">
       <h5 className="mx-0 my-1">
-        {disableCliente ? "Listado de Productos" : "Carrito de Compras"}
+        {disableCliente ? "Listado de Productos" : "Compra!"}
       </h5>
     </div>
   );
@@ -472,7 +476,7 @@ export default function CatalogoProductos(data2) {
       <NavBar data={data2} />
 
       <Card
-        title={disableCliente ? "Listado de Productos" : "Carrito de Compras"}
+        title={disableCliente ? "Listado de Productos" : "Bienvenido, Empieza a comprar!"}
         className="mt-3"
       >
         <div className="datatable-crud-demo">
@@ -497,11 +501,7 @@ export default function CatalogoProductos(data2) {
               header={header}
               responsiveLayout="scroll"
             >
-              <Column
-                selectionMode="multiple"
-                headerStyle={{ width: "3rem" }}
-                exportable={false}
-              ></Column>
+             
               <Column
                 field="codigo"
                 header="Código"
