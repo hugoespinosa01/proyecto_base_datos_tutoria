@@ -2,14 +2,12 @@ const connection = require("../backend/connection");
 let tabla = 'producto';
 let codigo = null;
 let nombre = '';
-let imagen = '';
 let precio = 0;
 let categoria = '';
 
 const handler = async (req, res) => {
   codigo = req.body.codigo;
   nombre = req.body.nombre;
-  imagen = req.body.imagen;
   precio = req.body.precio;
   categoria = req.body.categoria;
 
@@ -34,7 +32,7 @@ const handler = async (req, res) => {
   }
 
  function createProduct() {
-  const insertar = "INSERT INTO " + tabla + " (codigo, nombre, imagen, precio, categoria) VALUES (NULL, '" + nombre + "', '" + imagen.objectURL + "', '" + precio + "', '" + categoria + "')";
+  const insertar = "INSERT INTO " + tabla + " (codigo, nombre, precio, categoria) VALUES (NULL, '" + nombre + "', '" + precio + "', '" + categoria + "')";
   connection.query(insertar, (error, results) => {
       if (error) throw error;
       return res.status(200).send("Producto creado");
@@ -42,7 +40,7 @@ const handler = async (req, res) => {
   }
 
   function updateProduct() {
-    const actualizar = "UPDATE " + tabla + " SET nombre = '" + nombre + "', imagen = '" + imagen.objectURL + "', precio = '" + precio +  "', categoria = '" + categoria + "' WHERE codigo = " + codigo + "";
+    const actualizar = "UPDATE " + tabla + " SET nombre = '" + nombre + "', precio = '" + precio +  "', categoria = '" + categoria + "' WHERE codigo = " + codigo + "";
     connection.query(actualizar, (error, results) => {
       if(error) throw error;
       return res.status(200).send("Producto actualizado");

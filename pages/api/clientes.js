@@ -32,7 +32,7 @@ const handler = async (req, res) => {
 
   function getCustomers() {
     connection.query("SELECT * FROM " + tabla, (error, results) => {
-      if (error) throw error;
+      if (error) throw error.message();
       return res.status(200).json(results);
     });
   }

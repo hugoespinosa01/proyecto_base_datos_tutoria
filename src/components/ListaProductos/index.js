@@ -181,7 +181,11 @@ export default function CatalogoProductos(data2) {
   };
 
   const deleteProduct = () => {
-    fetch(`/api/productos/${codigo}`, { method: 'DELETE' })
+    fetch(`/api/productos/`, { 
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({codigo:codigo})
+    })
     .then((res) => console.log("res", res));
     setDeleteProductDialog(false);
     setProduct(emptyProduct);
