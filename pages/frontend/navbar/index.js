@@ -38,39 +38,26 @@ export const NavBar = () => {
   const items = [
     {
       label: "Productos",
-   className:"text-teal-50",
+   className:"text-teal-50 bg-white",
       icon: "pi pi-fw pi-box",
-      items: [
-        {
-          label: "New",
-          icon: "pi pi-fw pi-plus",
-          items: [
-            {
-              label: "Bookmark",
-              icon: "pi pi-fw pi-bookmark",
-            },
-            {
-              label: "Video",
-              icon: "pi pi-fw pi-video",
-            },
-          ],
-        },
-        {
-          label: "Delete",
-          icon: "pi pi-fw pi-trash",
-        },
-        {
-          separator: true,
-        },
-        {
-          label: "Export",
-          icon: "pi pi-fw pi-external-link",
-        },
-      ],
+      command: () => {
+        router.push(
+          {
+            pathname: '../../frontend/catalogoProductos',
+      
+          },
+          '../../frontend/catalogoProductos',
+        );
+      }
+      
+    },
+    {
+
     },
     {
       visible:user==="Cliente"?false:true,
       label: "Clientes",
+      className:"text-teal-50 bg-white",
       icon: "pi pi-users",
       command: () => {
         router.push( {
@@ -110,7 +97,8 @@ export const NavBar = () => {
         start={start}
         end={end}
         className="p-4"
-        style={{backgroundColor: "#274C77", borderColor:"#274C77", color:"whitesmoke"}}
+        ///style={{backgroundColor: "#E7ECEF", borderColor:"#E7ECEF"}}
+      style={{backgroundColor: "#274C77", borderColor:"#274C77", color:"whitesmoke"}}
       />
 
 <OverlayPanel
