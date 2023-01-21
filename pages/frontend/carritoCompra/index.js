@@ -1,16 +1,15 @@
 import { useRouter } from 'next/router';
 import Head from "next/head";
-import  CatalogoProductos from '../../../src/components/ListaProductos/index';
-
+import  CarritoCompra from '../../../src/components/carritoCompraComp';
 //import { connection } from '../../backend/connection';
 //import Layout from '@components/layouts/';
 //import { FormCreacionProvider } from '@hooks/formCreacionContext';
 
 /** @function
- * @name CatalogoProductos1
+ * @name carritoCompra1
  * @description Pagina que contiene el componente de Consulta general de arrastre
  **/
-export default function CatalogoProductos1 () {
+export default function carritoCompra1 () {
   const router = useRouter();
   const data = router.query;
 
@@ -42,7 +41,7 @@ export default function CatalogoProductos1 () {
       </Head>
 
         <div className="text-base text-color surface-overlay border-1 border-solid surface-border appearance-none outline-none focus:border-primary w-full">
-          <CatalogoProductos data={data}/>
+          <CarritoCompra data={data} />
         </div></>
     
   );
