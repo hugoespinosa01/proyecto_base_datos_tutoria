@@ -40,7 +40,15 @@ export const NavBar = () => {
       label: "Productos",
    className:"text-teal-50 bg-white",
       icon: "pi pi-fw pi-box",
+      command: () => {
+        router.push(
+          {
+            pathname: '../../frontend/catalogoProductos',
       
+          },
+          '../../frontend/catalogoProductos',
+        );
+      }
       
     },
     {
