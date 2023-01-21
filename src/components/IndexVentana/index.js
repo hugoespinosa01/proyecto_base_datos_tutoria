@@ -119,9 +119,10 @@ const login=()=>{
         style={{backgroundColor: "#E7ECEF", borderColor:"#E7ECEF"}}
       >
            <div className="flex align-items-center justify-content-center ">
- <Button className=" shadow-4 col-6 transition-colors transition-duration-500  bg-yellow-500 text-color  hover: bg-white text-yellow-500  hover:bg-blue-800 text-white
-    flex align-items-center justify-content-center font-bold border-round cursor-pointer m-2 px-5 py-3"label="Ir a comprar" icon="pi
-    pi-shopping-bag" onClick={()=>login()}></Button>
+           
+ <Button className=" w-30rem flex align-items-center justify-content-center font-bold border-round cursor-pointer m-2 px-5 py-3" label="Ir a comprar" icon="pi
+    pi-shopping-bag" onClick={()=>login()}  style={{backgroundColor: "#274C77", borderColor:"#274C77", color:"whitesmoke"}}></Button>
+         
            </div>
 <br/>
 <div className="bg-bg-yellow-200 border-bg-yellow-200    ">

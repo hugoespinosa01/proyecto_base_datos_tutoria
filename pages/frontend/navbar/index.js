@@ -110,7 +110,7 @@ export const NavBar = () => {
         start={start}
         end={end}
         className="p-4"
-        style={{backgroundColor: "#274C77", borderColor:"#274C77", color:"whitesmoke"}}
+      style={{backgroundColor: "#274C77", borderColor:"#274C77", color:"whitesmoke"}}
       />
 
 <OverlayPanel
