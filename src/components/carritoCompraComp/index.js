@@ -16,7 +16,7 @@ import { InputText } from "primereact/inputtext";
 import { Menubar } from "primereact/menubar";
 import { NavBar } from "../../../pages/frontend/navbar";
 
-export default function carritoCompra(data2) {
+export default function CarritoCompra(data2) {
   let emptyProduct = {
     id: null,
     name: "",
