@@ -369,6 +369,7 @@ export default function CatalogoProductos(data2) {
 }
 
 const cellEditor1 = (options) =>{
+  console.log(options);
   return(
     <span>
     <InputNumber
@@ -578,8 +579,9 @@ const cellEditor= (options) =>{
               <Column
               header="Cantidad"
               field="cantidad"
-              editor={(options) => cellEditor1(options)} onCellEditComplete={onCellEditComplete}
-              
+              body={() => <div>{0}</div>}
+              editor={(options) => cellEditor1(options)} 
+              onCellEditComplete={onCellEditComplete}
               
                 exportable={false}
                 style={{ minWidth: "8rem" }}
