@@ -115,6 +115,7 @@ export default function CatalogoProductos(data2) {
   };
 
   const hideDeleteProductDialog = () => {
+    setCodigo(null);
     setDeleteProductDialog(false);
   };
 
@@ -186,15 +187,18 @@ export default function CatalogoProductos(data2) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({codigo:codigo})
     })
-    .then((res) => console.log("res", res));
-    setDeleteProductDialog(false);
+    .then(() => setLongitud(longitud+1)).then(()=>{setDeleteProductDialog(false)
     setProduct(emptyProduct);
+    setCodigo(null);
     toast.current.show({
       severity: "success",
       summary: "Successful",
       detail: "Product Deleted",
       life: 3000,
-    });
+    })});
+    
+   
+
   };
 
   const findIndexById = (id) => {
@@ -311,13 +315,7 @@ export default function CatalogoProductos(data2) {
           <></>
         )}
 
-        <Button
-          label="Eliminar"
-          icon="pi pi-trash"
-          className="p-button-danger"
-          onClick={confirmDeleteSelected}
-          disabled={!selectedProducts || !selectedProducts.length}
-        />
+       
       </React.Fragment>
     );
   };
@@ -514,11 +512,7 @@ export default function CatalogoProductos(data2) {
                 sortable
                 style={{ minWidth: "16rem" }}
               ></Column>
-              <Column
-                field="imagen"
-                header="Imagen"
-                body={imageBodyTemplate}
-              ></Column>
+              
               <Column
                 field="precio"
                 header="Precio"
@@ -638,17 +632,7 @@ export default function CatalogoProductos(data2) {
               </div>
              
               <div className="field col">
-                <label htmlFor="image">Imagen</label>
-                <FileUpload
-                  chooseLabel="Seleccione"
-                  mode="basic"
-                  onSelect={manejadorImagen}
-                  //url="https://primefaces.org/primereact/showcase/upload.php"
-                  accept="image/*"
-                  maxFileSize={1000000}
-                  customUpload
-                  //onUpload={onBasicUpload}
-                />
+                
               </div>
             </div>
           </Dialog>
