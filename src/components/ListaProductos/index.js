@@ -455,8 +455,8 @@ const cellEditor1 = (options) =>{
     );
   };
   const enviarAlCarrito=(data)=>{
-    const subtotal=(data.precio*100).toFixed(2);
-    const total=(subtotal*1.12).toFixed(2);
+    const subtotal=(data.precio*100);
+    const total=(subtotal*1.12);
     console.log("data carrito", data)
     console.log("cliente", cliente)
     const fecha = new Date();
@@ -467,12 +467,12 @@ const cellEditor1 = (options) =>{
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        codigo: 5,
-        cliente: cliente,
-        producto: data,
-        cantidad: 100,
-        subtotal: parseFloat(subtotal),
-        total: parseFloat(total),
+        codigo: null,
+        cliente: cliente.cedula,
+        producto: data.codigo,
+        cantidad: 10,
+        subtotal:subtotal,
+        total: total,
         fecha: fecha
       })
     })

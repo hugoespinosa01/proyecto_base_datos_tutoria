@@ -28,13 +28,6 @@ const handler = async (req, res) => {
       return res.status(400).json({ message: "Error, método no existe" });
   }
 
-  // function getShoppingCart() {
-  //   connection.query("SELECT * FROM '" + tabla + "' WHERE cliente = '" + cliente + "'", (error, results) => {
-  //     if (error) throw error.message();
-  //     return res.status(200).json(results);
-  //   });
-  // }
-
   function createShoppingCart() {
     const insertar =
       "INSERT INTO " +
@@ -51,9 +44,10 @@ const handler = async (req, res) => {
       total +
       ", '" +
       fecha +
-      "')'";
+      "')";
+      console.log(insertar);
     connection.query(insertar, (error, results) => {
-      if (error) throw error.message();
+      if (error) throw error;
       return res.status(200).send("Carrito de compras creado");
     });
   }
