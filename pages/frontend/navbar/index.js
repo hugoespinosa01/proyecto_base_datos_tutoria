@@ -59,6 +59,12 @@ export const NavBar = () => {
      // window.location.href = "http://localhost:3000";
     }
   }, [])
+  const formatCurrency = (value) => {
+    return value.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+  };
   
   const items = [
     {
@@ -199,6 +205,13 @@ export const NavBar = () => {
       </Fragment>
     );
   };
+  const actionBodyTemplate2 = (rowData) => {
+    return (
+      <Fragment>
+       {formatCurrency(rowData.cantidad*rowData.precio)}
+      </Fragment>
+    );
+  };
   return (
     <div style={{backgroundColor: "#274C77", borderColor:"#274C77"}}>
       <Menubar
@@ -234,7 +247,13 @@ export const NavBar = () => {
            >
              <Column field="nombre" header="Nombre Producto" />
              <Column field="cantidad" header="cantidad"></Column>
-             <Column field="total" header="Total"></Column>
+             <Column
+      header="Total"
+      prefix="$"
+                body={actionBodyTemplate2}
+                exportable={false}
+                style={{ minWidth: "8rem" }}
+              ></Column>
              
            </DataTable>
            <br></br>

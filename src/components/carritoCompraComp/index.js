@@ -232,7 +232,7 @@ const[carritoData,setCarritoData]=useState([]);
   };
 
   const deleteProduct = () => {
-    fetch(`/api/productos/`, { 
+    fetch(`/api/carrito_compras/`, { 
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({codigo:codigo})
@@ -633,18 +633,29 @@ const cellEditor1 = (options) =>{
       />
     </React.Fragment>
   );
+
+  let modifiedArr = carritoData.map(function(element){
+    return element?.cantidad*element?.precio;
+});
+console.log("total",modifiedArr)
+const  total=modifiedArr.reduce((a, b) => a + b, 0);
+
+  console.log("total2",total)
   const footer =  <ColumnGroup>
   <Row>
-      <Column footer="Subtotal:" colSpan={5} footerStyle={{textAlign: 'right'}}/>
-     
+      <Column footer="Subtotal:" colSpan={3} footerStyle={{textAlign: 'right'}}/>
+      <Column footer={formatCurrency(total)}></Column>
+      <Column footer=""></Column>
   </Row>
   <Row>
-      <Column footer="IVA: 12%" colSpan={5} footerStyle={{textAlign: 'right'}}/>
-     
+      <Column footer="IVA: 12% " colSpan={3} footerStyle={{textAlign: 'right'}}/>
+      <Column footer={formatCurrency(total*0.12)}></Column>
+      <Column footer=""></Column>
   </Row>
   <Row>
-      <Column footer="TOTAL:" colSpan={5} footerStyle={{textAlign: 'right'}}/>
-     
+      <Column footer="TOTAL:" colSpan={3} footerStyle={{textAlign: 'right'}}/>
+      <Column footer={formatCurrency(total*1.12)}></Column>
+      <Column footer=""></Column>
   </Row>
   </ColumnGroup>;
   return (
@@ -736,12 +747,7 @@ const cellEditor1 = (options) =>{
               responsiveLayout="scroll"
             >
              
-              <Column
-                field="codigo"
-                header="Código"
-                sortable
-                style={{ minWidth: "12rem" }}
-              ></Column>
+             
               <Column
                 field="nombre"
                 header="Nombre"
@@ -757,12 +763,7 @@ const cellEditor1 = (options) =>{
                 sortable
                 style={{ minWidth: "8rem" }}
               ></Column>
-              <Column
-                field="categoria"
-                header="Categoría"
-                sortable
-                style={{ minWidth: "10rem" }}
-              ></Column>
+              
               <Column
               header="Cantidad"
               field="cantidad"
