@@ -36,15 +36,14 @@ export const NavBar = () => {
 
   useEffect(() => {
     console.log("cedula", cliente2?.cedula)
-    fetch(`/api/carrito_compras`,{
+    fetch(`/api/carrito_compras/${cliente2?.cedula}`,{
       method:"GET",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({cliente:cliente2?.cedula})
     })
       .then((res) => res.json())
       .then((data) => setCarritoData(data));
   }, [cliente2]);
- 
+ console.log("data", carritoData)
 
 
   useEffect(() => {
