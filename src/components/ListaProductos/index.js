@@ -189,6 +189,13 @@ export default function CatalogoProductos(data2) {
         life: 3000,
       });
     }
+
+    toast.current.show({
+      severity: "success",
+      summary: "Exitoso!",
+      detail: "Proceso Exitoso!",
+      life: 3000,
+    });
   
     setLongitud(longitud+1);
    

@@ -493,6 +493,21 @@ export default function Clientes(data2) {
     });
   };
   const guardar = () => {
+    if(cedula==""|| nombre=="" || apellido=="" || telefono=="" || email=="" || fechaNacimiento==null || direccion==""){
+      console.log("entro aqui")
+      toast.current.show({
+        severity: "error",
+        summary: "Error",
+        detail: "Llene todos los campos!",
+        life: 3000,
+      });
+      
+
+      return;
+
+    }
+
+    
     if(clientes.find(element => element.cedula === cedula)===undefined){
       fetch('/api/clientes', {
         method: 'POST',
@@ -512,6 +527,14 @@ export default function Clientes(data2) {
         .then(res => res.json())
         .then(res => {
           console.log(res);
+        });
+
+
+        toast.current.show({
+          severity: "success",
+          summary: "Exitoso!",
+          detail: "Producto creado!",
+          life: 3000,
         });
     }else{
       fetch('/api/clientes', {
@@ -533,7 +556,21 @@ export default function Clientes(data2) {
         .then(res => {
           console.log(res);
         });
+
+        toast.current.show({
+          severity: "success",
+          summary: "Exitoso!",
+          detail: "Producto actualizado!",
+          life: 3000,
+        });
     }
+
+    toast.current.show({
+      severity: "success",
+      summary: "Exitoso!",
+      detail: "Proceso Exitoso!",
+      life: 3000,
+    });
     
 
 
@@ -770,9 +807,9 @@ export default function Clientes(data2) {
                 className="pi pi-exclamation-triangle mr-3"
                 style={{ fontSize: "2rem" }}
               />
-              {product && (
+              {cliente && (
                 <span>
-                  Desea eliminar el siguiente cliente : <b>{product.nombre}</b>
+                  Desea eliminar el siguiente cliente
                   ?
                 </span>
               )}
