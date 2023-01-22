@@ -668,6 +668,7 @@ const cellEditor1 = (options) =>{
               <Column
                 field="precio"
                 header="Precio"
+                prefix="$"
                 body={priceBodyTemplate}
                 sortable
                 style={{ minWidth: "8rem" }}

@@ -17,6 +17,9 @@ import {Dropdown} from "primereact/dropdown";
 import { Menubar } from "primereact/menubar";
 import { NavBar } from "../../../pages/frontend/navbar";
 import {AutoComplete} from "primereact/autocomplete";
+import { ColumnGroup } from 'primereact/columngroup';
+import { Row } from 'primereact/row';
+
 export default function CarritoCompra(data2) {
   let emptyProduct = {
     id: null,
@@ -567,7 +570,7 @@ const cellEditor1 = (options) =>{
   const actionBodyTemplate2 = (rowData) => {
     return (
       <React.Fragment>
-        <label>{rowData.cantidad*rowData.precio}</label>
+       {formatCurrency(rowData.cantidad*rowData.precio)}
       </React.Fragment>
     );
   };
@@ -627,8 +630,20 @@ const cellEditor1 = (options) =>{
       />
     </React.Fragment>
   );
-  const footer =  `SubTotal:${"10" }  IVA:0,12%      Total:$20`;
-
+  const footer =  <ColumnGroup>
+  <Row>
+      <Column footer="Subtotal:" colSpan={5} footerStyle={{textAlign: 'right'}}/>
+     
+  </Row>
+  <Row>
+      <Column footer="IVA: 12%" colSpan={5} footerStyle={{textAlign: 'right'}}/>
+     
+  </Row>
+  <Row>
+      <Column footer="TOTAL:" colSpan={5} footerStyle={{textAlign: 'right'}}/>
+     
+  </Row>
+  </ColumnGroup>;
   return (
     <div className="card">
       <NavBar data={data2} />
@@ -704,7 +719,7 @@ const cellEditor1 = (options) =>{
               emptyMessage="No se encontraron resultados"
               value={productos}
               selection={selectedProducts}
-              footer={footer}
+              footerColumnGroup={footer}
               onSelectionChange={(e) => setSelectedProducts(e.value)}
               dataKey="id"
               paginator
@@ -734,6 +749,7 @@ const cellEditor1 = (options) =>{
               <Column
                 field="precio"
                 header="Precio"
+                prefix="$"
                 body={priceBodyTemplate}
                 sortable
                 style={{ minWidth: "8rem" }}
@@ -756,6 +772,7 @@ const cellEditor1 = (options) =>{
       
       <Column
       header="Total"
+      prefix="$"
                 body={actionBodyTemplate2}
                 exportable={false}
                 style={{ minWidth: "8rem" }}
