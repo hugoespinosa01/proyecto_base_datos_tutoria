@@ -148,6 +148,7 @@ export default function CatalogoProductos(data2) {
       imagen: imagen,
       precio: precio,
       categoria: categoria,
+      cantidad:0,
     };
     if(codigo==null){
       fetch("/api/productos", {
@@ -467,11 +468,11 @@ const cellEditor1 = (options) =>{
       },
       body: JSON.stringify({
         codigo: 5,
-        cliente: cliente.cedula,
-        producto: data.codigo,
+        cliente: cliente,
+        producto: data,
         cantidad: 100,
-        subtotal: subtotal,
-        total: total,
+        subtotal: parseFloat(subtotal),
+        total: parseFloat(total),
         fecha: fecha
       })
     })
