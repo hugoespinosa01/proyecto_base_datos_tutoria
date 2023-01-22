@@ -9,7 +9,7 @@ const handler = async (req, res) => {
     case "GET":
       return getShoppingCartById();
     default:
-      return res.status(400).json({ message: "Error, método no existe" });
+      return res.status(400).json({ message: "Error, no existe este cliente" });
   }
 
   function getShoppingCartById() {

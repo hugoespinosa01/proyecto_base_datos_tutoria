@@ -1,20 +1,12 @@
 const connection = require("../../backend/connection");
 let tabla = "carrito_compra";
-let codigo = null;
 let cliente = "";
 let producto = null;
-let cantidad = null;
-let subtotal = null;
-let total = null;
 let fecha = null;
 
 const handler = async (req, res) => {
-  codigo = req.body.codigo;
   cliente = req.body.cliente;
   producto = req.body.producto;
-  cantidad = req.body.cantidad;
-  subtotal = req.body.subtotal;
-  total = req.body.total;
   fecha = req.body.fecha;
 
   switch (req.method) {
@@ -32,20 +24,13 @@ const handler = async (req, res) => {
     const insertar =
       "INSERT INTO " +
       tabla +
-      " (codigo, cliente, producto, cantidad, subtotal, total, fecha) VALUES (NULL, '" +
-      cliente +
-      "', " +
+      " (producto, cliente, fecha) VALUES (" +
       producto +
-      ", " +
-      cantidad +
-      ", " +
-      subtotal +
-      ", " +
-      total +
       ", '" +
+      cliente +
+      "', '" +
       fecha +
       "')";
-      console.log(insertar);
     connection.query(insertar, (error, results) => {
       if (error) throw error;
       return res.status(200).send("Carrito de compras creado");
@@ -56,21 +41,13 @@ const handler = async (req, res) => {
     const actualizar =
       "UPDATE " +
       tabla +
-      " SET cliente = '" +
-      cliente +
-      "', producto = " +
+      " SET producto = " +
       producto +
-      ", cantidad = " +
-      cantidad +
-      ", subtotal = " +
-      subtotal +
-      ", total = " +
-      total +
       ", fecha = '" +
       fecha +
-      "' WHERE codigo = " +
-      codigo +
-      "";
+      "' WHERE cliente = '" +
+      cliente +
+      "'";
     connection.query(actualizar, (error, results) => {
       if (error) throw error;
       return res.status(200).send("Carrito de compras actualizado");
@@ -78,7 +55,7 @@ const handler = async (req, res) => {
   }
 
   function deleteShoppingCart() {
-    const eliminar = "DELETE FROM " + tabla + " WHERE codigo = " + codigo + "";
+    const eliminar = "DELETE FROM " + tabla + " WHERE cliente = '" + cliente + "'";
     console.log(eliminar);
     connection.query(eliminar, (error, results) => {
       if (error) throw error;
