@@ -492,24 +492,24 @@ const cellEditor1 = (options) =>{
 
   useEffect(() => {
     fetch(`/api/carrito_compras/${cliente?.cedula}`,{
-      method:"GET",
-      headers: { "Content-Type": "application/json" },
+     // method:"GET",
+      //headers: { "Content-Type": "application/json" },
     })
       .then((res) => res.json())
       .then((data) => setCarritoData(data));
   }, [cliente]);
-
+  
  
   const enviarAlCarrito=(data)=>{
     const subtotal=(data.precio*100);
     const total=(subtotal*1.12);
-    console.log("data carrito", data)
+  //  console.log("data carrito", data)
     console.log("cliente", cliente)
     const fecha = new Date();
     console.log("date", fecha)
 
 
-    if(carritoData.find(x=>x.producto===data.producto)===undefined){
+    if(carritoData.find(x=>x.nombre===data.nombre)===undefined){
       console.log("NO EXISTE")
       fetch(('/api/carrito_compras'), {
         method: 'POST',
