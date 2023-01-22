@@ -14,10 +14,15 @@ const handler = async (req, res) => {
   }
 
   function getShoppingCartById() {
-    connection.query("SELECT * FROM " + tabla + " WHERE cliente = '" + cliente + "'", (error, results) => {
-      if (error) throw error;
-      return res.status(200).json(results);
-    });
+    connection.query(
+      "SELECT producto.nombre, producto.precio, producto.cantidad, cliente.cedula FROM `producto`, `cliente`, `carrito_compra` WHERE ((producto.codigo = carrito_compra.producto) AND (carrito_compra.cliente = cliente.cedula) AND (cliente.cedula = '" +
+        cliente +
+        "'))",
+      (error, results) => {
+        if (error) throw error;
+        return res.status(200).json(results);
+      }
+    );
   }
 };
 
