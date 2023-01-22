@@ -421,13 +421,13 @@ export default function CatalogoProductos(data2) {
     console.log("cliente", cliente)
     const fecha = new Date();
     console.log("date", fecha)
-    fetch('/api/carrito_compras', {
+    fetch(('/api/carrito_compras'), {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        codigo: 1,
+        codigo: 5,
         cliente: cliente.cedula,
         producto: data.codigo,
         cantidad: 100,

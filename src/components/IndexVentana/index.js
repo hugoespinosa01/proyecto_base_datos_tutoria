@@ -20,28 +20,102 @@ import { Galleria } from 'primereact/galleria';
 import axios from "axios";
 import { useRouter } from 'next/router';
 import CatalogoProductos from "../ListaProductos";
+import imagesJSON from "../../../pages/frontend/JSON/images.json"
 const baseURL= 'https://rickandmortyapi.com/api/character';
 export default function VentanaIndex() {
   const router = useRouter();
   const [post, setPost] = useState(null);
   const [imagenes2, setImagenes2] = useState(null);
   const [entidad, setEntidad] = useState(null);
+  const [images2, setImages2] = useState(null);
+  const [imagenes3, setImagenes3] = useState(null);
+  const [post2, setPost2] = useState(null);
+
+ 
+console.log("img",imagesJSON)
 
     useEffect(() => {
-      axios.get(baseURL).then((response) => {
-        setPost(response.data);
-        let valor=response.data.results.length
-        let valor2=response.data.results
-        setImages(valor2)
-        let i=0
-        let imagenes=[]
-        for (i; i<valor;i++){
+
+  //      const axios = require("axios");
+
+  // const JUEGOS = {
+  //   method: 'GET',
+  //   url: 'https://amazon23.p.rapidapi.com/product-search',
+  //   params: {query: 'xbox', country: 'US'},
+  //   headers: {
+  //     'X-RapidAPI-Key': '55c225e340msh6132e7631cacf8ep1ff5ffjsn33bf9c6ebfba',
+  //     'X-RapidAPI-Host': 'amazon23.p.rapidapi.com'
+  //   }
+  // };
+  
+  // axios.request(JUEGOS).then(function (response) {
+  //   setPost(response.data);
+  //   let valor=response.data.result.length
+  //   let valor2=response.data.result
+  //   console.log("valor",valor)
+  //   console.log("valor2",valor2)
+  //   setImages(valor2)
+  //   let i=0
+  //   let imagenes=[]
+  //   for (i; i<valor;i++){
+
+    
+  //     imagenes.push(valor2[i].thumbnail)
+  //     setImagenes2(imagenes)
+  //   }
+  // }).catch(function (error) {
+  //   console.error(error);
+  // });
+
+  // const axios2 = require("axios");
+
+  // const COMPUTADORAS = {
+  //   method: 'GET',
+  //   url: 'https://amazon23.p.rapidapi.com/product-search',
+  //   params: {query: 'PC', country: 'US'},
+  //   headers: {
+  //     'X-RapidAPI-Key': '55c225e340msh6132e7631cacf8ep1ff5ffjsn33bf9c6ebfba',
+  //     'X-RapidAPI-Host': 'amazon23.p.rapidapi.com'
+  //   }
+  // };
+  
+  // axios2.request(COMPUTADORAS).then(function (response) {
+  //   setPost2(response.data);
+  //   let valor3=response.data.result.length
+  //   let valor4=response.data.result
+  //   console.log("valor",valor3)
+  //   console.log("valor2",valor4)
+  //   setImages2(valor4)
+  //   let i=0
+  //   let imagenes=[]
+  //   for (i; i<valor4;i++){
+
+    
+  //     imagenes.push(valor3[i].thumbnail)
+  //     setImagenes3(imagenes)
+  //   }
+  // }).catch(function (error) {
+  //   console.error(error);
+  // });
+
+
+
+
+      //
+      // axios.get(baseURL).then((response) => {
+       setPost(imagesJSON);
+         let valor=imagesJSON.length
+        let valor2=imagesJSON
+         setImages(valor2)
+         let i=0
+         let imagenes=[]
+         for (i; i<valor;i++){
   
         
-          imagenes.push(valor2[i].image)
-          setImagenes2(imagenes)
-        }
-      });
+           imagenes.push(valor2[i].image)
+           setImagenes2(imagenes)
+         }
+    //   });
     }, []);
     
 
@@ -100,6 +174,14 @@ const thumbnailTemplate = (imagenes2) => {
     return <img src={imagenes2} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'}  style={{ display: 'block' }} />;
 }
 
+const itemTemplate2 = (imagenes3) => {
+  return <img src={imagenes3} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'}  style={{ width: '100%', display: 'block' }} />;
+}
+
+const thumbnailTemplate2 = (imagenes3) => {
+  return <img src={imagenes3} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'}  style={{ display: 'block' }} />;
+}
+
 
 const login=()=>{
    
@@ -151,8 +233,8 @@ const login=()=>{
                      
               <Card className="col-3 " >
               <h1 className="text-6xl">Computadoras y Accesorios</h1>  <br/>
-<Galleria className=""value={imagenes2} responsiveOptions={responsiveOptions} numVisible={5} style={{ maxWidth: '720px' }}
-                    item={itemTemplate} circular autoPlay transitionInterval={3000} />
+<Galleria className=""value={imagenes3} responsiveOptions={responsiveOptions} numVisible={5} style={{ maxWidth: '720px' }}
+                    item={itemTemplate2} circular autoPlay transitionInterval={3000} />
 </Card>  
 
                     
