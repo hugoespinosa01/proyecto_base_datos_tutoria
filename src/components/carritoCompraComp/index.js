@@ -54,11 +54,14 @@ export default function CarritoCompra(data2) {
   let tipoEntidadSeleccionada;
 
   //Obtener los productos
-  useEffect(() => {
-    fetch("/api/productos")
-      .then((res) => res.json())
-      .then((data) => setProductos(data));
-  }, [longitud, cliente]);
+    useEffect(() => {
+      fetch(`/api/carrito_compras/${cliente?.cedula}`,{
+        method:"GET",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((res) => res.json())
+        .then((data) => setCarritoData(data));
+    }, [cliente]);
 
   useEffect(() => {
     if (
