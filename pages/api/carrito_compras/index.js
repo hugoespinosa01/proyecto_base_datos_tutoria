@@ -18,8 +18,6 @@ const handler = async (req, res) => {
   fecha = req.body.fecha;
 
   switch (req.method) {
-    case "GET":
-      return getShoppingCart();
     case "POST":
       return createShoppingCart();
     case "PUT":
@@ -30,12 +28,12 @@ const handler = async (req, res) => {
       return res.status(400).json({ message: "Error, método no existe" });
   }
 
-  function getShoppingCart() {
-    connection.query("SELECT * FROM '" + tabla + "' WHERE cliente = '" + cliente + "'", (error, results) => {
-      if (error) throw error.message();
-      return res.status(200).json(results);
-    });
-  }
+  // function getShoppingCart() {
+  //   connection.query("SELECT * FROM '" + tabla + "' WHERE cliente = '" + cliente + "'", (error, results) => {
+  //     if (error) throw error.message();
+  //     return res.status(200).json(results);
+  //   });
+  // }
 
   function createShoppingCart() {
     const insertar =
