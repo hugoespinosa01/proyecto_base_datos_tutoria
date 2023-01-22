@@ -3,11 +3,13 @@ let tabla = "carrito_compra";
 let cliente = "";
 let producto = null;
 let fecha = null;
+let cantidad = null;
 
 const handler = async (req, res) => {
   cliente = req.body.cliente;
   producto = req.body.producto;
   fecha = req.body.fecha;
+  cantidad = req.body.cantidad;
 
   switch (req.method) {
     case "POST":
@@ -24,13 +26,16 @@ const handler = async (req, res) => {
     const insertar =
       "INSERT INTO " +
       tabla +
-      " (producto, cliente, fecha) VALUES (" +
+      " (producto, cliente, fecha, cantidad) VALUES (" +
       producto +
       ", '" +
       cliente +
       "', '" +
       fecha +
-      "')";
+      "', " + 
+      cantidad + 
+      ")";
+      console.log(insertar);
     connection.query(insertar, (error, results) => {
       if (error) throw error;
       return res.status(200).send("Carrito de compras creado");
@@ -45,7 +50,9 @@ const handler = async (req, res) => {
       producto +
       ", fecha = '" +
       fecha +
-      "' WHERE cliente = '" +
+      "', cantidad = " +
+      cantidad + 
+      " WHERE cliente = '" +
       cliente +
       "'";
     connection.query(actualizar, (error, results) => {
