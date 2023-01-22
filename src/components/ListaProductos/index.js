@@ -396,6 +396,45 @@ export default function CatalogoProductos(data2) {
       />
     );
   };
+  const onCellEditComplete = (e) => {
+    let { rowData, newValue, field, originalEvent: event } = e;
+
+    switch (field) {
+        case 'cantidad':
+          rowData[field] = newValue;
+          break;
+       
+        default:
+           
+                event.preventDefault();
+            break;
+    }
+}
+
+const cellEditor1 = (options) =>{
+  return(
+    <span>
+    <InputNumber
+    inputId="vertical"
+    value={options.value}
+    onValueChange={(e) => options.editorCallback(e.value)}
+    mode="decimal"
+    showButtons
+    buttonLayout="vertical"
+    style={{ width: "4rem" }}
+    decrementButtonClassName="p-button-secondary"
+    incrementButtonClassName="p-button-secondary"
+    incrementButtonIcon="pi pi-plus"
+    decrementButtonIcon="pi pi-minus"
+  />
+  </span>
+
+  );
+  
+ 
+
+}
+
 
   const priceBodyTemplate = (rowData) => {
     return formatCurrency(rowData.precio);
@@ -634,9 +673,11 @@ export default function CatalogoProductos(data2) {
               emptyMessage="No se encontraron resultados"
               value={productos}
               selection={selectedProducts}
+              
               onSelectionChange={(e) => setSelectedProducts(e.value)}
               dataKey="id"
               paginator
+              editMode="cell" className="editable-cells-table"
               rows={10}
               rowsPerPageOptions={[5, 10, 25]}
               paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -671,6 +712,15 @@ export default function CatalogoProductos(data2) {
                 header="Categoría"
                 sortable
                 style={{ minWidth: "10rem" }}
+              ></Column>
+              <Column
+              header="Cantidad"
+              field="cantidad"
+              editor={(options) => cellEditor1(options)} onCellEditComplete={onCellEditComplete}
+              
+              
+                exportable={false}
+                style={{ minWidth: "8rem" }}
               ></Column>
 
               <Column
