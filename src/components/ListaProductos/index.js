@@ -468,8 +468,8 @@ const cellEditor1 = (options) =>{
       },
       body: JSON.stringify({
         codigo: 5,
-        cliente: cliente,
-        producto: data,
+        cliente: cliente.cedula,
+        producto: data.codigo,
         cantidad: 100,
         subtotal: parseFloat(subtotal),
         total: parseFloat(total),
