@@ -41,7 +41,7 @@ export default function CatalogoProductos(data2) {
   const [clienteLista, setClienteLista]=useState([])
   const[nombreCliente, setNombreCliente]= useState("");
   const[apellidoCliente, setApellidoCliente]= useState("");
-
+  const[carritoData,setCarritoData]=useState([]);
   useEffect(() => {
     fetch(`/api/clientes`)
       .then((res) =>  res.json())
@@ -488,6 +488,18 @@ const cellEditor1 = (options) =>{
       </span>
     );
   };
+
+
+  useEffect(() => {
+    fetch(`/api/carrito_compras/${cliente?.cedula}`,{
+      method:"GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => setCarritoData(data));
+  }, [cliente]);
+
+ 
   const enviarAlCarrito=(data)=>{
     const subtotal=(data.precio*100);
     const total=(subtotal*1.12);
@@ -495,25 +507,53 @@ const cellEditor1 = (options) =>{
     console.log("cliente", cliente)
     const fecha = new Date();
     console.log("date", fecha)
-    fetch(('/api/carrito_compras'), {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        codigo: null,
-        cliente: cliente.cedula,
-        producto: data.codigo,
-        cantidad: 10,
-        subtotal:subtotal,
-        total: total,
-        fecha: fecha
+
+
+    if(carritoData.find(x=>x.producto===data.producto)===undefined){
+      console.log("NO EXISTE")
+      fetch(('/api/carrito_compras'), {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+         // codigo: null,
+          cliente: cliente.cedula,
+          producto: data.codigo,
+          //cantidad: 10,
+         // subtotal:subtotal,
+         // total: total,
+          fecha: fecha
+        })
       })
-    })
-      .then(res => res.json())
-      .then(res => {
-        console.log("res",res);
-      });
+        .then(res => res.json())
+        .then(res => {
+          console.log("res",res);
+        });
+    }
+    else{
+      console.log(" EXISTE")
+      fetch(('/api/carrito_compras'), {
+        method: 'PUT',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+         // codigo: null,
+          cliente: cliente.cedula,
+          producto: data.codigo,
+          //cantidad: 10,
+         // subtotal:subtotal,
+         // total: total,
+          fecha: fecha
+        })
+      })
+        .then(res => res.json())
+        .then(res => {
+          console.log("res",res);
+        });
+    }
+    
     
   }
 

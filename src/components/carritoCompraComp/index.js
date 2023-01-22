@@ -44,7 +44,7 @@ export default function CarritoCompra(data2) {
   const [clienteLista, setClienteLista]=useState([])
   const[nombreCliente, setNombreCliente]= useState("");
   const[apellidoCliente, setApellidoCliente]= useState("");
-
+const[carritoData,setCarritoData]=useState([]);
   useEffect(() => {
     fetch(`/api/clientes`)
       .then((res) =>  res.json())
@@ -720,7 +720,7 @@ const cellEditor1 = (options) =>{
             </>:<DataTable
               ref={dt}
               emptyMessage="No se encontraron resultados"
-              value={productos}
+              value={carritoData}
               selection={selectedProducts}
               footerColumnGroup={footer}
               onSelectionChange={(e) => setSelectedProducts(e.value)}
