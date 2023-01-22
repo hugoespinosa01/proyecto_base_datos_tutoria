@@ -148,6 +148,7 @@ export default function CatalogoProductos(data2) {
       imagen: imagen,
       precio: precio,
       categoria: categoria,
+      cantidad:0,
     };
     if(codigo==null){
       fetch("/api/productos", {
@@ -503,23 +504,7 @@ const cellEditor1 = (options) =>{
         ) : (
           <></>
         )}
-        {disableCliente ? (
-          <></>
-        ) : (
-          <InputNumber
-            inputId="vertical"
-            value={value19}
-            onValueChange={(e) => setValue19(e.value)}
-            mode="decimal"
-            showButtons
-            buttonLayout="vertical"
-            style={{ width: "4rem" }}
-            decrementButtonClassName="p-button-secondary"
-            incrementButtonClassName="p-button-secondary"
-            incrementButtonIcon="pi pi-plus"
-            decrementButtonIcon="pi pi-minus"
-          />
-        )}
+       
         &nbsp;&nbsp;&nbsp;
         {disableCliente ? (
           <></>
