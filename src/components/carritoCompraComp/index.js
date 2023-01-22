@@ -192,8 +192,8 @@ export default function CarritoCompra(data2) {
     setCodigo(null);
     toast.current.show({
       severity: "success",
-      summary: "Successful",
-      detail: "Product Deleted",
+      summary: "Exitoso",
+      detail: "Producto Eliminado!",
       life: 3000,
     })});
     
@@ -275,8 +275,8 @@ export default function CarritoCompra(data2) {
     setSelectedProducts(null);
     toast.current.show({
       severity: "success",
-      summary: "Successful",
-      detail: "Products Deleted",
+      summary: "Exitoso",
+      detail: "Producto Eliminado!",
       life: 3000,
     });
   };

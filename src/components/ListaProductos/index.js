@@ -140,6 +140,19 @@ export default function CatalogoProductos(data2) {
   };
 
   const saveProduct = () => {
+
+    if(nombre==null||precio==null||categoria==null){
+
+      toast.current.show({
+        severity: "error",
+        summary: "Error",
+        detail: "Llene todos los campos!",
+        life: 3000,
+      });
+
+      return;
+
+    }
     setSubmitted(true);
 
     const formData = {
@@ -156,6 +169,12 @@ export default function CatalogoProductos(data2) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+      toast.current.show({
+        severity: "success",
+        summary: "Exitoso!",
+        detail: "Producto creado!",
+        life: 3000,
+      });
     }
     else{
       fetch("/api/productos", {
@@ -163,9 +182,16 @@ export default function CatalogoProductos(data2) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+      toast.current.show({
+        severity: "success",
+        summary: "Exitoso!",
+        detail: "Producto actualizado!",
+        life: 3000,
+      });
     }
   
     setLongitud(longitud+1);
+   
 
   
       setProductDialog(false);
@@ -174,6 +200,7 @@ export default function CatalogoProductos(data2) {
       setCategoria(null)
 
       setCodigo(null)
+
   };
 
   const editProduct = (rowData) => {
@@ -202,8 +229,8 @@ export default function CatalogoProductos(data2) {
     setCodigo(null);
     toast.current.show({
       severity: "success",
-      summary: "Successful",
-      detail: "Product Deleted",
+      summary: "Exitoso",
+      detail: "Producto Eliminado!",
       life: 3000,
     })});
     
@@ -285,8 +312,8 @@ export default function CatalogoProductos(data2) {
     setSelectedProducts(null);
     toast.current.show({
       severity: "success",
-      summary: "Successful",
-      detail: "Products Deleted",
+      summary: "Exitoso",
+      detail: "Producto Eliminado!",
       life: 3000,
     });
   };
