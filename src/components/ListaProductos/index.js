@@ -414,6 +414,34 @@ export default function CatalogoProductos(data2) {
       </span>
     );
   };
+  const enviarAlCarrito=(data)=>{
+    const subtotal=(data.precio*100).toFixed(2);
+    const total=(subtotal*1.12).toFixed(2);
+    console.log("data carrito", data)
+    console.log("cliente", cliente)
+    const fecha = new Date();
+    console.log("date", fecha)
+    fetch('/api/carrito_compras', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        codigo: 1,
+        cliente: cliente.cedula,
+        producto: data.codigo,
+        cantidad: 100,
+        subtotal: subtotal,
+        total: total,
+        fecha: fecha
+      })
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log("res",res);
+      });
+    
+  }
 
   const actionBodyTemplate = (rowData) => {
     return (
@@ -461,6 +489,7 @@ export default function CatalogoProductos(data2) {
             label="Agregar a carrito"
             icon="pi pi-cart-plus"
             className="p-button-success mr-2"
+            onClick={()=>enviarAlCarrito(rowData)}
           />
         )}
       </React.Fragment>
