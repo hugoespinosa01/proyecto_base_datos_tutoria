@@ -57,13 +57,10 @@ export default function CarritoCompra(data2) {
     }
 
     if (tipoEntidadSeleccionada === "Empresa") {
-      console.log("EMPRESA");
       //  sessionStorage.setItem('usuario', tipoEntidadSeleccionada);
       setDisableCliente(true);
     } else if (tipoEntidadSeleccionada === "Cliente") {
-      console.log("CLIENTE");
     } else {
-      console.log("SIN DATOS", tipoEntidadSeleccionada);
       window.location.href = "http://localhost:3000";
     }
   }, []);
@@ -284,7 +281,6 @@ export default function CarritoCompra(data2) {
   const onCategoryChange = (e) => {
     setCategoria(e.value)
   };
-  console.log({ product });
   const onInputChange = (e, name) => {
     const val = (e.target && e.target.value) || "";
     let _product = { ...product };
@@ -321,7 +317,6 @@ export default function CarritoCompra(data2) {
   };
 
   const imageBodyTemplate = (rowData) => {
-    console.log(rowData);
     return (
       <img
         src={`${rowData.imagen}`}

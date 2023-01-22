@@ -14,8 +14,6 @@ export default function Index () {
   const router = useRouter();
   const data = router.query;
 
-  //console.log(connection);
-
   return (
     <>
     <Head>

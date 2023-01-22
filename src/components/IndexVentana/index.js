@@ -31,9 +31,6 @@ export default function VentanaIndex() {
   const [imagenes3, setImagenes3] = useState(null);
   const [post2, setPost2] = useState(null);
 
- 
-console.log("img",imagesJSON)
-
     useEffect(() => {
 
   //      const axios = require("axios");

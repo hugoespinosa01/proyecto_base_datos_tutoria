@@ -50,7 +50,6 @@ export default function Login() {
   }else{
 
     sessionStorage.setItem('usuario', tipoEntidadSeleccionada?.name);
-    console.log("name", tipoEntidadSeleccionada?.name)
     router.push(
       {
         pathname: '/frontend/catalogoProductos',

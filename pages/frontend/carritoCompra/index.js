@@ -13,8 +13,6 @@ export default function carritoCompra1 () {
   const router = useRouter();
   const data = router.query;
 
-  //console.log(connection);
-
   return (
     <>
     <Head>

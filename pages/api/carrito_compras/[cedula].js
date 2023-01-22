@@ -4,6 +4,7 @@ let cliente = "";
 
 const handler = async (req, res) => {
   cliente = req.query.cedula;
+  console.log("cliente: " + cliente);
 
   switch (req.method) {
     case "GET":
@@ -13,8 +14,8 @@ const handler = async (req, res) => {
   }
 
   function getShoppingCartById() {
-    connection.query("SELECT * FROM '" + tabla + "' WHERE cliente = '" + cliente + "'", (error, results) => {
-      if (error) throw error.message();
+    connection.query("SELECT * FROM " + tabla + " WHERE cliente = '" + cliente + "'", (error, results) => {
+      if (error) throw error;
       return res.status(200).json(results);
     });
   }
