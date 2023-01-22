@@ -1,5 +1,4 @@
 const connection = require("../../backend/connection");
-let tabla = "carrito_compra";
 let cliente = "";
 
 const handler = async (req, res) => {
@@ -15,7 +14,7 @@ const handler = async (req, res) => {
 
   function getShoppingCartById() {
     connection.query(
-      "SELECT producto.nombre, producto.precio, producto.cantidad, cliente.cedula FROM `producto`, `cliente`, `carrito_compra` WHERE ((producto.codigo = carrito_compra.producto) AND (carrito_compra.cliente = cliente.cedula) AND (cliente.cedula = '" +
+      "SELECT producto.nombre, producto.precio, carrito_compra.cantidad, cliente.cedula FROM `producto`, `carrito_compra`, `cliente`  WHERE ((producto.codigo = carrito_compra.producto) AND (carrito_compra.cliente = cliente.cedula) AND (cliente.cedula = '" +
         cliente +
         "'))",
       (error, results) => {

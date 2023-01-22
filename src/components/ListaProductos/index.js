@@ -520,7 +520,7 @@ const cellEditor1 = (options) =>{
          // codigo: null,
           cliente: cliente.cedula,
           producto: data.codigo,
-          //cantidad: 10,
+          cantidad: 10,
          // subtotal:subtotal,
          // total: total,
           fecha: fecha

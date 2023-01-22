@@ -55,6 +55,7 @@ const handler = async (req, res) => {
       " WHERE cliente = '" +
       cliente +
       "'";
+      console.log(actualizar);
     connection.query(actualizar, (error, results) => {
       if (error) throw error;
       return res.status(200).send("Carrito de compras actualizado");
