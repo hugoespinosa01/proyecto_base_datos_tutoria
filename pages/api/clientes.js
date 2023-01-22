@@ -32,7 +32,7 @@ const handler = async (req, res) => {
 
   function getCustomers() {
     connection.query("SELECT * FROM " + tabla, (error, results) => {
-      if (error) throw error.message();
+      if (error) throw error;
       return res.status(200).json(results);
     });
   }
@@ -58,7 +58,7 @@ const handler = async (req, res) => {
       "')";
       
     connection.query(insertar, (error, results) => {
-      if (error) throw error.message();
+      if (error) throw error;
       return res.status(200).send("Cliente creado");
     });
   }
