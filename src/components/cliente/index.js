@@ -77,18 +77,13 @@ export default function Clientes(data2) {
     }
 
     if (tipoEntidadSeleccionada === "Empresa") {
-      console.log("EMPRESA");
       //  sessionStorage.setItem('usuario', tipoEntidadSeleccionada);
       setDisableCliente(true);
     } else if (tipoEntidadSeleccionada === "Cliente") {
-      console.log("CLIENTE");
     } else {
-      console.log("SIN DATOS", tipoEntidadSeleccionada);
       window.location.href = "http://localhost:3000";
     }
   }, []);
-
-  console.log("equipos", equipos);
 
   useEffect(() => {
     let producto = [
@@ -182,7 +177,6 @@ export default function Clientes(data2) {
   };
 
   const editProduct = (rowData) => {
-    console.log("rowData", rowData)
     setCliente({ ...rowData });
     setProductDialog(true);
   };
@@ -295,7 +289,6 @@ export default function Clientes(data2) {
     _product["category"] = e.value;
     setProduct(_product);
   };
-  // console.log({ product });
   const onInputChange = (e, name) => {
     const val = (e?.target && e?.target?.value) || "";
     let _product = { ...cliente };
@@ -367,7 +360,6 @@ export default function Clientes(data2) {
 
   const editar = (rowData) => {
     let fecha = new Date(rowData.fechaNacimiento)
-    console.log("rowData", rowData)
     setNombre(rowData.nombre)
     setCedula(rowData.cedula)
     setApellido(rowData.apellido)
@@ -511,7 +503,6 @@ export default function Clientes(data2) {
       })
         .then(res => res.json())
         .then(res => {
-          console.log(res);
         });
     }else{
       fetch('/api/clientes', {
@@ -531,7 +522,6 @@ export default function Clientes(data2) {
       })
         .then(res => res.json())
         .then(res => {
-          console.log(res);
         });
     }
     

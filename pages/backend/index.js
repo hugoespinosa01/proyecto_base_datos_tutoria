@@ -11,5 +11,4 @@ app.use(express.static(path.join(__dirname, "./dbimages")));
 
 //Escuchamos al puerto
 app.listen(3000, () => {
-  console.log("Escuchando en el puerto 3000");
 });

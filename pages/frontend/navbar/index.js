@@ -35,7 +35,6 @@ export const NavBar = () => {
 
 
   useEffect(() => {
-    console.log("cedula", cliente2?.cedula)
     fetch(`/api/carrito_compras/${cliente2?.cedula}`,{
       method:"GET",
       headers: { "Content-Type": "application/json" },
@@ -43,8 +42,6 @@ export const NavBar = () => {
       .then((res) => res.json())
       .then((data) => setCarritoData(data));
   }, [cliente2]);
- console.log("data", carritoData)
-
 
   useEffect(() => {
     if (sessionStorage.getItem('usuario') !== null || sessionStorage.getItem('usuario') !== undefined) {
@@ -55,17 +52,13 @@ export const NavBar = () => {
     }
 
     if (tipoEntidadSeleccionada === "Empresa") {
-      console.log("EMPRESA");
       
      // setDisableCliente(true);
     } else if (tipoEntidadSeleccionada === "Cliente") {
-    //  console.log("CLIENTE");
     } else {
-      //console.log("SIN DATOS", tipoEntidadSeleccionada);
      // window.location.href = "http://localhost:3000";
     }
   }, [])
-  console.log("tipoUser",tipoEntidadSeleccionada )
   
   const items = [
     {

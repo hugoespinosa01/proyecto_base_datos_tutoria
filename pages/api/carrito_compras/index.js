@@ -56,7 +56,6 @@ const handler = async (req, res) => {
 
   function deleteShoppingCart() {
     const eliminar = "DELETE FROM " + tabla + " WHERE cliente = '" + cliente + "'";
-    console.log(eliminar);
     connection.query(eliminar, (error, results) => {
       if (error) throw error;
       return res.status(200).send("Carrito de compras eliminado");

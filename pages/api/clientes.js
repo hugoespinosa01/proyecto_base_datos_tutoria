@@ -90,7 +90,6 @@ const handler = async (req, res) => {
 
   function deleteCustomer() {
     const eliminar = "DELETE FROM " + tabla + " WHERE cedula = '" + cedula + "'";
-    console.log(eliminar);
     connection.query(eliminar, (error, results) => {
       if (error) throw error;
       return res.status(200).send("Cliente eliminado");

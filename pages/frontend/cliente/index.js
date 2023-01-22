@@ -14,8 +14,6 @@ export default function CatalogoProductos1 () {
   const router = useRouter();
   const data = router.query;
 
-  //console.log(connection);
-
   return (
     <>
     <Head>
