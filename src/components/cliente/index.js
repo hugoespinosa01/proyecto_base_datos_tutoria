@@ -154,8 +154,8 @@ export default function Clientes(data2) {
         _products[index] = _product;
         toast.current.show({
           severity: "success",
-          summary: "Successful",
-          detail: "Product Updated",
+          summary: "Exitoso",
+          detail: "Producto Actualizado",
           life: 3000,
         });
       } else {
@@ -164,8 +164,8 @@ export default function Clientes(data2) {
         _products.push(_product);
         toast.current.show({
           severity: "success",
-          summary: "Successful",
-          detail: "Product Created",
+          summary: "Exitoso",
+          detail: "Producton Creado!",
           life: 3000,
         });
       }
@@ -197,8 +197,8 @@ export default function Clientes(data2) {
     //setCodigo(null);
     toast.current.show({
       severity: "success",
-      summary: "Successful",
-      detail: "Cliente Deleted",
+      summary: "Exitoso!",
+      detail: "Cliente Eliminado",
       life: 3000,
     })});
   };
@@ -277,8 +277,8 @@ export default function Clientes(data2) {
     setSelectedProducts(null);
     toast.current.show({
       severity: "success",
-      summary: "Successful",
-      detail: "Products Deleted",
+      summary: "Exitoso",
+      detail: "Producto Eliminado!",
       life: 3000,
     });
   };
@@ -485,6 +485,21 @@ export default function Clientes(data2) {
     });
   };
   const guardar = () => {
+    if(cedula==""|| nombre=="" || apellido=="" || telefono=="" || email=="" || fechaNacimiento==null || direccion==""){
+      console.log("entro aqui")
+      toast.current.show({
+        severity: "error",
+        summary: "Error",
+        detail: "Llene todos los campos!",
+        life: 3000,
+      });
+      
+
+      return;
+
+    }
+
+    
     if(clientes.find(element => element.cedula === cedula)===undefined){
       fetch('/api/clientes', {
         method: 'POST',
@@ -503,6 +518,14 @@ export default function Clientes(data2) {
       })
         .then(res => res.json())
         .then(res => {
+        });
+
+
+        toast.current.show({
+          severity: "success",
+          summary: "Exitoso!",
+          detail: "Producto creado!",
+          life: 3000,
         });
     }else{
       fetch('/api/clientes', {
@@ -523,7 +546,21 @@ export default function Clientes(data2) {
         .then(res => res.json())
         .then(res => {
         });
+
+        toast.current.show({
+          severity: "success",
+          summary: "Exitoso!",
+          detail: "Producto actualizado!",
+          life: 3000,
+        });
     }
+
+    toast.current.show({
+      severity: "success",
+      summary: "Exitoso!",
+      detail: "Proceso Exitoso!",
+      life: 3000,
+    });
     
 
 
@@ -760,9 +797,9 @@ export default function Clientes(data2) {
                 className="pi pi-exclamation-triangle mr-3"
                 style={{ fontSize: "2rem" }}
               />
-              {product && (
+              {cliente && (
                 <span>
-                  Desea eliminar el siguiente cliente : <b>{product.nombre}</b>
+                  Desea eliminar el siguiente cliente
                   ?
                 </span>
               )}
