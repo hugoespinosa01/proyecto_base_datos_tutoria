@@ -224,6 +224,7 @@ export const NavBar = () => {
           <DataTable
           value={carritoData}
           //   dataKey="id"
+          className="col-12"
             responsiveLayout="scroll"
             paginator
             rows={5}
