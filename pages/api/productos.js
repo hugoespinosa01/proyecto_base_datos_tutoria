@@ -4,12 +4,14 @@ let codigo = null;
 let nombre = '';
 let precio = 0;
 let categoria = '';
+let cantidad = null;
 
 const handler = async (req, res) => {
   codigo = req.body.codigo;
   nombre = req.body.nombre;
   precio = req.body.precio;
   categoria = req.body.categoria;
+  cantidad = req.body.cantidad;
 
   switch (req.method) {
     case "GET":
@@ -32,7 +34,7 @@ const handler = async (req, res) => {
   }
 
  function createProduct() {
-  const insertar = "INSERT INTO " + tabla + " (codigo, nombre, precio, categoria) VALUES (NULL, '" + nombre + "', '" + precio + "', '" + categoria + "')";
+  const insertar = "INSERT INTO " + tabla + " (codigo, nombre, precio, categoria, cantidad) VALUES (NULL, '" + nombre + "', " + precio + ", '" + categoria + "' , " + cantidad + ")";
   connection.query(insertar, (error, results) => {
       if (error) throw error;
       return res.status(200).send("Producto creado");
@@ -40,7 +42,7 @@ const handler = async (req, res) => {
   }
 
   function updateProduct() {
-    const actualizar = "UPDATE " + tabla + " SET nombre = '" + nombre + "', precio = '" + precio +  "', categoria = '" + categoria + "' WHERE codigo = " + codigo + "";
+    const actualizar = "UPDATE " + tabla + " SET nombre = '" + nombre + "', precio = " + precio +  ", categoria = '" + categoria + "', cantidad = " + cantidad + " WHERE codigo = " + codigo + "";
     connection.query(actualizar, (error, results) => {
       if(error) throw error;
       return res.status(200).send("Producto actualizado");
