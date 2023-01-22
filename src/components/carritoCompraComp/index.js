@@ -627,13 +627,7 @@ const cellEditor1 = (options) =>{
       />
     </React.Fragment>
   );
-  const onBasicUpload = () => {
-    toast.current.show({
-      severity: "info",
-      summary: "Success",
-      detail: "File Uploaded with Basic Mode",
-    });
-  };
+  const footer =  `SubTotal:${"10" }  IVA:0,12%      Total:$20`;
 
   return (
     <div className="card">
@@ -710,7 +704,7 @@ const cellEditor1 = (options) =>{
               emptyMessage="No se encontraron resultados"
               value={productos}
               selection={selectedProducts}
-              
+              footer={footer}
               onSelectionChange={(e) => setSelectedProducts(e.value)}
               dataKey="id"
               paginator
