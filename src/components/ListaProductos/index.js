@@ -518,12 +518,8 @@ const cellEditor1 = (options) =>{
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-         // codigo: null,
-          //cliente: cliente.cedula,
-          producto: data.producto,
+          producto: data.codigo,
           cantidad: data.cantidad,
-         // subtotal:subtotal,
-         // total: total,
           fecha: fecha
         })
       })

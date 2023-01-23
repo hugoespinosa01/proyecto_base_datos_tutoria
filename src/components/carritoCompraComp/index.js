@@ -13,12 +13,12 @@ import { RadioButton } from "primereact/radiobutton";
 import { InputNumber } from "primereact/inputnumber";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
-import {Dropdown} from "primereact/dropdown";
+import { Dropdown } from "primereact/dropdown";
 import { Menubar } from "primereact/menubar";
 import { NavBar } from "../../../pages/frontend/navbar";
-import {AutoComplete} from "primereact/autocomplete";
-import { ColumnGroup } from 'primereact/columngroup';
-import { Row } from 'primereact/row';
+import { AutoComplete } from "primereact/autocomplete";
+import { ColumnGroup } from "primereact/columngroup";
+import { Row } from "primereact/row";
 
 export default function CarritoCompra(data2) {
   let emptyProduct = {
@@ -36,32 +36,32 @@ export default function CarritoCompra(data2) {
   const [productos, setProductos] = useState([]);
   const [value19, setValue19] = useState(1);
   const [longitud, setLongitud] = useState(0);
-  const[nombre, setNombre]= useState("");
-  const[codigo, setCodigo]= useState(null);
-  const[precio, setPrecio]= useState("");
-  const[categoria, setCategoria]= useState("");
-  const [cliente, setCliente]=useState(null)
-  const [clienteLista, setClienteLista]=useState([])
-  const[nombreCliente, setNombreCliente]= useState("");
-  const[apellidoCliente, setApellidoCliente]= useState("");
-const[carritoData,setCarritoData]=useState([]);
+  const [nombre, setNombre] = useState("");
+  const [codigo, setCodigo] = useState(null);
+  const [precio, setPrecio] = useState("");
+  const [categoria, setCategoria] = useState("");
+  const [cliente, setCliente] = useState(null);
+  const [clienteLista, setClienteLista] = useState([]);
+  const [nombreCliente, setNombreCliente] = useState("");
+  const [apellidoCliente, setApellidoCliente] = useState("");
+  const [carritoData, setCarritoData] = useState([]);
   useEffect(() => {
     fetch(`/api/clientes`)
-      .then((res) =>  res.json())
+      .then((res) => res.json())
       .then((data) => setClienteLista(data));
   }, []);
   // const [tipoEntidadSeleccionada, setTipoEntidadSeleccionada] = useState(0);
   let tipoEntidadSeleccionada;
 
   //Obtener los productos
-    useEffect(() => {
-      fetch(`/api/carrito_compras/${cliente?.cedula}`,{
-        method:"GET",
-        headers: { "Content-Type": "application/json" },
-      })
-        .then((res) => res.json())
-        .then((data) => setCarritoData(data));
-    }, [cliente, longitud]);
+  useEffect(() => {
+    fetch(`/api/carrito_compras/${cliente?.cedula}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => setCarritoData(data));
+  }, [cliente, longitud]);
 
   useEffect(() => {
     if (
@@ -146,9 +146,7 @@ const[carritoData,setCarritoData]=useState([]);
   };
 
   const saveProduct = () => {
-
-    if(nombre==null||precio==null||categoria==null){
-
+    if (nombre == null || precio == null || categoria == null) {
       toast.current.show({
         severity: "error",
         summary: "Error",
@@ -157,19 +155,18 @@ const[carritoData,setCarritoData]=useState([]);
       });
 
       return;
-
     }
     setSubmitted(true);
 
     const formData = {
-      codigo: codigo==null?null:codigo,
+      codigo: codigo == null ? null : codigo,
       nombre: nombre,
       imagen: imagen,
       precio: precio,
       categoria: categoria,
-      cantidad:0,
+      cantidad: 0,
     };
-    if(codigo==null){
+    if (codigo == null) {
       fetch("/api/productos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -181,8 +178,7 @@ const[carritoData,setCarritoData]=useState([]);
         detail: "Producto creado!",
         life: 3000,
       });
-    }
-    else{
+    } else {
       fetch("/api/productos", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -202,70 +198,62 @@ const[carritoData,setCarritoData]=useState([]);
       detail: "Proceso Exitoso!",
       life: 3000,
     });
-  
-    setLongitud(longitud+1);
-   
 
-  
-      setProductDialog(false);
-      setNombre("")
-      setPrecio(null)
-      setCategoria(null)
+    setLongitud(longitud + 1);
 
-      setCodigo(null)
+    setProductDialog(false);
+    setNombre("");
+    setPrecio(null);
+    setCategoria(null);
 
+    setCodigo(null);
   };
 
   const editarCarrito = (data) => {
     const fecha = new Date();
-    console.log("data",data)
-    fetch((`/api/carrito_compras/${cliente?.cedula}`), {
-      method: 'PUT',
+    console.log("data", data);
+    fetch(`/api/carrito_compras/${cliente?.cedula}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-       // codigo: null,
-        //cliente: cliente.cedula,
         producto: data.codigo,
         cantidad: data.cantidad,
-       // subtotal:subtotal,
-       // total: total,
-        fecha: fecha
-      })
+        fecha: fecha,
+      }),
     })
-      .then(res => res.json())
-      .then(res => {
-        console.log("res",res);
+      .then((res) => res.json())
+      .then((res) => {
+        console.log("res", res);
       });
-      setLongitud(longitud+1)
+    setLongitud(longitud + 1);
   };
 
   const confirmDeleteProduct = (product) => {
-    console.log("codigooo",product.producto)
-    setCodigo(product.producto)
+    setCodigo(product.codigo);
     setProduct(product);
     setDeleteProductDialog(true);
   };
 
   const deleteProduct = () => {
-    fetch(`/api/carrito_compras/${cliente.cedula}`, { 
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({producto:codigo})
+    fetch(`/api/carrito_compras/${cliente.cedula}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ producto: codigo }),
     })
-    .then(() => setLongitud(longitud+1)).then(()=>{setDeleteProductDialog(false)
-    setProduct(emptyProduct);
-    setCodigo(null);
-    toast.current.show({
-      severity: "success",
-      summary: "Exitoso",
-      detail: "Producto Eliminado!",
-      life: 3000,
-    })});
-    
-   
-
+      .then(() => setLongitud(longitud + 1))
+      .then(() => {
+        setDeleteProductDialog(false);
+        setProduct(emptyProduct);
+        setCodigo(null);
+        toast.current.show({
+          severity: "success",
+          summary: "Exitoso",
+          detail: "Producto Eliminado!",
+          life: 3000,
+        });
+      });
   };
 
   const findIndexById = (id) => {
@@ -349,7 +337,7 @@ const[carritoData,setCarritoData]=useState([]);
   };
 
   const onCategoryChange = (e) => {
-    setCategoria(e.value)
+    setCategoria(e.value);
   };
   console.log({ product });
   const onInputChange = (e, name) => {
@@ -367,12 +355,12 @@ const[carritoData,setCarritoData]=useState([]);
 
     setProduct(_product);
   };
-  const selecionarCliente=(e)=>{
-    setCliente(e.value)
-    let cliente2=e.value;
-   setNombreCliente(cliente2?.nombre);
-    setApellidoCliente(cliente2?.apellido)
-  }
+  const selecionarCliente = (e) => {
+    setCliente(e.value);
+    let cliente2 = e.value;
+    setNombreCliente(cliente2?.nombre);
+    setApellidoCliente(cliente2?.apellido);
+  };
 
   const leftToolbarTemplate = () => {
     return (
@@ -387,54 +375,41 @@ const[carritoData,setCarritoData]=useState([]);
         ) : (
           <div className="flex align-items-center justify-content-center">
             <div className="col-3"></div>
-              <h3 className="" htmlFor="name">Cliente: </h3>
-              <div className="col-1">
-
-                
-              </div>
-              <div className="col-2">
-
-                <Dropdown
+            <h3 className="" htmlFor="name">
+              Cliente:{" "}
+            </h3>
+            <div className="col-1"></div>
+            <div className="col-2">
+              <Dropdown
                 options={clienteLista}
-                optionLabel="cedula" value={cliente}
+                optionLabel="cedula"
+                value={cliente}
                 filterBy="cedula"
-                onChange={selecionarCliente} filter showClear  placeholder="Seleccione cédula de cliente"
-                 
-                
+                onChange={selecionarCliente}
+                filter
+                showClear
+                placeholder="Seleccione cédula de cliente"
               />
-              </div>
+            </div>
 
-              <div className="col-2">
+            <div className="col-2"></div>
 
-                
-              </div>
+            <div className="flex align-items-center justify-content-center">
+              <h3 className="" htmlFor="name">
+                Nombre:{" "}
+              </h3>
+              <AutoComplete disabled value={nombreCliente}></AutoComplete>
+            </div>
+            <div className="col-1"></div>
+            <div className="flex align-items-center justify-content-center">
+              <h3 className="" htmlFor="name">
+                Apellido:{" "}
+              </h3>
 
-              <div className="flex align-items-center justify-content-center">
-              <h3 className="" htmlFor="name">Nombre: </h3>
-              <AutoComplete
-              disabled
-              value={nombreCliente}
-              >
-                
-              </AutoComplete>
-              
-              </div>
-              <div className="col-1">
-
-                
-</div>
-              <div className="flex align-items-center justify-content-center">
-              <h3 className="" htmlFor="name">Apellido: </h3>
-              
-              <AutoComplete
-              disabled
-              value={apellidoCliente}
-              ></AutoComplete></div>
-              
-              </div>
+              <AutoComplete disabled value={apellidoCliente}></AutoComplete>
+            </div>
+          </div>
         )}
-
-       
       </React.Fragment>
     );
   };
@@ -458,41 +433,35 @@ const[carritoData,setCarritoData]=useState([]);
     let { rowData, newValue, field, originalEvent: event } = e;
 
     switch (field) {
-        case 'cantidad':
-          rowData[field] = newValue;
-          break;
-       
-        default:
-           
-                event.preventDefault();
-            break;
+      case "cantidad":
+        rowData[field] = newValue;
+        break;
+
+      default:
+        event.preventDefault();
+        break;
     }
-}
+  };
 
-const cellEditor1 = (options) =>{
-  return(
-    <span>
-    <InputNumber
-    inputId="vertical"
-    value={options.value}
-    onValueChange={(e) => options.editorCallback(e.value)}
-    mode="decimal"
-    showButtons
-    buttonLayout="vertical"
-    style={{ width: "4rem" }}
-    decrementButtonClassName="p-button-secondary"
-    incrementButtonClassName="p-button-secondary"
-    incrementButtonIcon="pi pi-plus"
-    decrementButtonIcon="pi pi-minus"
-  />
-  </span>
-
-  );
-  
- 
-
-}
-
+  const cellEditor1 = (options) => {
+    return (
+      <span>
+        <InputNumber
+          inputId="vertical"
+          value={options.value}
+          onValueChange={(e) => options.editorCallback(e.value)}
+          mode="decimal"
+          showButtons
+          buttonLayout="vertical"
+          style={{ width: "4rem" }}
+          decrementButtonClassName="p-button-secondary"
+          incrementButtonClassName="p-button-secondary"
+          incrementButtonIcon="pi pi-plus"
+          decrementButtonIcon="pi pi-minus"
+        />
+      </span>
+    );
+  };
 
   const priceBodyTemplate = (rowData) => {
     return formatCurrency(rowData.precio);
@@ -511,14 +480,33 @@ const cellEditor1 = (options) =>{
       </span>
     );
   };
-  const enviarAlCarrito=()=>{
-    toast.current.show({
-      severity: "success",
-      summary: "Pago Completado",
-      //detail: "Llene todos los campos!",
-      life: 3000,
-    });
-  }
+  const enviarAlCarrito = (data) => {
+    const subtotal = data.precio * 100;
+    const total = subtotal * 1.12;
+    console.log("data carrito", data);
+    console.log("cliente", cliente);
+    const fecha = new Date();
+    console.log("date", fecha);
+    fetch("/api/carrito_compras", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        codigo: null,
+        cliente: cliente.cedula,
+        producto: data.codigo,
+        cantidad: 10,
+        subtotal: subtotal,
+        total: total,
+        fecha: fecha,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log("res", res);
+      });
+  };
 
   const actionBodyTemplate = (rowData) => {
     return (
@@ -541,27 +529,23 @@ const cellEditor1 = (options) =>{
         ) : (
           <></>
         )}
-       
         &nbsp;&nbsp;&nbsp;
         {disableCliente ? (
           <></>
-        ) : (<>
-        
-       
-<Button
-            label="Editar Cantidad"
-            icon="pi pi-cart-plus"
-            className="p-button-success mr-2"
-            onClick={()=>editarCarrito(rowData)}
-          />
-           <Button
-            icon="pi pi-trash"
-            className="p-button-rounded p-button-warning"
-            onClick={() => confirmDeleteProduct(rowData)}
-          />
-        </>
-          
-          
+        ) : (
+          <>
+            <Button
+              label="Editar Cantidad"
+              icon="pi pi-cart-plus"
+              className="p-button-success mr-2"
+              onClick={() => editarCarrito(rowData)}
+            />
+            <Button
+              icon="pi pi-trash"
+              className="p-button-rounded p-button-warning"
+              onClick={() => confirmDeleteProduct(rowData)}
+            />
+          </>
         )}
       </React.Fragment>
     );
@@ -570,7 +554,7 @@ const cellEditor1 = (options) =>{
   const actionBodyTemplate2 = (rowData) => {
     return (
       <React.Fragment>
-       {formatCurrency(rowData.cantidad*rowData.precio)}
+        {formatCurrency(rowData.cantidad * rowData.precio)}
       </React.Fragment>
     );
   };
@@ -631,30 +615,44 @@ const cellEditor1 = (options) =>{
     </React.Fragment>
   );
 
-  let modifiedArr = carritoData.map(function(element){
-    return element?.cantidad*element?.precio;
-});
-console.log("total",modifiedArr)
-const  total=modifiedArr.reduce((a, b) => a + b, 0);
+  let modifiedArr = carritoData.map(function (element) {
+    return element?.cantidad * element?.precio;
+  });
+  console.log("total", modifiedArr);
+  const total = modifiedArr.reduce((a, b) => a + b, 0);
 
-  console.log("total2",total)
-  const footer =  <ColumnGroup>
-  <Row>
-      <Column footer="Subtotal:" colSpan={3} footerStyle={{textAlign: 'right'}}/>
-      <Column footer={formatCurrency(total)}></Column>
-      <Column footer=""></Column>
-  </Row>
-  <Row>
-      <Column footer="IVA: 12% " colSpan={3} footerStyle={{textAlign: 'right'}}/>
-      <Column footer={formatCurrency(total*0.12)}></Column>
-      <Column footer=""></Column>
-  </Row>
-  <Row>
-      <Column footer="TOTAL:" colSpan={3} footerStyle={{textAlign: 'right'}}/>
-      <Column footer={formatCurrency(total*1.12)}></Column>
-      <Column footer=""></Column>
-  </Row>
-  </ColumnGroup>;
+  console.log("total2", total);
+  const footer = (
+    <ColumnGroup>
+      <Row>
+        <Column
+          footer="Subtotal:"
+          colSpan={3}
+          footerStyle={{ textAlign: "right" }}
+        />
+        <Column footer={formatCurrency(total)}></Column>
+        <Column footer=""></Column>
+      </Row>
+      <Row>
+        <Column
+          footer="IVA: 12% "
+          colSpan={3}
+          footerStyle={{ textAlign: "right" }}
+        />
+        <Column footer={formatCurrency(total * 0.12)}></Column>
+        <Column footer=""></Column>
+      </Row>
+      <Row>
+        <Column
+          footer="TOTAL:"
+          colSpan={3}
+          footerStyle={{ textAlign: "right" }}
+        />
+        <Column footer={formatCurrency(total * 1.12)}></Column>
+        <Column footer=""></Column>
+      </Row>
+    </ColumnGroup>
+  );
   return (
     <div className="card">
       <NavBar data={data2} />
@@ -668,127 +666,111 @@ const  total=modifiedArr.reduce((a, b) => a + b, 0);
 
           <div className="card">
             <Toolbar className="col-12" left={leftToolbarTemplate}></Toolbar>
-            <br/>
-            {(cliente===null || cliente===undefined) && disableCliente==false?<><br></br><h2 style={{color:"red"}}>Debe Seleccionar un cliente para proceder a pagar sus productos*</h2>
-            <br></br>
-            <br></br>
-            <br></br>
-            <DataTable
-              ref={dt}
-              emptyMessage="No se encontraron resultados"
-              
-              selection={selectedProducts}
-              onSelectionChange={(e) => setSelectedProducts(e.value)}
-              dataKey="id"
-              paginator
-              rows={10}
-              rowsPerPageOptions={[5, 10, 25]}
-              paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-              globalFilter={globalFilter}
-              header={header}
-              responsiveLayout="scroll"
-            >
-             
-              <Column
-                field="codigo"
-                header="Código"
-                sortable
-                style={{ minWidth: "12rem" }}
-              ></Column>
-              <Column
-                field="nombre"
-                header="Nombre"
-                sortable
-                style={{ minWidth: "16rem" }}
-              ></Column>
-              
-              <Column
-                field="precio"
-                header="Precio"
-                body={priceBodyTemplate}
-                sortable
-                style={{ minWidth: "8rem" }}
-              ></Column>
-              <Column
-                field="categoria"
-                header="Categoría"
-                sortable
-                style={{ minWidth: "10rem" }}
-              ></Column>
+            <br />
+            {(cliente === null || cliente === undefined) &&
+            disableCliente == false ? (
+              <>
+                <br></br>
+                <h2 style={{ color: "red" }}>
+                  Debe Seleccionar un cliente para proceder a pagar sus
+                  productos*
+                </h2>
+                <br></br>
+                <br></br>
+                <br></br>
+                <DataTable
+                  ref={dt}
+                  emptyMessage="No se encontraron resultados"
+                  selection={selectedProducts}
+                  onSelectionChange={(e) => setSelectedProducts(e.value)}
+                  dataKey="id"
+                  paginator
+                  rows={10}
+                  rowsPerPageOptions={[5, 10, 25]}
+                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+                  globalFilter={globalFilter}
+                  header={header}
+                  responsiveLayout="scroll"
+                >
+                  <Column
+                    field="codigo"
+                    header="Código"
+                    sortable
+                    style={{ minWidth: "12rem" }}
+                  ></Column>
+                  <Column
+                    field="nombre"
+                    header="Nombre"
+                    sortable
+                    style={{ minWidth: "16rem" }}
+                  ></Column>
 
-              <Column
-                body={actionBodyTemplate}
-                exportable={false}
-                style={{ minWidth: "8rem" }}
-              ></Column>
-            </DataTable>
-            
-            
-            </>:<DataTable
-              ref={dt}
-              emptyMessage="No se encontraron resultados"
-              value={carritoData}
-              selection={selectedProducts}
-              footerColumnGroup={footer}
-              onSelectionChange={(e) => setSelectedProducts(e.value)}
-              dataKey="id"
-              paginator
-              editMode="cell" className="editable-cells-table"
-              rows={10}
-              rowsPerPageOptions={[5, 10, 25]}
-              paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-              globalFilter={globalFilter}
-              header={header}
-              responsiveLayout="scroll"
-            >
-             
-             
-              <Column
-                field="nombre"
-                header="Nombre"
-                sortable
-                style={{ minWidth: "16rem" }}
-              ></Column>
-              
-              <Column
-                field="precio"
-                header="Precio"
-                prefix="$"
-                body={priceBodyTemplate}
-                sortable
-                style={{ minWidth: "8rem" }}
-              ></Column>
-              
-              <Column
-              header="Cantidad"
-              field="cantidad"
-              editor={(options) => cellEditor1(options)} onCellEditComplete={onCellEditComplete}
-              
-              
-                exportable={false}
-                style={{ minWidth: "8rem" }}
-              ></Column>
-      
-      <Column
-      header="Total"
-      prefix="$"
-                body={actionBodyTemplate2}
-                exportable={false}
-                style={{ minWidth: "8rem" }}
-              ></Column>
+                  <Column
+                    field="precio"
+                    header="Precio"
+                    body={priceBodyTemplate}
+                    sortable
+                    style={{ minWidth: "8rem" }}
+                  ></Column>
+                  <Column
+                    field="categoria"
+                    header="Categoría"
+                    sortable
+                    style={{ minWidth: "10rem" }}
+                  ></Column>
 
+                  <Column
+                    body={actionBodyTemplate}
+                    exportable={false}
+                    style={{ minWidth: "8rem" }}
+                  ></Column>
+                </DataTable>
+              </>
+            ) : (
+              <DataTable
+                ref={dt}
+                emptyMessage="No se encontraron resultados"
+                value={carritoData}
+                selection={selectedProducts}
+                footerColumnGroup={footer}
+                onSelectionChange={(e) => setSelectedProducts(e.value)}
+                dataKey="id"
+                paginator
+                editMode="cell"
+                className="editable-cells-table"
+                rows={10}
+                rowsPerPageOptions={[5, 10, 25]}
+                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+                globalFilter={globalFilter}
+                header={header}
+                responsiveLayout="scroll"
+              >
+                <Column
+                  field="nombre"
+                  header="Nombre"
+                  sortable
+                  style={{ minWidth: "16rem" }}
+                ></Column>
 
+                <Column
+                  field="precio"
+                  header="Precio"
+                  prefix="$"
+                  body={priceBodyTemplate}
+                  sortable
+                  style={{ minWidth: "8rem" }}
+                ></Column>
 
-              <Column
-                body={actionBodyTemplate}
-                exportable={false}
-                style={{ minWidth: "8rem" }}
-              ></Column>
-            </DataTable>}
-    <br></br>
-          <div>
+                <Column
+                  header="Cantidad"
+                  field="cantidad"
+                  editor={(options) => cellEditor1(options)}
+                  onCellEditComplete={onCellEditComplete}
+                  exportable={false}
+                  style={{ minWidth: "8rem" }}
+                ></Column>
 
           <Button
             label="Completar Pago"
@@ -797,9 +779,22 @@ const  total=modifiedArr.reduce((a, b) => a + b, 0);
             onClick={()=>enviarAlCarrito()}
           />
 
-          </div>
-           
-            
+                <Column
+                  body={actionBodyTemplate}
+                  exportable={false}
+                  style={{ minWidth: "8rem" }}
+                ></Column>
+              </DataTable>
+            )}
+            <br></br>
+            <div>
+              <Button
+                label="Completar Pago"
+                icon="pi pi-cart-plus"
+                className="p-button-success mr-4"
+                onClick={() => enviarAlCarrito(rowData)}
+              />
+            </div>
           </div>
 
           <Dialog
@@ -897,10 +892,8 @@ const  total=modifiedArr.reduce((a, b) => a + b, 0);
                   locale="en-US"
                 />
               </div>
-             
-              <div className="field col">
-                
-              </div>
+
+              <div className="field col"></div>
             </div>
           </Dialog>
 
