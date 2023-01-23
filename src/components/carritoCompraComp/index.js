@@ -61,7 +61,7 @@ const[carritoData,setCarritoData]=useState([]);
       })
         .then((res) => res.json())
         .then((data) => setCarritoData(data));
-    }, [cliente]);
+    }, [cliente, longitud]);
 
   useEffect(() => {
     if (
@@ -216,26 +216,43 @@ const[carritoData,setCarritoData]=useState([]);
 
   };
 
-  const editProduct = (rowData) => {
-   setNombre(rowData.nombre)
-   setPrecio(rowData.precio)
-
-   setCategoria(rowData.categoria)
-   setCodigo(rowData.codigo)
-    setProductDialog(true);
+  const editarCarrito = (data) => {
+    const fecha = new Date();
+    console.log("data",data)
+    fetch((`/api/carrito_compras/${cliente?.cedula}`), {
+      method: 'PUT',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+       // codigo: null,
+        //cliente: cliente.cedula,
+        producto: data.codigo,
+        cantidad: data.cantidad,
+       // subtotal:subtotal,
+       // total: total,
+        fecha: fecha
+      })
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log("res",res);
+      });
+      setLongitud(longitud+1)
   };
 
   const confirmDeleteProduct = (product) => {
-    setCodigo(product.codigo)
+    console.log("codigooo",product.producto)
+    setCodigo(product.producto)
     setProduct(product);
     setDeleteProductDialog(true);
   };
 
   const deleteProduct = () => {
-    fetch(`/api/carrito_compras/`, { 
+    fetch(`/api/carrito_compras/${cliente.cedula}`, { 
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({codigo:codigo})
+      body: JSON.stringify({producto:codigo})
     })
     .then(() => setLongitud(longitud+1)).then(()=>{setDeleteProductDialog(false)
     setProduct(emptyProduct);
@@ -555,7 +572,7 @@ const cellEditor1 = (options) =>{
             label="Editar Cantidad"
             icon="pi pi-cart-plus"
             className="p-button-success mr-2"
-            onClick={()=>enviarAlCarrito(rowData)}
+            onClick={()=>editarCarrito(rowData)}
           />
            <Button
             icon="pi pi-trash"

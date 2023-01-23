@@ -492,12 +492,13 @@ const cellEditor1 = (options) =>{
 
   useEffect(() => {
     fetch(`/api/carrito_compras/${cliente?.cedula}`,{
-     // method:"GET",
-      //headers: { "Content-Type": "application/json" },
+      method:"GET",
+      headers: { "Content-Type": "application/json" },
     })
       .then((res) => res.json())
-      .then((data) => setCarritoData(data));
-  }, [cliente]);
+      .then((data) => {setCarritoData(data)});
+  }, [cliente,longitud]);
+  let cantidadProduc=carritoData;
   
  
   const enviarAlCarrito=(data)=>{
@@ -511,15 +512,15 @@ const cellEditor1 = (options) =>{
 
     if(carritoData.find(x=>x.nombre===data.nombre)===undefined){
       console.log("NO EXISTE")
-      fetch(('/api/carrito_compras'), {
+      fetch((`/api/carrito_compras/${cliente?.cedula}`), {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
          // codigo: null,
-          cliente: cliente.cedula,
-          producto: data.codigo,
+          //cliente: cliente.cedula,
+          producto: data.producto,
           cantidad: data.cantidad,
          // subtotal:subtotal,
          // total: total,
@@ -532,17 +533,20 @@ const cellEditor1 = (options) =>{
         });
     }
     else{
+      console.log("cantidad Producto",cantidadProduc)
+      
+      console.log("similitud", carritoData.find(x=>x.nombre===data.nombre).cantidad)
       console.log(" EXISTE")
-      fetch(('/api/carrito_compras'), {
+      fetch((`/api/carrito_compras/${cliente?.cedula}`), {
         method: 'PUT',
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
          // codigo: null,
-          cliente: cliente.cedula,
-          producto: data.codigo,
-          cantidad: data.cantidad,
+          //cliente: cliente.cedula,
+          producto: data.producto,
+          cantidad: carritoData.find(x=>x.nombre===data.nombre).cantidad+data.cantidad,
          // subtotal:subtotal,
          // total: total,
           fecha: fecha
@@ -553,6 +557,7 @@ const cellEditor1 = (options) =>{
           console.log("res",res);
         });
     }
+    setLongitud(longitud+1);
     
     
   }

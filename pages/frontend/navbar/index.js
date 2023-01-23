@@ -205,6 +205,10 @@ export const NavBar = () => {
       </Fragment>
     );
   };
+
+  const cerrar=()=>{
+    setCliente2(undefined);
+  }
   const actionBodyTemplate2 = (rowData) => {
     return (
       <Fragment>
@@ -227,6 +231,8 @@ export const NavBar = () => {
           ref={op}
           breakpoints={{ '1000px': '75vw', '640px': '100vw' }}
           showCloseIcon
+          onHide={cerrar}
+          
           id="overlay_panel"
           style={{ width: '450px' }}
           className="overlaypanel-demo"
