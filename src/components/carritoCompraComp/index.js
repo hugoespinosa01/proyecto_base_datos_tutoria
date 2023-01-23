@@ -511,33 +511,13 @@ const cellEditor1 = (options) =>{
       </span>
     );
   };
-  const enviarAlCarrito=(data)=>{
-    const subtotal=(data.precio*100);
-    const total=(subtotal*1.12);
-    console.log("data carrito", data)
-    console.log("cliente", cliente)
-    const fecha = new Date();
-    console.log("date", fecha)
-    fetch(('/api/carrito_compras'), {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        codigo: null,
-        cliente: cliente.cedula,
-        producto: data.codigo,
-        cantidad: 10,
-        subtotal:subtotal,
-        total: total,
-        fecha: fecha
-      })
-    })
-      .then(res => res.json())
-      .then(res => {
-        console.log("res",res);
-      });
-    
+  const enviarAlCarrito=()=>{
+    toast.current.show({
+      severity: "success",
+      summary: "Pago Completado",
+      //detail: "Llene todos los campos!",
+      life: 3000,
+    });
   }
 
   const actionBodyTemplate = (rowData) => {
@@ -814,7 +794,7 @@ const  total=modifiedArr.reduce((a, b) => a + b, 0);
             label="Completar Pago"
             icon="pi pi-cart-plus"
             className="p-button-success mr-4"
-            onClick={()=>enviarAlCarrito(rowData)}
+            onClick={()=>enviarAlCarrito()}
           />
 
           </div>
