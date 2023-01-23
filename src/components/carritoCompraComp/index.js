@@ -362,6 +362,14 @@ export default function CarritoCompra(data2) {
     setApellidoCliente(cliente2?.apellido);
   };
 
+  const completarPAGO=()=>{
+    toast.current.show({
+      severity: "success",
+      detail: "Pago realizado con Éxito!",
+      life: 3000,
+    });
+  }
+
   const leftToolbarTemplate = () => {
     return (
       <React.Fragment>
@@ -771,6 +779,13 @@ export default function CarritoCompra(data2) {
                   exportable={false}
                   style={{ minWidth: "8rem" }}
                 ></Column>
+                <Column
+      header="Total"
+      prefix="$"
+                body={actionBodyTemplate2}
+                exportable={false}
+                style={{ minWidth: "8rem" }}
+              ></Column>
 
           <Button
             label="Completar Pago"
@@ -792,7 +807,7 @@ export default function CarritoCompra(data2) {
                 label="Completar Pago"
                 icon="pi pi-cart-plus"
                 className="p-button-success mr-4"
-                onClick={() => enviarAlCarrito(rowData)}
+                onClick={() => completarPAGO()}
               />
             </div>
           </div>
