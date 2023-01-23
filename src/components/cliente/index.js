@@ -191,7 +191,14 @@ export default function Clientes(data2) {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({cedula:cedula})
-    })
+    }).then(res => {if(res.status==308){toast.current.show({
+      severity: "error",
+      summary: "Fallo",
+      detail: "Producto No Eliminado!",
+      life: 3000,
+    })}else {
+      console.log("res", res.status)
+    }})
     .then(() => setLongitud(longitud+1)).then(()=>{setDeleteProductDialog(false)
     //setProduct(emptyProduct);
     //setCodigo(null);
